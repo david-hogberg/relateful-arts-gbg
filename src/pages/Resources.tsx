@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Book, Video, FileText, ExternalLink, User, Calendar, Plus, Eye } from 'lucide-react';
+import { Book, Video, FileText, ExternalLink, User, Calendar, Plus, Eye, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Navigation } from '@/components/Navigation';
 import { SubmitResourceModal } from '@/components/SubmitResourceModal';
 import { ViewResourceModal } from '@/components/ViewResourceModal';
@@ -32,6 +33,8 @@ export default function Resources() {
   const [submitModalOpen, setSubmitModalOpen] = useState(false);
   const [viewModalOpen, setViewModalOpen] = useState(false);
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
+  const [availableTags, setAvailableTags] = useState<string[]>([]);
+  const [selectedTag, setSelectedTag] = useState<string>('all');
 
   useEffect(() => {
     fetchResources();
@@ -45,7 +48,13 @@ export default function Resources() {
         .order('publish_date', { ascending: false });
 
       if (error) throw error;
-      setResources((data || []) as Resource[]);
+      const resourceData = (data || []) as Resource[];
+      setResources(resourceData);
+      
+      // Extract unique tags from all resources
+      const allTags = resourceData.flatMap(resource => resource.tags);
+      const uniqueTags = Array.from(new Set(allTags)).sort();
+      setAvailableTags(uniqueTags);
     } catch (error: any) {
       toast({
         title: "Error loading resources",
@@ -98,6 +107,10 @@ export default function Resources() {
     });
   };
 
+  const filteredResources = selectedTag === 'all' 
+    ? resources 
+    : resources.filter(resource => resource.tags.includes(selectedTag));
+
   return (
     <div className="min-h-screen">
       <Navigation />
@@ -146,18 +159,40 @@ export default function Resources() {
           </div>
         </section>
 
+        {/* Tag Filter */}
+        {availableTags.length > 0 && (
+          <div className="flex items-center gap-4 mb-6">
+            <Filter className="h-4 w-4" />
+            <Select value={selectedTag} onValueChange={setSelectedTag}>
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="Filter by tag" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Resources</SelectItem>
+                {availableTags.map((tag) => (
+                  <SelectItem key={tag} value={tag}>
+                    {tag}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+
         {/* Resources Grid */}
         {loading ? (
           <div className="text-center py-8">
             <p className="text-muted-foreground">Loading resources...</p>
           </div>
-        ) : resources.length === 0 ? (
+        ) : filteredResources.length === 0 ? (
           <div className="text-center py-8">
-            <p className="text-muted-foreground">No resources available yet. Be the first to submit one!</p>
+            <p className="text-muted-foreground">
+              {selectedTag === 'all' ? 'No resources available yet. Be the first to submit one!' : `No resources found for tag "${selectedTag}".`}
+            </p>
           </div>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {resources.map((resource) => (
+            {filteredResources.map((resource) => (
               <Card key={resource.id} className="hover:shadow-lg transition-shadow">
                 <CardHeader>
                   <div className="flex items-start justify-between">

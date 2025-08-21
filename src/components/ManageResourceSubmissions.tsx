@@ -55,7 +55,7 @@ export function ManageResourceSubmissions() {
         .from('resource_submissions')
         .select(`
           *,
-          profiles!resource_submissions_user_id_fkey (full_name)
+          profiles (full_name)
         `)
         .order('submitted_at', { ascending: false });
 
