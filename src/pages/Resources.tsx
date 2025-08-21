@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Book, Video, FileText, ExternalLink, User, Calendar, Plus, Eye, Filter } from 'lucide-react';
+import { Book, Video, FileText, ExternalLink, User, Calendar, Plus, Eye, Filter, Edit, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Navigation } from '@/components/Navigation';
 import { SubmitResourceModal } from '@/components/SubmitResourceModal';
 import { ViewResourceModal } from '@/components/ViewResourceModal';
+import { EditResourceModal } from '@/components/EditResourceModal';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
@@ -24,15 +25,17 @@ interface Resource {
   tags: string[];
   publish_date: string;
   image_url?: string;
+  author_id: string;
 }
 
 export default function Resources() {
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const { toast } = useToast();
   const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitModalOpen, setSubmitModalOpen] = useState(false);
   const [viewModalOpen, setViewModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
   const [availableTags, setAvailableTags] = useState<string[]>([]);
   const [selectedTag, setSelectedTag] = useState<string>('all');
@@ -70,6 +73,15 @@ export default function Resources() {
   const handleViewResource = (resource: Resource) => {
     setSelectedResource(resource);
     setViewModalOpen(true);
+  };
+
+  const handleEditResource = (resource: Resource) => {
+    setSelectedResource(resource);
+    setEditModalOpen(true);
+  };
+
+  const canEditResource = (resource: Resource) => {
+    return user && (user.id === resource.author_id || profile?.role === 'admin');
   };
 
   // Helper function to get the appropriate icon for each resource type
@@ -261,6 +273,16 @@ export default function Resources() {
                         <Eye className="h-4 w-4 mr-1" />
                         View
                       </Button>
+                      {canEditResource(resource) && (
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          className="border-primary/30 hover:border-primary hover:bg-primary/5 transition-all duration-200"
+                          onClick={() => handleEditResource(resource)}
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                      )}
                       {resource.type === 'link' && resource.url && (
                         <Button variant="outline" size="sm" className="border-primary/30 hover:border-primary hover:bg-primary/5 transition-all duration-200" asChild>
                           <a href={resource.url} target="_blank" rel="noopener noreferrer">
@@ -341,6 +363,13 @@ export default function Resources() {
         resource={selectedResource}
         open={viewModalOpen}
         onOpenChange={setViewModalOpen}
+      />
+
+      <EditResourceModal
+        resource={selectedResource}
+        isOpen={editModalOpen}
+        onClose={() => setEditModalOpen(false)}
+        onUpdate={fetchResources}
       />
     </div>
   );

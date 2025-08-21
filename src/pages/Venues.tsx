@@ -5,9 +5,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../co
 import { Badge } from '../components/ui/badge';
 import { SubmitVenueModal } from '../components/SubmitVenueModal';
 import { ViewVenueModal } from '../components/ViewVenueModal';
+import { EditVenueModal } from '../components/EditVenueModal';
 import { supabase } from '../integrations/supabase/client';
-import { MapPin, Users, DollarSign, Building } from 'lucide-react';
+import { MapPin, Users, DollarSign, Building, Edit, Trash2 } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
+import { useAuth } from '../hooks/useAuth';
 
 interface Venue {
   id: string;
@@ -23,10 +25,12 @@ interface Venue {
 }
 
 const Venues: React.FC = () => {
+  const { user, profile } = useAuth();
   const [venues, setVenues] = useState<Venue[]>([]);
   const [loading, setLoading] = useState(true);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null);
   const { toast } = useToast();
 
@@ -58,6 +62,15 @@ const Venues: React.FC = () => {
   const handleViewVenue = (venue: Venue) => {
     setSelectedVenue(venue);
     setShowViewModal(true);
+  };
+
+  const handleEditVenue = (venue: Venue) => {
+    setSelectedVenue(venue);
+    setShowEditModal(true);
+  };
+
+  const canEditVenue = (venue: Venue) => {
+    return user && (user.id === venue.author_id || profile?.role === 'admin');
   };
 
   const getCostLevelColor = (costLevel: string) => {
@@ -208,6 +221,26 @@ const Venues: React.FC = () => {
                         </p>
                       </div>
                     )}
+                     
+                    {/* Edit/Delete Actions */}
+                    {canEditVenue(venue) && (
+                      <div className="pt-3 border-t border-border/50">
+                        <div className="flex gap-2">
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            className="flex-1 border-primary/30 hover:border-primary hover:bg-primary/5 transition-all duration-200"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleEditVenue(venue);
+                            }}
+                          >
+                            <Edit className="h-3 w-3 mr-1" />
+                            Edit
+                          </Button>
+                        </div>
+                      </div>
+                    )}
                     
                     {/* Date Added */}
                     <div className="pt-2 border-t border-border/50">
@@ -237,6 +270,13 @@ const Venues: React.FC = () => {
           onClose={() => setShowViewModal(false)}
         />
       )}
+
+      <EditVenueModal
+        venue={selectedVenue}
+        isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        onUpdate={fetchVenues}
+      />
     </div>
   );
 };
