@@ -18,7 +18,7 @@ const About = () => {
             <h1 className="text-5xl font-bold mb-4">About Relateful Arts</h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
               We are a community of practitioners, facilitators, and seekers dedicated to exploring 
-              authentic relating and circling practices in Gothenburg. Our mission is to create 
+              relateful practices in Gothenburg. Our mission is to create 
               spaces where people can connect genuinely, practice vulnerable communication, 
               and support each other's journey toward deeper authenticity.
             </p>
@@ -90,7 +90,7 @@ const About = () => {
               <Card className="shadow-card text-center">
                 <CardHeader>
                   <Heart className="w-12 h-12 text-primary mx-auto mb-4" />
-                  <CardTitle>Conscious Consent</CardTitle>
+                  <CardTitle>Conscious Boundaries</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="leading-relaxed">
@@ -133,7 +133,7 @@ const About = () => {
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="leading-relaxed">
-                    Our facilitators offer various formats including weekly circling groups, 
+                    Facilitators offer various formats including weekly circling groups, 
                     authentic relating game nights, weekend workshops, and drop-in practice sessions. 
                     Events range from beginner-friendly introductions to advanced practices for 
                     experienced participants.
@@ -183,8 +183,8 @@ const About = () => {
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-4xl font-bold mb-6">Join Our Community</h2>
             <p className="text-xl text-muted-foreground mb-8">
-              Ready to explore authentic relating and circling practices? Whether you're completely 
-              new or an experienced practitioner, there's a place for you in our community.
+              Ready to explore relateful arts? Whether you're completely 
+              new or an experienced practitioner, there's a place for you.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -200,7 +200,7 @@ const About = () => {
             
             <p className="text-muted-foreground">
               Have questions? Want to learn more before diving in? Feel free to reach out to 
-              any of our facilitators or attend one of our monthly community gatherings.
+              any of our facilitators or attend one of our community gatherings.
             </p>
           </div>
         </div>
