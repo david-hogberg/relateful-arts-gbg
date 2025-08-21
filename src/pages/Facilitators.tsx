@@ -19,6 +19,7 @@ interface Facilitator {
   languages: string[];
   contact_email: string;
   website?: string;
+  image_url?: string;
 }
 
 const Facilitators = () => {
@@ -54,7 +55,8 @@ const Facilitators = () => {
         approach: profile.approach,
         languages: profile.languages || [],
         contact_email: profile.contact_email || profile.email,
-        website: profile.website
+        website: profile.website,
+        image_url: profile.image_url
       })) || [];
 
       setFacilitators(facilitatorsData);
@@ -104,19 +106,33 @@ const Facilitators = () => {
               {facilitators.map((facilitator) => (
                 <Card key={facilitator.id} className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <CardHeader className="relative z-10">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-12 h-12 rounded-full bg-gradient-primary flex items-center justify-center text-white font-semibold text-lg">
+                  
+                  {/* Facilitator Image */}
+                  {facilitator.image_url ? (
+                    <div className="relative h-48 overflow-hidden">
+                      <img 
+                        src={facilitator.image_url} 
+                        alt={facilitator.full_name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                    </div>
+                  ) : (
+                    <div className="h-48 bg-gradient-primary flex items-center justify-center">
+                      <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white font-semibold text-2xl">
                         {facilitator.full_name.split(' ').map(n => n[0]).join('')}
                       </div>
-                      <div>
-                        <CardTitle className="text-xl text-foreground group-hover:text-primary transition-colors">
-                          {facilitator.full_name}
-                        </CardTitle>
-                        <CardDescription className="text-base font-medium text-muted-foreground">
-                          {facilitator.title || 'Facilitator'}
-                        </CardDescription>
-                      </div>
+                    </div>
+                  )}
+                  
+                  <CardHeader className="relative z-10">
+                    <div className="text-center">
+                      <CardTitle className="text-xl text-foreground group-hover:text-primary transition-colors mb-1">
+                        {facilitator.full_name}
+                      </CardTitle>
+                      <CardDescription className="text-base font-medium text-muted-foreground">
+                        {facilitator.title || 'Facilitator'}
+                      </CardDescription>
                     </div>
                   </CardHeader>
                   <CardContent className="relative z-10 flex-1 flex flex-col">

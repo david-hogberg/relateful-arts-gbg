@@ -19,6 +19,7 @@ interface Venue {
   notes?: string;
   author_id: string;
   created_at: string;
+  image_url?: string;
 }
 
 const Venues: React.FC = () => {
@@ -137,30 +138,83 @@ const Venues: React.FC = () => {
                   onClick={() => handleViewVenue(venue)}
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  {/* Venue Image */}
+                  {venue.image_url && (
+                    <div className="relative h-48 overflow-hidden">
+                      <img 
+                        src={venue.image_url} 
+                        alt={venue.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                      <Badge className="absolute top-3 right-3 bg-primary/90 text-white border-0 backdrop-blur-sm">
+                        {venue.cost_level}
+                      </Badge>
+                    </div>
+                  )}
+                  
                   <CardHeader className="relative z-10">
                     <CardTitle className="flex items-start justify-between">
                       <span className="text-lg group-hover:text-primary transition-colors">{venue.name}</span>
-                      <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors">
-                        {venue.cost_level}
-                      </Badge>
+                      {!venue.image_url && (
+                        <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors">
+                          {venue.cost_level}
+                        </Badge>
+                      )}
                     </CardTitle>
                     <CardDescription className="flex items-center gap-2 text-muted-foreground">
-                      <MapPin className="h-4 w-4 text-primary" />
-                      {venue.location}
+                      <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
+                      <span className="line-clamp-2">{venue.location}</span>
                     </CardDescription>
                   </CardHeader>
-                  <CardContent className="relative z-10">
-                    <div className="flex items-center gap-2 mb-4 p-3 bg-gradient-subtle rounded-lg border border-primary/10">
-                      <Users className="h-4 w-4 text-primary" />
-                      <span className="text-sm font-medium text-foreground">
-                        Capacity: {venue.hosting_capacity} people
-                      </span>
+                  <CardContent className="relative z-10 space-y-4">
+                    {/* Capacity Info */}
+                    <div className="flex items-center gap-3 p-3 bg-gradient-subtle rounded-lg border border-primary/10">
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <Users className="h-4 w-4 text-primary" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="text-sm font-medium text-foreground">Capacity</div>
+                        <div className="text-xs text-muted-foreground">{venue.hosting_capacity} people</div>
+                      </div>
                     </div>
-                    {venue.notes && (
-                      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
-                        {venue.notes}
-                      </p>
+                    
+                    {/* Contact Info */}
+                    <div className="flex items-center gap-3 p-3 bg-gradient-subtle rounded-lg border border-primary/10">
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <DollarSign className="h-4 w-4 text-primary" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="text-sm font-medium text-foreground">Cost Level</div>
+                        <div className="text-xs text-muted-foreground capitalize">{venue.cost_level} cost</div>
+                      </div>
+                    </div>
+                    
+                    {/* Contact Information */}
+                    {venue.contact_information && (
+                      <div className="p-3 bg-accent/10 rounded-lg border border-accent/20">
+                        <div className="text-xs font-medium text-foreground mb-1">Contact</div>
+                        <div className="text-xs text-muted-foreground line-clamp-2">{venue.contact_information}</div>
+                      </div>
                     )}
+                    
+                    {/* Notes */}
+                    {venue.notes && (
+                      <div className="p-3 bg-muted/30 rounded-lg">
+                        <div className="text-xs font-medium text-foreground mb-1">Additional Notes</div>
+                        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
+                          {venue.notes}
+                        </p>
+                      </div>
+                    )}
+                    
+                    {/* Date Added */}
+                    <div className="pt-2 border-t border-border/50">
+                      <div className="text-xs text-muted-foreground">
+                        Added {new Date(venue.created_at).toLocaleDateString()}
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
