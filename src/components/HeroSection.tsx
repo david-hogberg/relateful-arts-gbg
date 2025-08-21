@@ -33,9 +33,7 @@ const HeroSection = () => {
               Explore Events
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button variant="outline" size="lg" className="transition-warm">
-              Learn About Our Practices
-            </Button>
+            
           </div>
           
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto">
