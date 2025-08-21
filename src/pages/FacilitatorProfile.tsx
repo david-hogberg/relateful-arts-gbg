@@ -187,6 +187,7 @@ export default function FacilitatorProfile() {
                     onImageUploaded={(url) => setFormData(prev => ({ ...prev, image_url: url }))}
                     onImageRemoved={() => setFormData(prev => ({ ...prev, image_url: "" }))}
                     label="Profile Picture"
+                    circular
                   />
                   
                   <div className="space-y-2">
@@ -348,10 +349,22 @@ export default function FacilitatorProfile() {
                 </Button>
               </div>
             </CardHeader>
-            <CardContent className="space-y-3">
-              <div>
-                <span className="font-medium">Full Name:</span> {profile.full_name}
-              </div>
+            <CardContent className="space-y-6">
+              {/* Profile Image */}
+              {(profile as any).image_url && (
+                <div className="flex justify-center">
+                  <img
+                    src={(profile as any).image_url}
+                    alt={profile.full_name}
+                    className="w-32 h-32 object-cover rounded-full border-4 border-primary/20 shadow-lg"
+                  />
+                </div>
+              )}
+              
+              <div className="space-y-3">
+                <div>
+                  <span className="font-medium">Full Name:</span> {profile.full_name}
+                </div>
               <div>
                 <span className="font-medium">Professional Title:</span> {profile.title || 'Not set'}
               </div>
@@ -413,6 +426,7 @@ export default function FacilitatorProfile() {
                   </div>
                 </div>
               )}
+              </div>
             </CardContent>
           </Card>
         </div>
