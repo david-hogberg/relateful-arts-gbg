@@ -5,57 +5,42 @@ import { Button } from "@/components/ui/button";
 import { Mail, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function EmailConfirmation() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [isVerifying, setIsVerifying] = useState(false);
-  const [verificationStatus, setVerificationStatus] = useState<'pending' | 'success' | 'error'>('pending');
+  const { user, loading } = useAuth();
+  const [verificationStatus, setVerificationStatus] = useState<'waiting' | 'success' | 'error'>('waiting');
   
   const email = searchParams.get('email');
-  const token = searchParams.get('token');
-  const type = searchParams.get('type');
 
   useEffect(() => {
-    // If there are verification tokens in the URL, process them
-    if (token && type === 'signup') {
-      handleEmailVerification();
-    }
-  }, [token, type]);
-
-  const handleEmailVerification = async () => {
-    setIsVerifying(true);
-    try {
-      const { data, error } = await supabase.auth.verifyOtp({
-        token_hash: token!,
-        type: 'signup'
-      });
-
-      if (error) throw error;
-
+    // Check if user is authenticated (email was verified)
+    if (!loading && user) {
       setVerificationStatus('success');
       toast({
         title: "Email verified!",
         description: "Your email has been successfully verified. Redirecting to dashboard...",
       });
-
+      
       // Redirect to dashboard after successful verification
       setTimeout(() => {
         navigate('/dashboard');
       }, 2000);
-
-    } catch (error) {
-      console.error('Email verification error:', error);
-      setVerificationStatus('error');
-      toast({
-        title: "Verification failed",
-        description: "Failed to verify your email. Please try again or contact support.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsVerifying(false);
+    } else if (!loading && !user) {
+      // Check URL hash for error or success indicators
+      const hash = window.location.hash;
+      if (hash.includes('error')) {
+        setVerificationStatus('error');
+        toast({
+          title: "Verification failed",
+          description: "Failed to verify your email. The link may have expired or already been used.",
+          variant: "destructive",
+        });
+      }
     }
-  };
+  }, [user, loading, navigate]);
 
   const resendConfirmation = async () => {
     if (!email) {
@@ -92,14 +77,14 @@ export default function EmailConfirmation() {
     }
   };
 
-  if (isVerifying) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-gradient-warm flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
           <CardContent className="flex flex-col items-center justify-center py-8">
             <Loader2 className="h-8 w-8 animate-spin text-primary mb-4" />
             <p className="text-center text-muted-foreground">
-              Verifying your email...
+              Checking authentication status...
             </p>
           </CardContent>
         </Card>
