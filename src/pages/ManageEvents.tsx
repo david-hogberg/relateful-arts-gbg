@@ -6,6 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import CreateEventModal from "@/components/CreateEventModal";
+import EditEventModal from "@/components/EditEventModal";
+import ViewParticipantsModal from "@/components/ViewParticipantsModal";
 import { Loader2, Calendar, Clock, MapPin, Plus, Edit, Trash2, Users } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -31,6 +33,9 @@ export default function ManageEvents() {
   const [events, setEvents] = useState<FacilitatorEvent[]>([]);
   const [loadingEvents, setLoadingEvents] = useState(true);
   const [createEventOpen, setCreateEventOpen] = useState(false);
+  const [editEventOpen, setEditEventOpen] = useState(false);
+  const [viewParticipantsOpen, setViewParticipantsOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<FacilitatorEvent | null>(null);
   const [deleting, setDeleting] = useState<string | null>(null);
 
   useEffect(() => {
@@ -156,6 +161,16 @@ export default function ManageEvents() {
     }
   };
 
+  const handleEditEvent = (event: FacilitatorEvent) => {
+    setSelectedEvent(event);
+    setEditEventOpen(true);
+  };
+
+  const handleViewParticipants = (event: FacilitatorEvent) => {
+    setSelectedEvent(event);
+    setViewParticipantsOpen(true);
+  };
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { 
@@ -256,10 +271,15 @@ export default function ManageEvents() {
                                   Past Event
                                 </Badge>
                               )}
-                              <Badge variant="outline" className="text-xs">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="text-xs h-6 px-2"
+                                onClick={() => handleViewParticipants(event)}
+                              >
                                 <Users className="w-3 h-3 mr-1" />
                                 {event.registration_count}/{event.max_participants}
-                              </Badge>
+                              </Button>
                             </div>
                             <h3 className="font-semibold text-lg">{event.title}</h3>
                             {event.description && (
@@ -292,6 +312,7 @@ export default function ManageEvents() {
                               variant="outline"
                               size="sm"
                               disabled={event.is_past}
+                              onClick={() => handleEditEvent(event)}
                             >
                               <Edit className="w-4 h-4" />
                             </Button>
@@ -323,6 +344,30 @@ export default function ManageEvents() {
         open={createEventOpen} 
         onOpenChange={setCreateEventOpen}
         onEventCreated={fetchEvents}
+      />
+      
+      <EditEventModal
+        open={editEventOpen}
+        onOpenChange={setEditEventOpen}
+        onEventUpdated={fetchEvents}
+        event={selectedEvent ? {
+          id: selectedEvent.id,
+          title: selectedEvent.title,
+          description: selectedEvent.description,
+          date: selectedEvent.date,
+          time: selectedEvent.time,
+          location: selectedEvent.location,
+          type: selectedEvent.type,
+          max_participants: selectedEvent.max_participants,
+          price: selectedEvent.price,
+        } : null}
+      />
+      
+      <ViewParticipantsModal
+        open={viewParticipantsOpen}
+        onOpenChange={setViewParticipantsOpen}
+        eventId={selectedEvent?.id || null}
+        eventTitle={selectedEvent?.title || ""}
       />
     </div>
   );

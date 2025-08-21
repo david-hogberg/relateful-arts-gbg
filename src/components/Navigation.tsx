@@ -64,20 +64,21 @@ function Navigation() {
                     </span>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
+                <DropdownMenuContent align="end" className="bg-background border shadow-lg z-50">
                   <DropdownMenuItem asChild>
                     <Link to="/profile">Profile</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/my-events">My Events</Link>
+                    <Link to="/my-events">Booked Events</Link>
                   </DropdownMenuItem>
                   {(profile?.role === 'facilitator' || profile?.role === 'admin') && (
                     <>
+                      <DropdownMenuSeparator />
                       <DropdownMenuItem asChild>
                         <Link to="/manage-events">Manage Events</Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
-                        <Link to="/edit-facilitator-profile">Edit Facilitator Profile</Link>
+                        <Link to="/edit-facilitator-profile">Facilitator Profile</Link>
                       </DropdownMenuItem>
                     </>
                   )}

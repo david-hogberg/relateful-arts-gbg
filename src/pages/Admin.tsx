@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import ViewApplicationModal from "@/components/ViewApplicationModal";
 import { Loader2, Search, Users, FileText, Shield } from "lucide-react";
 
 interface FacilitatorApplication {
@@ -32,6 +33,18 @@ interface FacilitatorApplication {
   experience_description: string;
   status: 'pending' | 'approved' | 'rejected';
   submitted_at: string;
+  title?: string;
+  public_bio?: string;
+  years_experience?: number;
+  website?: string;
+  approach?: string;
+  certifications?: string;
+  preferred_practice_types?: string[];
+  availability?: string;
+  contact_email?: string;
+  contact_references?: string;
+  work_types?: string[];
+  languages?: string[];
   admin_notes?: string;
   profiles: {
     full_name: string;
@@ -57,6 +70,8 @@ export default function Admin() {
   const [loadingApplications, setLoadingApplications] = useState(true);
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const [viewApplicationOpen, setViewApplicationOpen] = useState(false);
+  const [selectedApplication, setSelectedApplication] = useState<FacilitatorApplication | null>(null);
 
   useEffect(() => {
     if (!loading && (!user || profile?.role !== 'admin')) {
@@ -205,6 +220,11 @@ export default function Admin() {
     }
   };
 
+  const handleViewApplication = (application: FacilitatorApplication) => {
+    setSelectedApplication(application);
+    setViewApplicationOpen(true);
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'approved': return 'bg-success';
@@ -297,7 +317,11 @@ export default function Admin() {
                         </TableHeader>
                         <TableBody>
                           {applications.map((application) => (
-                            <TableRow key={application.id}>
+                            <TableRow 
+                              key={application.id}
+                              className="cursor-pointer hover:bg-muted/50"
+                              onClick={() => handleViewApplication(application)}
+                            >
                               <TableCell className="font-medium">
                                 {application.profiles?.full_name || 'Unknown'}
                               </TableCell>
@@ -310,7 +334,7 @@ export default function Admin() {
                               <TableCell>
                                 {new Date(application.submitted_at).toLocaleDateString()}
                               </TableCell>
-                              <TableCell>
+                              <TableCell onClick={(e) => e.stopPropagation()}>
                                 {application.status === 'pending' && (
                                   <div className="flex gap-2">
                                     <Button
@@ -432,6 +456,12 @@ export default function Admin() {
           </Tabs>
         </div>
       </main>
+      
+      <ViewApplicationModal
+        open={viewApplicationOpen}
+        onOpenChange={setViewApplicationOpen}
+        application={selectedApplication}
+      />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -291,8 +292,10 @@ const Events = () => {
               If you're a facilitator interested in hosting circling or authentic relating events, 
               we'd love to support you in connecting with our community.
             </p>
-            <Button variant="outline" size="lg">
-              Contact Us About Hosting
+            <Button variant="outline" size="lg" asChild>
+              <Link to={user ? "/apply-facilitator" : "/auth"}>
+                Contact Us About Hosting
+              </Link>
             </Button>
           </div>
         </div>
