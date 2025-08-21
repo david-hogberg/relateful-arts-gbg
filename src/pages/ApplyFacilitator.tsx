@@ -15,6 +15,7 @@ import { Loader2 } from "lucide-react";
 const workTypes = [
   'Circling',
   'Authentic Relating',
+  'T-Group',
   'Nonviolent Communication',
   'Somatic Practices',
   'Mindfulness',
@@ -66,7 +67,7 @@ export default function ApplyFacilitator() {
       work_types: selectedWorkTypes,
       preferred_practice_types: selectedWorkTypes, // Keep for backward compatibility
       languages: selectedLanguages,
-      
+      contact_email: formData.get('contact_email') as string,
       website: formData.get('website') as string,
       availability: formData.get('availability') as string,
       contact_references: formData.get('references') as string,
@@ -162,11 +163,11 @@ export default function ApplyFacilitator() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="experience">Experience Description *</Label>
+                  <Label htmlFor="experience">More About You *</Label>
                   <Textarea
                     id="experience"
                     name="experience"
-                    placeholder="Please describe your experience with authentic relating, circling, or related practices in detail..."
+                    placeholder="Please describe your experience with authentic relating, circling, or related practices..."
                     className="min-h-32"
                     required
                   />
@@ -208,14 +209,27 @@ export default function ApplyFacilitator() {
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="website">Website (optional)</Label>
-                  <Input
-                    id="website"
-                    name="website"
-                    type="url"
-                    placeholder="https://yourwebsite.com"
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="contact_email">Contact Email *</Label>
+                    <Input
+                      id="contact_email"
+                      name="contact_email"
+                      type="email"
+                      placeholder="your@email.com"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="website">Website (optional)</Label>
+                    <Input
+                      id="website"
+                      name="website"
+                      type="url"
+                      placeholder="https://yourwebsite.com"
+                    />
+                  </div>
                 </div>
 
                 <div className="space-y-2">
