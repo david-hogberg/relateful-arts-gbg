@@ -40,7 +40,7 @@ const availableLanguages = [
   'Other'
 ];
 
-export default function EditFacilitatorProfile() {
+export default function FacilitatorProfile() {
   const { user, profile, loading } = useAuth();
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
