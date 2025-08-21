@@ -5,7 +5,7 @@ import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Star, ExternalLink, MessageCircle, Settings, Loader2 } from "lucide-react";
+import { Heart, ExternalLink, MessageCircle, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Facilitator {
@@ -75,24 +75,12 @@ const Facilitators = () => {
       <section className="py-16 bg-gradient-warm">
         <div className="container mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto">
-            <div className="flex justify-between items-start mb-8">
-              <div className="text-center flex-1">
-                <h1 className="text-5xl font-bold mb-4">Our Facilitators</h1>
-                <p className="text-xl text-muted-foreground mb-8">
-                  Meet the experienced practitioners and facilitators who guide our community. 
-                  Each brings their unique approach and expertise to authentic relating practices.
-                </p>
-              </div>
-              {currentUserIsFacilitator && (
-                <Button
-                  onClick={() => navigate('/edit-facilitator-profile')}
-                  variant="outline"
-                  className="ml-4"
-                >
-                  <Settings className="w-4 h-4 mr-2" />
-                  Edit My Profile
-                </Button>
-              )}
+            <div className="text-center">
+              <h1 className="text-5xl font-bold mb-4">Our Facilitators</h1>
+              <p className="text-xl text-muted-foreground mb-8">
+                Meet the experienced practitioners and facilitators who guide our community. 
+                Each brings their unique approach and expertise to authentic relating practices.
+              </p>
             </div>
             <div className="flex justify-center">
               <Badge className="bg-primary/10 text-primary border-primary/20 px-4 py-2">
@@ -124,16 +112,6 @@ const Facilitators = () => {
               {facilitators.map((facilitator) => (
                 <Card key={facilitator.id} className="shadow-card hover:shadow-gentle transition-warm h-full flex flex-col">
                   <CardHeader>
-                    <div className="flex items-center justify-between mb-4">
-                      <Badge variant="secondary">
-                        {facilitator.years_experience ? `${facilitator.years_experience}+ years` : 'Experienced'}
-                      </Badge>
-                      <div className="flex space-x-1">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                        ))}
-                      </div>
-                    </div>
                     <CardTitle className="text-xl mb-2">{facilitator.full_name}</CardTitle>
                     <CardDescription className="text-base font-medium">
                       {facilitator.title || 'Facilitator'}

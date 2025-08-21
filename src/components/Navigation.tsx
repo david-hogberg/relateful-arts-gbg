@@ -72,9 +72,14 @@ function Navigation() {
                     <Link to="/my-events">My Events</Link>
                   </DropdownMenuItem>
                   {(profile?.role === 'facilitator' || profile?.role === 'admin') && (
-                    <DropdownMenuItem asChild>
-                      <Link to="/manage-events">Manage Events</Link>
-                    </DropdownMenuItem>
+                    <>
+                      <DropdownMenuItem asChild>
+                        <Link to="/manage-events">Manage Events</Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link to="/edit-facilitator-profile">Edit Facilitator Profile</Link>
+                      </DropdownMenuItem>
+                    </>
                   )}
                   {profile?.role === 'admin' && (
                     <>

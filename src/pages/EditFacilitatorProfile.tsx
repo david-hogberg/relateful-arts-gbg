@@ -51,8 +51,7 @@ export default function EditFacilitatorProfile() {
     public_bio: '',
     approach: '',
     contact_email: '',
-    website: '',
-    years_experience: ''
+    website: ''
   });
 
   useEffect(() => {
@@ -68,8 +67,7 @@ export default function EditFacilitatorProfile() {
         public_bio: profile.public_bio || '',
         approach: profile.approach || '',
         contact_email: profile.contact_email || profile.email,
-        website: profile.website || '',
-        years_experience: profile.years_experience?.toString() || ''
+        website: profile.website || ''
       });
       setSelectedWorkTypes(profile.work_types || []);
       setSelectedLanguages(profile.languages || []);
@@ -89,7 +87,6 @@ export default function EditFacilitatorProfile() {
       approach: formData.approach,
       contact_email: formData.contact_email,
       website: formData.website,
-      years_experience: formData.years_experience ? parseInt(formData.years_experience) : null,
       work_types: selectedWorkTypes,
       languages: selectedLanguages,
       is_public_profile: isPublic
@@ -175,28 +172,14 @@ export default function EditFacilitatorProfile() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="title">Professional Title</Label>
-                    <Input
-                      id="title"
-                      value={formData.title}
-                      onChange={(e) => setFormData({...formData, title: e.target.value})}
-                      placeholder="e.g. Circling Facilitator & Coach"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="years_experience">Years of Experience</Label>
-                    <Input
-                      id="years_experience"
-                      value={formData.years_experience}
-                      onChange={(e) => setFormData({...formData, years_experience: e.target.value})}
-                      type="number"
-                      min="0"
-                      placeholder="e.g. 5"
-                    />
-                  </div>
+                <div className="space-y-2">
+                  <Label htmlFor="title">Professional Title</Label>
+                  <Input
+                    id="title"
+                    value={formData.title}
+                    onChange={(e) => setFormData({...formData, title: e.target.value})}
+                    placeholder="e.g. Circling Facilitator & Coach"
+                  />
                 </div>
 
                 <div className="space-y-2">
