@@ -75,9 +75,7 @@ export default function Admin() {
     try {
       const { data, error } = await supabase
         .from('facilitator_applications')
-        .select(`
-          *
-        `)
+        .select('*')
         .order('submitted_at', { ascending: false });
 
       if (error) throw error;
@@ -98,11 +96,6 @@ export default function Admin() {
       })) || [];
 
       setApplications(applicationsWithProfiles);
-        `)
-        .order('submitted_at', { ascending: false });
-
-      if (error) throw error;
-      setApplications((data as any) || []);
     } catch (error) {
       console.error('Error fetching applications:', error);
       toast({
