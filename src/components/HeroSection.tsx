@@ -22,7 +22,7 @@ const HeroSection = () => {
               Relateful Arts
             </span>
             <br />
-            <span className="text-foreground">A platform for deepening interpersonal practices in and around Gothenburg, Sweden.</span>
+            <span className="text-foreground">A platform for deepening interpersonal practices in and around Gothenburg, Sweden. Join as practitioner or facilitator in deepening connections and devloping communities.</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed max-w-3xl mx-auto">A platform for deepening interpersonal connections in and around Gothenburg, Sweden. Join as practitioner or facilitator in a shared space of collective-interpersonal practices.</p>
