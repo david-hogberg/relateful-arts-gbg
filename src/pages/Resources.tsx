@@ -1,126 +1,100 @@
-import Navigation from "@/components/Navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { BookOpen, ExternalLink, FileText, Video, Podcast, User } from "lucide-react";
+import { useState, useEffect } from 'react';
+import { Book, Video, FileText, ExternalLink, User, Calendar, Plus, Eye } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Navigation } from '@/components/Navigation';
+import { SubmitResourceModal } from '@/components/SubmitResourceModal';
+import { ViewResourceModal } from '@/components/ViewResourceModal';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/use-toast';
 
+// Define the Resource interface
 interface Resource {
   id: string;
   title: string;
-  author: string;
-  type: "article" | "video" | "podcast" | "substack" | "external";
-  category: "beginner" | "intermediate" | "advanced" | "facilitator";
+  author_name: string;
+  type: 'article' | 'link';
+  category: string;
   description: string;
+  content?: string;
   url?: string;
-  publishDate: string;
+  tags: string[];
+  publish_date: string;
 }
 
-const Resources = () => {
-  const resources: Resource[] = [
-    {
-      id: "1",
-      title: "Getting Started with Authentic Relating",
-      author: "Anna Lindberg",
-      type: "article",
-      category: "beginner",
-      description: "A gentle introduction to the principles and practices of authentic relating, perfect for newcomers to the community.",
-      publishDate: "2024-01-10"
-    },
-    {
-      id: "2",
-      title: "The Art of Vulnerable Sharing",
-      author: "Sofia Andersson", 
-      type: "substack",
-      category: "intermediate",
-      description: "Exploring how to share vulnerably while maintaining healthy boundaries and consent in relating practices.",
-      url: "https://sofia-relating.substack.com",
-      publishDate: "2024-01-05"
-    },
-    {
-      id: "3",
-      title: "Circling Practice Guidelines",
-      author: "Marcus Johansson",
-      type: "article", 
-      category: "facilitator",
-      description: "A comprehensive guide for facilitators on creating safe containers and holding space in circling practices.",
-      publishDate: "2023-12-20"
-    },
-    {
-      id: "4",
-      title: "Somatic Awareness in Relating",
-      author: "Sofia Andersson",
-      type: "video",
-      category: "intermediate", 
-      description: "A recorded workshop on integrating body awareness and somatic practices with authentic relating.",
-      publishDate: "2023-12-15"
-    },
-    {
-      id: "5",
-      title: "Men's Work & Emotional Intelligence",
-      author: "Erik Nilsson",
-      type: "substack",
-      category: "intermediate",
-      description: "Exploring how men can develop emotional intelligence through authentic relating and men's circle work.",
-      url: "https://erik-menswork.substack.com",
-      publishDate: "2023-12-10"
-    },
-    {
-      id: "6",
-      title: "NVC Meets Authentic Relating",
-      author: "Maja Petersson",
-      type: "podcast",
-      category: "intermediate",
-      description: "A deep conversation about integrating Nonviolent Communication principles with authentic relating practices.",
-      publishDate: "2023-12-01"
-    },
-    {
-      id: "7",
-      title: "Mindful Presence in Community",
-      author: "David Kumar",
-      type: "article",
-      category: "beginner",
-      description: "How mindfulness and meditation practices can deepen our capacity for authentic connection with others.",
-      publishDate: "2023-11-25"
-    },
-    {
-      id: "8",
-      title: "Building Consent Culture in Groups",
-      author: "Community Contributors",
-      type: "external",
-      category: "facilitator",
-      description: "Best practices for creating consent-based cultures in authentic relating and circling communities.",
-      url: "https://authentic-relating-global.org/consent",
-      publishDate: "2023-11-20"
-    }
-  ];
+export default function Resources() {
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const [resources, setResources] = useState<Resource[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [submitModalOpen, setSubmitModalOpen] = useState(false);
+  const [viewModalOpen, setViewModalOpen] = useState(false);
+  const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
 
-  const getTypeIcon = (type: Resource["type"]) => {
+  useEffect(() => {
+    fetchResources();
+  }, []);
+
+  const fetchResources = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('resources')
+        .select('*')
+        .order('publish_date', { ascending: false });
+
+      if (error) throw error;
+      setResources((data || []) as Resource[]);
+    } catch (error: any) {
+      toast({
+        title: "Error loading resources",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleViewResource = (resource: Resource) => {
+    setSelectedResource(resource);
+    setViewModalOpen(true);
+  };
+
+  // Helper function to get the appropriate icon for each resource type
+  const getTypeIcon = (type: Resource['type']) => {
     switch (type) {
-      case "article": return FileText;
-      case "video": return Video;
-      case "podcast": return Podcast;
-      case "substack": return BookOpen;
-      case "external": return ExternalLink;
-      default: return FileText;
+      case 'article':
+        return <FileText className="h-5 w-5" />;
+      case 'link':
+        return <ExternalLink className="h-5 w-5" />;
+      default:
+        return <FileText className="h-5 w-5" />;
     }
   };
 
-  const getCategoryColor = (category: Resource["category"]) => {
-    switch (category) {
-      case "beginner": return "bg-green-100 text-green-800 border-green-200";
-      case "intermediate": return "bg-primary/10 text-primary border-primary/20";
-      case "advanced": return "bg-orange-100 text-orange-800 border-orange-200";
-      case "facilitator": return "bg-purple-100 text-purple-800 border-purple-200";
-      default: return "bg-muted/50 text-muted-foreground border-muted";
-    }
+  // Helper function to get category-specific colors
+  const getCategoryColor = (category: string) => {
+    const colors = {
+      'Authentic Relating': 'bg-blue-100 text-blue-800',
+      'Circling': 'bg-green-100 text-green-800',
+      'Communication': 'bg-purple-100 text-purple-800',
+      'Community Building': 'bg-yellow-100 text-yellow-800',
+      'Personal Growth': 'bg-pink-100 text-pink-800',
+      'Practice Guides': 'bg-indigo-100 text-indigo-800',
+      'Theory & Philosophy': 'bg-orange-100 text-orange-800',
+      'Other': 'bg-gray-100 text-gray-800'
+    };
+    return colors[category as keyof typeof colors] || 'bg-gray-100 text-gray-800';
   };
 
+  // Helper function to format dates
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
     });
   };
 
@@ -148,81 +122,105 @@ const Resources = () => {
         </div>
       </section>
 
-      {/* Resources Grid */}
-      <section className="py-20">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-            {resources.map((resource) => {
-              const TypeIcon = getTypeIcon(resource.type);
-              return (
-                <Card key={resource.id} className="shadow-card hover:shadow-gentle transition-warm h-full flex flex-col">
-                  <CardHeader>
-                    <div className="flex items-start justify-between mb-4">
+      <div className="container mx-auto px-6 py-12">
+        {/* Submit New Resource Section */}
+        <section className="bg-muted/50 rounded-lg p-8 mb-12">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold mb-4">Share Your Knowledge</h2>
+            <p className="text-muted-foreground mb-6">
+              Have a valuable resource to share with the authentic relating community? 
+              Submit your articles, guides, or external resources for others to discover.
+            </p>
+            <Button 
+              size="lg" 
+              className="flex items-center gap-2"
+              onClick={() => user ? setSubmitModalOpen(true) : toast({
+                title: "Sign in required",
+                description: "Please sign in to submit resources.",
+                variant: "destructive",
+              })}
+            >
+              <Plus className="h-5 w-5" />
+              Submit Your Resource
+            </Button>
+          </div>
+        </section>
+
+        {/* Resources Grid */}
+        {loading ? (
+          <div className="text-center py-8">
+            <p className="text-muted-foreground">Loading resources...</p>
+          </div>
+        ) : resources.length === 0 ? (
+          <div className="text-center py-8">
+            <p className="text-muted-foreground">No resources available yet. Be the first to submit one!</p>
+          </div>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {resources.map((resource) => (
+              <Card key={resource.id} className="hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-2">
+                      {getTypeIcon(resource.type)}
                       <Badge className={getCategoryColor(resource.category)}>
                         {resource.category}
                       </Badge>
-                      <TypeIcon className="w-5 h-5 text-primary" />
                     </div>
-                    <CardTitle className="text-lg leading-tight">{resource.title}</CardTitle>
-                    <CardDescription className="flex items-center">
-                      <User className="w-4 h-4 mr-1" />
-                      {resource.author}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex-1 flex flex-col">
-                    <p className="text-muted-foreground mb-4 leading-relaxed text-sm flex-1">
-                      {resource.description}
-                    </p>
-                    
-                    <div className="mt-auto">
-                      <div className="text-xs text-muted-foreground mb-3">
-                        Published {formatDate(resource.publishDate)}
+                  </div>
+                  <CardTitle className="text-lg">{resource.title}</CardTitle>
+                  <CardDescription>{resource.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-1 mb-3">
+                    {resource.tags.slice(0, 3).map((tag) => (
+                      <Badge key={tag} variant="outline" className="text-xs">
+                        {tag}
+                      </Badge>
+                    ))}
+                    {resource.tags.length > 3 && (
+                      <Badge variant="outline" className="text-xs">
+                        +{resource.tags.length - 3}
+                      </Badge>
+                    )}
+                  </div>
+                  <div className="flex items-center justify-between text-sm text-muted-foreground">
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-1">
+                        <User className="h-4 w-4" />
+                        {resource.author_name}
                       </div>
-                      
-                      <div className="flex gap-2">
-                        <Button 
-                          variant={resource.url || resource.type === "external" ? "default" : "outline"} 
-                          size="sm" 
-                          className="flex-1"
-                        >
-                          {resource.url || resource.type === "external" ? (
-                            <>
-                              <ExternalLink className="w-4 h-4 mr-2" />
-                              Visit
-                            </>
-                          ) : (
-                            <>
-                              <FileText className="w-4 h-4 mr-2" />
-                              Read
-                            </>
-                          )}
+                      <div className="flex items-center gap-1">
+                        <Calendar className="h-4 w-4" />
+                        {formatDate(resource.publish_date)}
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => handleViewResource(resource)}
+                      >
+                        <Eye className="h-4 w-4 mr-1" />
+                        View
+                      </Button>
+                      {resource.type === 'link' && resource.url && (
+                        <Button variant="outline" size="sm" asChild>
+                          <a href={resource.url} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="h-4 w-4" />
+                          </a>
                         </Button>
-                      </div>
+                      )}
                     </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-          
-          <div className="text-center mt-16">
-            <div className="max-w-2xl mx-auto">
-              <h3 className="text-2xl font-semibold mb-4">Contribute to Our Resource Library</h3>
-              <p className="text-muted-foreground mb-6">
-                Have you written an article, created a video, or started a Substack about 
-                authentic relating? We'd love to feature your content in our community library.
-              </p>
-              <Button size="lg" className="bg-gradient-hero shadow-warm">
-                Submit Your Resource
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+        )}
 
-      {/* External Resources */}
-      <section className="py-20 bg-gradient-gentle">
-        <div className="container mx-auto px-6">
+        {/* External Resources */}
+        <section className="mt-20 bg-gradient-gentle rounded-lg p-8">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold mb-8 text-center">Recommended External Resources</h2>
             
@@ -239,8 +237,10 @@ const Resources = () => {
                     The international community for authentic relating with resources, 
                     training programs, and connections to practitioners worldwide.
                   </CardDescription>
-                  <Button variant="outline" size="sm">
-                    Visit Website
+                  <Button variant="outline" size="sm" asChild>
+                    <a href="https://authentic-relating-global.org" target="_blank" rel="noopener noreferrer">
+                      Visit Website
+                    </a>
                   </Button>
                 </CardContent>
               </Card>
@@ -257,17 +257,34 @@ const Resources = () => {
                     Training and certification programs for circling facilitators, 
                     plus extensive resources on the practice and philosophy.
                   </CardDescription>
-                  <Button variant="outline" size="sm">
-                    Visit Website
+                  <Button variant="outline" size="sm" asChild>
+                    <a href="https://circlinginstitute.com" target="_blank" rel="noopener noreferrer">
+                      Visit Website
+                    </a>
                   </Button>
                 </CardContent>
               </Card>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
+
+      <SubmitResourceModal 
+        open={submitModalOpen} 
+        onOpenChange={(open) => {
+          setSubmitModalOpen(open);
+          if (!open) {
+            // Refresh resources when modal closes in case new resource was published
+            fetchResources();
+          }
+        }} 
+      />
+
+      <ViewResourceModal
+        resource={selectedResource}
+        open={viewModalOpen}
+        onOpenChange={setViewModalOpen}
+      />
     </div>
   );
-};
-
-export default Resources;
+}

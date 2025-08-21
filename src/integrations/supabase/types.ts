@@ -223,6 +223,111 @@ export type Database = {
         }
         Relationships: []
       }
+      resource_submissions: {
+        Row: {
+          admin_notes: string | null
+          category: string
+          content: string | null
+          created_at: string
+          description: string
+          id: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          submitted_at: string
+          tags: string[]
+          title: string
+          type: string
+          updated_at: string
+          url: string | null
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          category: string
+          content?: string | null
+          created_at?: string
+          description: string
+          id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          submitted_at?: string
+          tags?: string[]
+          title: string
+          type: string
+          updated_at?: string
+          url?: string | null
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          category?: string
+          content?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          submitted_at?: string
+          tags?: string[]
+          title?: string
+          type?: string
+          updated_at?: string
+          url?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      resources: {
+        Row: {
+          author_id: string
+          author_name: string
+          category: string
+          content: string | null
+          created_at: string
+          description: string
+          id: string
+          publish_date: string
+          tags: string[]
+          title: string
+          type: string
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          author_id: string
+          author_name: string
+          category: string
+          content?: string | null
+          created_at?: string
+          description: string
+          id?: string
+          publish_date?: string
+          tags?: string[]
+          title: string
+          type: string
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          author_id?: string
+          author_name?: string
+          category?: string
+          content?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          publish_date?: string
+          tags?: string[]
+          title?: string
+          type?: string
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
