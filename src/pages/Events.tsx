@@ -24,6 +24,7 @@ interface Event {
   price: number;
   current_participants: number;
   is_registered: boolean;
+  image_url?: string;
 }
 
 const Events = () => {
@@ -81,7 +82,8 @@ const Events = () => {
         current_participants: event.event_registrations?.filter(reg => !reg.cancelled_at).length || 0,
         is_registered: user ? event.event_registrations?.some(reg => 
           reg.user_id === user.id && !reg.cancelled_at
-        ) || false : false
+        ) || false : false,
+        image_url: event.image_url
       })) || [];
 
       setEvents(eventsWithRegistration);
@@ -211,24 +213,48 @@ const Events = () => {
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {events.map((event) => (
-              <Card key={event.id} className="shadow-card hover:shadow-gentle transition-warm">
-                <CardHeader>
-                  <div className="flex items-start justify-between mb-4">
-                    <Badge className={getTypeColor(event.type)}>
+              <Card key={event.id} className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-1">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                
+                {/* Event Banner Image */}
+                {event.image_url && (
+                  <div className="relative h-48 overflow-hidden">
+                    <img 
+                      src={event.image_url} 
+                      alt={event.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                    <Badge className="absolute top-3 right-3 bg-primary/90 text-white border-0 backdrop-blur-sm">
                       {event.type.replace('_', ' ')}
                     </Badge>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-primary">
+                    <div className="absolute top-3 left-3 text-white bg-black/30 backdrop-blur-sm px-2 py-1 rounded">
+                      <div className="text-lg font-bold">
                         {event.price === 0 ? 'Free' : `${event.price} SEK`}
                       </div>
                     </div>
                   </div>
-                  <CardTitle className="text-2xl mb-2">{event.title}</CardTitle>
+                )}
+                
+                <CardHeader className="relative z-10">
+                  {!event.image_url && (
+                    <div className="flex items-start justify-between mb-4">
+                      <Badge className={getTypeColor(event.type)}>
+                        {event.type.replace('_', ' ')}
+                      </Badge>
+                      <div className="text-right">
+                        <div className="text-2xl font-bold text-primary">
+                          {event.price === 0 ? 'Free' : `${event.price} SEK`}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  <CardTitle className="text-2xl mb-2 group-hover:text-primary transition-colors">{event.title}</CardTitle>
                   <CardDescription className="text-lg">
                     Facilitated by {event.facilitator_name}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="relative z-10">
                   <div className="space-y-4 mb-6">
                     <div className="flex items-center text-muted-foreground">
                       <Calendar className="w-5 h-5 mr-3 text-primary" />

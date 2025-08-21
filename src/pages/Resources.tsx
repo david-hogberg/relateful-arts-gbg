@@ -23,6 +23,7 @@ interface Resource {
   url?: string;
   tags: string[];
   publish_date: string;
+  image_url?: string;
 }
 
 export default function Resources() {
@@ -189,17 +190,40 @@ export default function Resources() {
             {filteredResources.map((resource) => (
               <Card key={resource.id} className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-1">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <CardHeader className="relative z-10">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-gradient-primary rounded-lg text-white shadow-soft">
+                
+                {/* Resource Banner Image */}
+                {resource.image_url && (
+                  <div className="relative h-48 overflow-hidden">
+                    <img 
+                      src={resource.image_url} 
+                      alt={resource.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                    <Badge className="absolute top-3 right-3 bg-primary/90 text-white border-0 backdrop-blur-sm">
+                      {resource.category}
+                    </Badge>
+                    <div className="absolute top-3 left-3 p-2 bg-black/30 backdrop-blur-sm rounded-lg">
+                      <div className="text-white">
                         {getTypeIcon(resource.type)}
                       </div>
-                      <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors">
-                        {resource.category}
-                      </Badge>
                     </div>
                   </div>
+                )}
+                
+                <CardHeader className="relative z-10">
+                  {!resource.image_url && (
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-gradient-primary rounded-lg text-white shadow-soft">
+                          {getTypeIcon(resource.type)}
+                        </div>
+                        <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors">
+                          {resource.category}
+                        </Badge>
+                      </div>
+                    </div>
+                  )}
                   <CardTitle className="text-lg group-hover:text-primary transition-colors">{resource.title}</CardTitle>
                   <CardDescription className="text-muted-foreground leading-relaxed">{resource.description}</CardDescription>
                 </CardHeader>

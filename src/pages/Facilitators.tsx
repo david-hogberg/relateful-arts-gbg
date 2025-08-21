@@ -107,25 +107,18 @@ const Facilitators = () => {
                 <Card key={facilitator.id} className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   
-                  {/* Facilitator Image */}
-                  {facilitator.image_url ? (
-                    <div className="relative h-48 overflow-hidden">
+                  {/* Profile Image - Circular in corner */}
+                  {facilitator.image_url && (
+                    <div className="absolute top-4 right-4 w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-lg z-10">
                       <img 
                         src={facilitator.image_url} 
                         alt={facilitator.full_name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-                    </div>
-                  ) : (
-                    <div className="h-48 bg-gradient-primary flex items-center justify-center">
-                      <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white font-semibold text-2xl">
-                        {facilitator.full_name.split(' ').map(n => n[0]).join('')}
-                      </div>
                     </div>
                   )}
                   
-                  <CardHeader className="relative z-10">
+                  <CardHeader className="relative z-10 pt-8">
                     <div className="text-center">
                       <CardTitle className="text-xl text-foreground group-hover:text-primary transition-colors mb-1">
                         {facilitator.full_name}
@@ -133,6 +126,11 @@ const Facilitators = () => {
                       <CardDescription className="text-base font-medium text-muted-foreground">
                         {facilitator.title || 'Facilitator'}
                       </CardDescription>
+                      {!facilitator.image_url && (
+                        <div className="mt-4 mx-auto w-16 h-16 rounded-full bg-gradient-primary flex items-center justify-center text-white font-semibold text-lg shadow-soft">
+                          {facilitator.full_name.split(' ').map(n => n[0]).join('')}
+                        </div>
+                      )}
                     </div>
                   </CardHeader>
                   <CardContent className="relative z-10 flex-1 flex flex-col">
