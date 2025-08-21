@@ -2,57 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Scandinavian Design System - Soft sage & cream palette
+/* Relateful Arts Design System - Warm, authentic, and welcoming
 All colors MUST be HSL for consistency.
 */
 
 @layer base {
   :root {
-    /* Warm cream base */
-    --background: 42 15% 97%;
-    --foreground: 160 8% 25%;
+    /* Core authentic color palette */
+    --background: 35 15% 97%;
+    --foreground: 25 15% 15%;
 
-    --card: 42 20% 95%;
-    --card-foreground: 160 8% 25%;
+    --card: 35 20% 95%;
+    --card-foreground: 25 15% 15%;
 
-    --popover: 42 20% 95%;
-    --popover-foreground: 160 8% 25%;
+    --popover: 35 20% 95%;
+    --popover-foreground: 25 15% 15%;
 
-    /* Sage green primary - Nordic forest inspiration */
-    --primary: 145 25% 45%;
-    --primary-foreground: 42 15% 97%;
-    --primary-glow: 145 30% 55%;
+    /* Warm terracotta primary - authentic and grounding */
+    --primary: 15 75% 58%;
+    --primary-foreground: 35 15% 97%;
+    --primary-glow: 15 85% 68%;
 
-    /* Warm beige secondary */
-    --secondary: 35 15% 85%;
-    --secondary-foreground: 160 8% 25%;
+    /* Soft sage secondary - growth and harmony */
+    --secondary: 95 25% 78%;
+    --secondary-foreground: 25 15% 15%;
 
-    /* Soft neutral muted tones */
-    --muted: 40 12% 90%;
-    --muted-foreground: 160 6% 50%;
+    /* Warm cream muted tones */
+    --muted: 40 20% 88%;
+    --muted-foreground: 25 15% 45%;
 
-    /* Light sage accent */
-    --accent: 150 15% 88%;
-    --accent-foreground: 160 8% 25%;
+    /* Sage accent with warmth */
+    --accent: 95 30% 82%;
+    --accent-foreground: 25 15% 15%;
 
-    --destructive: 0 60% 52%;
-    --destructive-foreground: 42 15% 97%;
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 35 15% 97%;
 
-    --border: 40 10% 86%;
-    --input: 40 10% 86%;
-    --ring: 145 25% 45%;
+    --border: 40 15% 85%;
+    --input: 40 15% 85%;
+    --ring: 15 75% 58%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    /* Soft Nordic gradients */
+    /* Authentic relating gradients */
     --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
     --gradient-warm: linear-gradient(180deg, hsl(var(--background)), hsl(var(--card)));
-    --gradient-gentle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted) / 0.3));
+    --gradient-gentle: radial-gradient(circle at top, hsl(var(--accent) / 0.1), transparent);
 
-    /* Gentle, organic shadows */
-    --shadow-warm: 0 4px 20px -4px hsl(var(--primary) / 0.12);
-    --shadow-gentle: 0 2px 12px -2px hsl(var(--foreground) / 0.08);
-    --shadow-card: 0 1px 6px -1px hsl(var(--foreground) / 0.06);
+    /* Organic shadows for authentic feel */
+    --shadow-warm: 0 8px 32px -8px hsl(var(--primary) / 0.15);
+    --shadow-gentle: 0 4px 16px -4px hsl(var(--foreground) / 0.08);
+    --shadow-card: 0 2px 12px -2px hsl(var(--foreground) / 0.05);
 
     /* Smooth, natural transitions */
     --transition-warm: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
