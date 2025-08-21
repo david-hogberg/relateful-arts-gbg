@@ -289,12 +289,12 @@ const Events = () => {
           <div className="text-center mt-16">
             <h3 className="text-2xl font-semibold mb-4">Want to Host an Event?</h3>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              If you're a facilitator interested in hosting circling or authentic relating events, 
+              If you're a facilitator interested in hosting relateful events, 
               we'd love to support you in connecting with our community.
             </p>
             <Button variant="outline" size="lg" asChild>
               <Link to={user ? "/apply-facilitator" : "/auth"}>
-                Contact Us About Facilitating
+                Contact Us About Hosting
               </Link>
             </Button>
           </div>
