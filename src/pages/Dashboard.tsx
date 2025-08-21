@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
+import EditProfileModal from "@/components/EditProfileModal";
 import { Loader2, User, Calendar, Settings } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
@@ -22,6 +23,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const [application, setApplication] = useState<FacilitatorApplication | null>(null);
   const [loadingApp, setLoadingApp] = useState(true);
+  const [editProfileOpen, setEditProfileOpen] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -118,7 +120,7 @@ export default function Dashboard() {
                   <span className="font-medium">Member since:</span>{' '}
                   {new Date(profile.created_at).toLocaleDateString()}
                 </div>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full" onClick={() => setEditProfileOpen(true)}>
                   Edit Profile
                 </Button>
               </CardContent>
@@ -196,6 +198,11 @@ export default function Dashboard() {
           )}
         </div>
       </main>
+      
+      <EditProfileModal 
+        open={editProfileOpen} 
+        onOpenChange={setEditProfileOpen} 
+      />
     </div>
   );
 }
