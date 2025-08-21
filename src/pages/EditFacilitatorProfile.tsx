@@ -18,7 +18,6 @@ import { Loader2, Eye, EyeOff, User, Settings, Edit } from "lucide-react";
 const workTypes = [
   'Circling',
   'Authentic Relating',
-  'T-Group',
   'Nonviolent Communication',
   'Somatic Practices',
   'Mindfulness',
