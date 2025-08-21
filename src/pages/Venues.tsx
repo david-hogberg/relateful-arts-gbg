@@ -133,30 +133,31 @@ const Venues: React.FC = () => {
               {venues.map((venue) => (
                 <Card 
                   key={venue.id} 
-                  className="cursor-pointer hover:shadow-lg transition-shadow"
+                  className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-1 cursor-pointer"
                   onClick={() => handleViewVenue(venue)}
                 >
-                  <CardHeader>
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <CardHeader className="relative z-10">
                     <CardTitle className="flex items-start justify-between">
-                      <span className="text-lg">{venue.name}</span>
-                      <Badge className={getCostLevelColor(venue.cost_level)}>
+                      <span className="text-lg group-hover:text-primary transition-colors">{venue.name}</span>
+                      <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors">
                         {venue.cost_level}
                       </Badge>
                     </CardTitle>
-                    <CardDescription className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4" />
+                    <CardDescription className="flex items-center gap-2 text-muted-foreground">
+                      <MapPin className="h-4 w-4 text-primary" />
                       {venue.location}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center gap-2 mb-3">
-                      <Users className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground">
+                  <CardContent className="relative z-10">
+                    <div className="flex items-center gap-2 mb-4 p-3 bg-gradient-subtle rounded-lg border border-primary/10">
+                      <Users className="h-4 w-4 text-primary" />
+                      <span className="text-sm font-medium text-foreground">
                         Capacity: {venue.hosting_capacity} people
                       </span>
                     </div>
                     {venue.notes && (
-                      <p className="text-sm text-muted-foreground line-clamp-3">
+                      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
                         {venue.notes}
                       </p>
                     )}

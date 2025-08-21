@@ -187,28 +187,31 @@ export default function Resources() {
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredResources.map((resource) => (
-              <Card key={resource.id} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-2">
-                      {getTypeIcon(resource.type)}
-                      <Badge className={getCategoryColor(resource.category)}>
+              <Card key={resource.id} className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-1">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <CardHeader className="relative z-10">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-gradient-primary rounded-lg text-white shadow-soft">
+                        {getTypeIcon(resource.type)}
+                      </div>
+                      <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors">
                         {resource.category}
                       </Badge>
                     </div>
                   </div>
-                  <CardTitle className="text-lg">{resource.title}</CardTitle>
-                  <CardDescription>{resource.description}</CardDescription>
+                  <CardTitle className="text-lg group-hover:text-primary transition-colors">{resource.title}</CardTitle>
+                  <CardDescription className="text-muted-foreground leading-relaxed">{resource.description}</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-1 mb-3">
+                <CardContent className="relative z-10">
+                  <div className="flex flex-wrap gap-1 mb-4">
                     {resource.tags.slice(0, 3).map((tag) => (
-                      <Badge key={tag} variant="outline" className="text-xs">
+                      <Badge key={tag} variant="secondary" className="text-xs bg-accent/20 text-foreground border-accent/30">
                         {tag}
                       </Badge>
                     ))}
                     {resource.tags.length > 3 && (
-                      <Badge variant="outline" className="text-xs">
+                      <Badge variant="secondary" className="text-xs bg-accent/20 text-foreground border-accent/30">
                         +{resource.tags.length - 3}
                       </Badge>
                     )}
@@ -228,13 +231,14 @@ export default function Resources() {
                       <Button 
                         variant="outline" 
                         size="sm"
+                        className="border-primary/30 hover:border-primary hover:bg-primary/5 transition-all duration-200"
                         onClick={() => handleViewResource(resource)}
                       >
                         <Eye className="h-4 w-4 mr-1" />
                         View
                       </Button>
                       {resource.type === 'link' && resource.url && (
-                        <Button variant="outline" size="sm" asChild>
+                        <Button variant="outline" size="sm" className="border-primary/30 hover:border-primary hover:bg-primary/5 transition-all duration-200" asChild>
                           <a href={resource.url} target="_blank" rel="noopener noreferrer">
                             <ExternalLink className="h-4 w-4" />
                           </a>

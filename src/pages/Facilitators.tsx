@@ -102,18 +102,28 @@ const Facilitators = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
               {facilitators.map((facilitator) => (
-                <Card key={facilitator.id} className="shadow-card hover:shadow-gentle transition-warm h-full flex flex-col">
-                  <CardHeader>
-                    <CardTitle className="text-xl mb-2">{facilitator.full_name}</CardTitle>
-                    <CardDescription className="text-base font-medium">
-                      {facilitator.title || 'Facilitator'}
-                    </CardDescription>
+                <Card key={facilitator.id} className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <CardHeader className="relative z-10">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-12 h-12 rounded-full bg-gradient-primary flex items-center justify-center text-white font-semibold text-lg">
+                        {facilitator.full_name.split(' ').map(n => n[0]).join('')}
+                      </div>
+                      <div>
+                        <CardTitle className="text-xl text-foreground group-hover:text-primary transition-colors">
+                          {facilitator.full_name}
+                        </CardTitle>
+                        <CardDescription className="text-base font-medium text-muted-foreground">
+                          {facilitator.title || 'Facilitator'}
+                        </CardDescription>
+                      </div>
+                    </div>
                   </CardHeader>
-                  <CardContent className="flex-1 flex flex-col">
+                  <CardContent className="relative z-10 flex-1 flex flex-col">
                     <div className="mb-4">
                       <div className="flex flex-wrap gap-2">
                         {facilitator.work_types.map((workType, index) => (
-                          <Badge key={index} variant="outline" className="text-xs">
+                          <Badge key={index} variant="secondary" className="text-xs bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors">
                             {workType}
                           </Badge>
                         ))}
@@ -127,8 +137,8 @@ const Facilitators = () => {
                     )}
                     
                     {facilitator.approach && (
-                      <div className="mb-4 p-3 bg-accent/20 rounded-lg">
-                        <p className="text-sm italic text-foreground">
+                      <div className="mb-4 p-4 bg-gradient-subtle rounded-xl border border-primary/10 shadow-soft">
+                        <p className="text-sm italic text-foreground/90 leading-relaxed">
                           "{facilitator.approach}"
                         </p>
                       </div>
@@ -147,19 +157,19 @@ const Facilitators = () => {
                       </div>
                     )}
                     
-                    <div className="mt-auto space-y-3">
+                    <div className="mt-auto space-y-2">
                       <Button 
                         variant="outline" 
-                        className="w-full text-sm"
+                        className="w-full text-sm group/btn border-primary/30 hover:border-primary hover:bg-primary/5 transition-all duration-200"
                         onClick={() => window.location.href = `mailto:${facilitator.contact_email}`}
                       >
-                        <MessageCircle className="w-4 h-4 mr-2" />
+                        <MessageCircle className="w-4 h-4 mr-2 group-hover/btn:scale-110 transition-transform" />
                         Contact {facilitator.full_name.split(' ')[0]}
                       </Button>
                       {facilitator.website && (
                         <Button 
                           variant="ghost" 
-                          className="w-full text-sm"
+                          className="w-full text-sm hover:bg-accent/20 transition-colors"
                           onClick={() => window.open(facilitator.website, '_blank')}
                         >
                           <ExternalLink className="w-4 h-4 mr-2" />
