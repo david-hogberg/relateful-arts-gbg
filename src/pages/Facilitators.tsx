@@ -15,7 +15,6 @@ interface Facilitator {
   title?: string;
   public_bio?: string;
   work_types: string[];
-  years_experience?: number;
   approach?: string;
   languages: string[];
   contact_email: string;
@@ -39,7 +38,7 @@ const Facilitators = () => {
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
-        .eq('role', 'facilitator')
+        .in('role', ['facilitator', 'admin'])
         .eq('is_public_profile', true)
         .order('full_name');
 
@@ -52,7 +51,6 @@ const Facilitators = () => {
         title: profile.title,
         public_bio: profile.public_bio,
         work_types: profile.work_types || [],
-        years_experience: profile.years_experience,
         approach: profile.approach,
         languages: profile.languages || [],
         contact_email: profile.contact_email || profile.email,

@@ -53,8 +53,7 @@ export default function EditFacilitatorProfile() {
     public_bio: '',
     approach: '',
     contact_email: '',
-    website: '',
-    years_experience: ''
+    website: ''
   });
 
   useEffect(() => {
@@ -70,8 +69,7 @@ export default function EditFacilitatorProfile() {
         public_bio: profile.public_bio || '',
         approach: profile.approach || '',
         contact_email: profile.contact_email || profile.email,
-        website: profile.website || '',
-        years_experience: profile.years_experience?.toString() || ''
+        website: profile.website || ''
       });
       setSelectedWorkTypes(profile.work_types || []);
       setSelectedLanguages(profile.languages || []);
@@ -91,7 +89,6 @@ export default function EditFacilitatorProfile() {
       approach: formData.approach,
       contact_email: formData.contact_email,
       website: formData.website,
-      years_experience: formData.years_experience ? parseInt(formData.years_experience) : null,
       work_types: selectedWorkTypes,
       languages: selectedLanguages,
       is_public_profile: isPublic
@@ -249,7 +246,7 @@ export default function EditFacilitatorProfile() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="contact_email">Contact Email *</Label>
                       <Input
@@ -270,18 +267,6 @@ export default function EditFacilitatorProfile() {
                         onChange={(e) => setFormData({...formData, website: e.target.value})}
                         type="url"
                         placeholder="https://yourwebsite.com"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="years_experience">Years of Experience</Label>
-                      <Input
-                        id="years_experience"
-                        value={formData.years_experience}
-                        onChange={(e) => setFormData({...formData, years_experience: e.target.value})}
-                        type="number"
-                        placeholder="0"
-                        min="0"
                       />
                     </div>
                   </div>
@@ -372,11 +357,6 @@ export default function EditFacilitatorProfile() {
                   >
                     {profile.website}
                   </a>
-                </div>
-              )}
-              {profile.years_experience && (
-                <div>
-                  <span className="font-medium">Years of Experience:</span> {profile.years_experience}
                 </div>
               )}
               <div>
