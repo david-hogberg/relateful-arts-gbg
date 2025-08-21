@@ -18,6 +18,9 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -72,15 +75,16 @@ export default {
 			backgroundImage: {
 				'gradient-hero': 'var(--gradient-hero)',
 				'gradient-warm': 'var(--gradient-warm)',
-				'gradient-gentle': 'var(--gradient-gentle)'
+				'gradient-gentle': 'var(--gradient-gentle)',
+				'gradient-subtle': 'var(--gradient-subtle)'
 			},
 			boxShadow: {
-				'warm': 'var(--shadow-warm)',
-				'gentle': 'var(--shadow-gentle)',
-				'card': 'var(--shadow-card)'
+				'elegant': 'var(--shadow-elegant)',
+				'glow': 'var(--shadow-glow)',
+				'soft': 'var(--shadow-soft)'
 			},
 			transitionProperty: {
-				'warm': 'var(--transition-warm)',
+				'smooth': 'var(--transition-smooth)',
 				'gentle': 'var(--transition-gentle)'
 			},
 			keyframes: {
