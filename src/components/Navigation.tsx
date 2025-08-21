@@ -75,10 +75,10 @@ function Navigation() {
                     <>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem asChild>
-                        <Link to="/manage-events">Manage Events</Link>
+                        <Link to="/edit-facilitator-profile">Facilitator Profile</Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
-                        <Link to="/edit-facilitator-profile">Facilitator Profile</Link>
+                        <Link to="/manage-events">Manage Events</Link>
                       </DropdownMenuItem>
                     </>
                   )}

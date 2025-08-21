@@ -61,14 +61,12 @@ export default function ApplyFacilitator() {
     const applicationData = {
       user_id: user.id,
       title: formData.get('title') as string,
-      public_bio: formData.get('public_bio') as string,
       experience_description: formData.get('experience') as string,
       years_experience: parseInt(formData.get('years_experience') as string) || null,
       certifications: formData.get('certifications') as string,
       work_types: selectedWorkTypes,
       preferred_practice_types: selectedWorkTypes, // Keep for backward compatibility
       languages: selectedLanguages,
-      approach: formData.get('approach') as string,
       contact_email: formData.get('contact_email') as string,
       website: formData.get('website') as string,
       availability: formData.get('availability') as string,
@@ -87,7 +85,7 @@ export default function ApplyFacilitator() {
         description: "Your facilitator application has been submitted for review.",
       });
 
-      navigate('/dashboard');
+      navigate('/profile');
     } catch (error: any) {
       toast({
         title: "Submission failed",
@@ -165,17 +163,6 @@ export default function ApplyFacilitator() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="public_bio">Public Bio *</Label>
-                  <Textarea
-                    id="public_bio"
-                    name="public_bio"
-                    placeholder="Write a brief bio that will be displayed on your public profile..."
-                    className="min-h-24"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
                   <Label htmlFor="experience">Experience Description *</Label>
                   <Textarea
                     id="experience"
@@ -183,16 +170,6 @@ export default function ApplyFacilitator() {
                     placeholder="Please describe your experience with authentic relating, circling, or related practices in detail..."
                     className="min-h-32"
                     required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="approach">Facilitation Approach</Label>
-                  <Textarea
-                    id="approach"
-                    name="approach"
-                    placeholder="Describe your unique approach to facilitation and what participants can expect..."
-                    className="min-h-24"
                   />
                 </div>
 
@@ -289,7 +266,7 @@ export default function ApplyFacilitator() {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => navigate('/dashboard')}
+                    onClick={() => navigate('/profile')}
                     className="flex-1"
                   >
                     Cancel
