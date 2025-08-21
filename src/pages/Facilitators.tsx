@@ -5,7 +5,7 @@ import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, ExternalLink, MessageCircle, Loader2 } from "lucide-react";
+import { Heart, ExternalLink, MessageCircle, Loader2, Users } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Facilitator {
@@ -78,8 +78,8 @@ const Facilitators = () => {
             <div className="text-center">
               <h1 className="text-5xl font-bold mb-4">Facilitators</h1>
               <p className="text-xl text-muted-foreground mb-8">
-                Meet the experienced practitioners and facilitators who guide our community. 
-                Each brings their unique approach and expertise to authentic relating practices.
+                Meet the facilitators who guide the community. 
+                Each brings their unique approach and expertise to relating practices.
               </p>
             </div>
           </div>
@@ -87,19 +87,18 @@ const Facilitators = () => {
       </section>
 
       {/* Facilitators Grid */}
-      <section className="py-20">
+      <section className="py-12">
         <div className="container mx-auto px-6">
           {loading ? (
-            <div className="flex items-center justify-center py-20">
+            <div className="flex items-center justify-center py-12">
               <Loader2 className="h-8 w-8 animate-spin" />
               <span className="ml-2">Loading facilitators...</span>
             </div>
           ) : facilitators.length === 0 ? (
-            <div className="text-center py-20">
-              <h3 className="text-2xl font-semibold mb-4">No Public Facilitator Profiles Yet</h3>
-              <p className="text-muted-foreground mb-6">
-                Check back soon as facilitators update their public profiles.
-              </p>
+            <div className="text-center py-12">
+              <Users className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-foreground mb-2">No Public Facilitator Profiles Yet</h3>
+              <p className="text-muted-foreground">Check back soon as facilitators update their public profiles.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
@@ -196,11 +195,11 @@ const Facilitators = () => {
             </div>
           )}
           
-          <div className="text-center mt-16">
+          <div className="text-center mt-12">
             <div className="max-w-2xl mx-auto">
               <h3 className="text-2xl font-semibold mb-4">Become a Community Facilitator</h3>
               <p className="text-muted-foreground mb-6">
-                Are you an experienced practitioner interested in contributing to our community? 
+                Are you interested in contributing to our community as a facilitator? 
                 We welcome facilitators who share our values of authentic connection and conscious relating.
               </p>
               <Button 

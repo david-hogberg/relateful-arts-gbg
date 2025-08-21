@@ -169,8 +169,7 @@ const Events = () => {
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-5xl font-bold mb-4">Community Events</h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Join our upcoming circling sessions, authentic relating workshops, and community gatherings. 
-              All events are designed to foster genuine connection and personal growth.
+              Join our upcoming relateful sessions, workshops, and community gatherings.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="bg-gradient-hero shadow-warm">
@@ -194,15 +193,18 @@ const Events = () => {
       </section>
 
       {/* Events Grid */}
-      <section className="py-20">
+      <section className="py-12">
         <div className="container mx-auto px-6">
           {loading ? (
-            <div className="flex justify-center items-center py-20">
+            <div className="flex justify-center items-center py-12">
               <Loader2 className="h-8 w-8 animate-spin" />
+              <span className="ml-2">Loading events...</span>
             </div>
           ) : events.length === 0 ? (
-            <div className="text-center py-20">
-              <p className="text-muted-foreground text-lg mb-4">No upcoming events found.</p>
+            <div className="text-center py-12">
+              <Calendar className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-foreground mb-2">No upcoming events found</h3>
+              <p className="text-muted-foreground mb-4">Check back soon for new events or be the first to create one!</p>
               {canCreateEvents && (
                 <Button onClick={() => setCreateEventOpen(true)}>
                   <Plus className="w-5 h-5 mr-2" />
@@ -312,17 +314,21 @@ const Events = () => {
             </div>
           )}
           
-          <div className="text-center mt-16">
-            <h3 className="text-2xl font-semibold mb-4">Want to Host an Event?</h3>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              If you're a facilitator interested in hosting relateful events, 
-              we'd love to support you in connecting with our community.
-            </p>
-            <Button variant="outline" size="lg" asChild>
-              <Link to={user ? "/apply-facilitator" : "/auth"}>
-                Contact Us About Hosting
-              </Link>
-            </Button>
+          <div className="text-center mt-12">
+            <div className="max-w-2xl mx-auto">
+              <h3 className="text-2xl font-semibold mb-4">Want to Host an Event?</h3>
+              <p className="text-muted-foreground mb-6">
+                If you're a facilitator interested in hosting events, 
+                we'd love to support you in connecting with our community.
+              </p>
+              <Button 
+                size="lg" 
+                className="bg-gradient-hero shadow-warm"
+                onClick={() => user ? window.location.href = '/apply-facilitator' : window.location.href = '/auth'}
+              >
+                Apply to Host Events
+              </Button>
+            </div>
           </div>
         </div>
       </section>

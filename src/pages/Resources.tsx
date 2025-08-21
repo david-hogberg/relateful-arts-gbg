@@ -134,9 +134,7 @@ export default function Resources() {
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-5xl font-bold mb-4">Community Resources</h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Explore articles, videos, and resources created by our community members. 
-              From beginner guides to advanced practices, find content that supports 
-              your journey in authentic relating and circling.
+              Explore articles, videos, and resources posted by our community members.
             </p>
           </div>
         </div>
@@ -195,9 +193,13 @@ export default function Resources() {
             <p className="text-muted-foreground">Loading resources...</p>
           </div>
         ) : filteredResources.length === 0 ? (
-          <div className="text-center py-8">
+          <div className="text-center py-12">
+            <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-foreground mb-2">
+              {selectedTag === 'all' ? 'No resources available yet' : `No resources found for tag "${selectedTag}"`}
+            </h3>
             <p className="text-muted-foreground">
-              {selectedTag === 'all' ? 'No resources available yet. Be the first to submit one!' : `No resources found for tag "${selectedTag}".`}
+              {selectedTag === 'all' ? 'Be the first to submit a resource for the community!' : 'Try selecting a different tag or check back later.'}
             </p>
           </div>
         ) : (
