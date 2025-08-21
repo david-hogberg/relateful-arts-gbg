@@ -52,7 +52,7 @@ function Navigation() {
   return <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b shadow-gentle will-change-auto">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2 transform-gpu">
             <Heart className="w-8 h-8 text-primary" />
             <span className="text-2xl md:text-3xl font-bold bg-gradient-hero bg-clip-text text-transparent">Relateful Arts GBG</span>
           </Link>
@@ -82,7 +82,7 @@ function Navigation() {
                     </span>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="bg-background border shadow-lg z-50">
+                <DropdownMenuContent align="end" className="bg-background border shadow-lg z-[60] transform-gpu">
                   <DropdownMenuItem asChild>
                     <Link to="/profile">Profile</Link>
                   </DropdownMenuItem>
