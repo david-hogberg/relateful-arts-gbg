@@ -53,7 +53,8 @@ export default function EditFacilitatorProfile() {
     public_bio: '',
     approach: '',
     contact_email: '',
-    website: ''
+    website: '',
+    years_experience: ''
   });
 
   useEffect(() => {
@@ -69,7 +70,8 @@ export default function EditFacilitatorProfile() {
         public_bio: profile.public_bio || '',
         approach: profile.approach || '',
         contact_email: profile.contact_email || profile.email,
-        website: profile.website || ''
+        website: profile.website || '',
+        years_experience: profile.years_experience?.toString() || ''
       });
       setSelectedWorkTypes(profile.work_types || []);
       setSelectedLanguages(profile.languages || []);
@@ -89,6 +91,7 @@ export default function EditFacilitatorProfile() {
       approach: formData.approach,
       contact_email: formData.contact_email,
       website: formData.website,
+      years_experience: formData.years_experience ? parseInt(formData.years_experience) : null,
       work_types: selectedWorkTypes,
       languages: selectedLanguages,
       is_public_profile: isPublic
@@ -246,7 +249,7 @@ export default function EditFacilitatorProfile() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="contact_email">Contact Email *</Label>
                       <Input
@@ -267,6 +270,18 @@ export default function EditFacilitatorProfile() {
                         onChange={(e) => setFormData({...formData, website: e.target.value})}
                         type="url"
                         placeholder="https://yourwebsite.com"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="years_experience">Years of Experience</Label>
+                      <Input
+                        id="years_experience"
+                        value={formData.years_experience}
+                        onChange={(e) => setFormData({...formData, years_experience: e.target.value})}
+                        type="number"
+                        placeholder="0"
+                        min="0"
                       />
                     </div>
                   </div>
@@ -316,106 +331,98 @@ export default function EditFacilitatorProfile() {
             </div>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            {/* Profile Information Card */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Settings className="h-5 w-5" />
-                  Profile Information
-                </CardTitle>
-                <CardDescription>Your public facilitator profile details</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3">
+          {/* Facilitator Profile Card */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
                 <div>
-                  <span className="font-medium">Full Name:</span> {profile.full_name}
+                  <CardTitle className="flex items-center gap-2">
+                    <Settings className="h-5 w-5" />
+                    Profile Information
+                  </CardTitle>
+                  <CardDescription>Your public facilitator profile details</CardDescription>
                 </div>
-                <div>
-                  <span className="font-medium">Professional Title:</span> {profile.title || 'Not set'}
-                </div>
-                <div>
-                  <span className="font-medium">Contact Email:</span> {profile.contact_email || profile.email}
-                </div>
-                {profile.website && (
-                  <div>
-                    <span className="font-medium">Website:</span>
-                    <a 
-                      href={profile.website} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="ml-2 text-primary hover:underline"
-                    >
-                      {profile.website}
-                    </a>
-                  </div>
-                )}
-                <div>
-                  <span className="font-medium">Profile Visibility:</span>
-                  <Badge variant={isPublic ? "default" : "secondary"} className="ml-2">
-                    {isPublic ? 'Public' : 'Private'}
-                  </Badge>
-                </div>
-                {profile.public_bio && (
-                  <div>
-                    <span className="font-medium">Public Bio:</span>
-                    <p className="mt-1 text-sm text-muted-foreground">{profile.public_bio}</p>
-                  </div>
-                )}
-                {profile.approach && (
-                  <div>
-                    <span className="font-medium">Facilitation Approach:</span>
-                    <p className="mt-1 text-sm text-muted-foreground italic">"{profile.approach}"</p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* Specialties & Languages Card */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Edit className="h-5 w-5" />
-                  Specialties & Languages
-                </CardTitle>
-                <CardDescription>Your areas of expertise and language capabilities</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {profile.work_types && profile.work_types.length > 0 && (
-                  <div>
-                    <span className="font-medium">Work Types:</span>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {profile.work_types.map((workType, index) => (
-                        <Badge key={index} variant="outline" className="text-xs">
-                          {workType}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {profile.languages && profile.languages.length > 0 && (
-                  <div>
-                    <span className="font-medium">Languages:</span>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {profile.languages.map((language, index) => (
-                        <Badge key={index} variant="secondary" className="text-xs">
-                          {language}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                
                 <Button 
                   variant="outline" 
-                  className="w-full mt-4"
                   onClick={() => setIsEditing(true)}
                 >
                   <Edit className="w-4 h-4 mr-2" />
                   Edit Profile
                 </Button>
-              </CardContent>
-            </Card>
-          </div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div>
+                <span className="font-medium">Full Name:</span> {profile.full_name}
+              </div>
+              <div>
+                <span className="font-medium">Professional Title:</span> {profile.title || 'Not set'}
+              </div>
+              <div>
+                <span className="font-medium">Contact Email:</span> {profile.contact_email || profile.email}
+              </div>
+              {profile.website && (
+                <div>
+                  <span className="font-medium">Website:</span>
+                  <a 
+                    href={profile.website} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="ml-2 text-primary hover:underline"
+                  >
+                    {profile.website}
+                  </a>
+                </div>
+              )}
+              {profile.years_experience && (
+                <div>
+                  <span className="font-medium">Years of Experience:</span> {profile.years_experience}
+                </div>
+              )}
+              <div>
+                <span className="font-medium">Profile Visibility:</span>
+                <Badge variant={isPublic ? "default" : "secondary"} className="ml-2">
+                  {isPublic ? 'Public' : 'Private'}
+                </Badge>
+              </div>
+              {profile.public_bio && (
+                <div>
+                  <span className="font-medium">Public Bio:</span>
+                  <p className="mt-1 text-sm text-muted-foreground">{profile.public_bio}</p>
+                </div>
+              )}
+              {profile.approach && (
+                <div>
+                  <span className="font-medium">Facilitation Approach:</span>
+                  <p className="mt-1 text-sm text-muted-foreground italic">"{profile.approach}"</p>
+                </div>
+              )}
+              {profile.work_types && profile.work_types.length > 0 && (
+                <div>
+                  <span className="font-medium">Work Types:</span>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {profile.work_types.map((workType, index) => (
+                      <Badge key={index} variant="outline" className="text-xs">
+                        {workType}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {profile.languages && profile.languages.length > 0 && (
+                <div>
+                  <span className="font-medium">Languages:</span>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {profile.languages.map((language, index) => (
+                      <Badge key={index} variant="secondary" className="text-xs">
+                        {language}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </main>
     </div>
