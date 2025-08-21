@@ -294,7 +294,7 @@ const Events = () => {
             </p>
             <Button variant="outline" size="lg" asChild>
               <Link to={user ? "/apply-facilitator" : "/auth"}>
-                Contact Us About Hosting
+                Contact Us About Facilitating
               </Link>
             </Button>
           </div>
