@@ -8,7 +8,7 @@ const Home = () => {
   const features = [{
     icon: Calendar,
     title: "Community Events",
-    description: "Join circling sessions, authentic relating workshops, and practice groups throughout Gothenburg",
+    description: "Join relateful sessions, workshops, and practice groups throughout Gothenburg",
     link: "/events"
   }, {
     icon: Users,
