@@ -1,0 +1,189 @@
+import React, { useState, useEffect } from 'react';
+import { Navigation } from '../components/Navigation';
+import { Button } from '../components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { Badge } from '../components/ui/badge';
+import { SubmitVenueModal } from '../components/SubmitVenueModal';
+import { ViewVenueModal } from '../components/ViewVenueModal';
+import { supabase } from '../integrations/supabase/client';
+import { MapPin, Users, DollarSign, Building } from 'lucide-react';
+import { useToast } from '../hooks/use-toast';
+
+interface Venue {
+  id: string;
+  name: string;
+  location: string;
+  hosting_capacity: number;
+  contact_information: string;
+  cost_level: string;
+  notes?: string;
+  author_id: string;
+  created_at: string;
+}
+
+const Venues: React.FC = () => {
+  const [venues, setVenues] = useState<Venue[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showSubmitModal, setShowSubmitModal] = useState(false);
+  const [showViewModal, setShowViewModal] = useState(false);
+  const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    fetchVenues();
+  }, []);
+
+  const fetchVenues = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('venues')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setVenues(data || []);
+    } catch (error) {
+      console.error('Error fetching venues:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load venues",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleViewVenue = (venue: Venue) => {
+    setSelectedVenue(venue);
+    setShowViewModal(true);
+  };
+
+  const getCostLevelColor = (costLevel: string) => {
+    switch (costLevel.toLowerCase()) {
+      case 'free':
+        return 'bg-green-100 text-green-800';
+      case 'low':
+        return 'bg-blue-100 text-blue-800';
+      case 'medium':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'high':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="flex justify-center items-center h-64">
+          <div className="text-lg">Loading venues...</div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Navigation />
+      
+      <main className="container mx-auto px-4 py-8">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-foreground mb-4">
+              Community Venues
+            </h1>
+            <p className="text-xl text-muted-foreground mb-8">
+              Discover and share spaces for authentic relating and circling events
+            </p>
+          </div>
+
+          {/* Submit Venue Section */}
+          <div className="mb-12">
+            <Card className="border-dashed border-2 border-primary/20">
+              <CardHeader className="text-center">
+                <CardTitle className="flex items-center justify-center gap-2">
+                  <Building className="h-6 w-6" />
+                  Share Your Space
+                </CardTitle>
+                <CardDescription>
+                  Register your venue to help the community find great spaces for events
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-center">
+                <Button onClick={() => setShowSubmitModal(true)} size="lg">
+                  Register a Venue
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Venues Grid */}
+          {venues.length === 0 ? (
+            <div className="text-center py-12">
+              <Building className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-foreground mb-2">No venues yet</h3>
+              <p className="text-muted-foreground">Be the first to register a venue for the community!</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {venues.map((venue) => (
+                <Card 
+                  key={venue.id} 
+                  className="cursor-pointer hover:shadow-lg transition-shadow"
+                  onClick={() => handleViewVenue(venue)}
+                >
+                  <CardHeader>
+                    <CardTitle className="flex items-start justify-between">
+                      <span className="text-lg">{venue.name}</span>
+                      <Badge className={getCostLevelColor(venue.cost_level)}>
+                        {venue.cost_level}
+                      </Badge>
+                    </CardTitle>
+                    <CardDescription className="flex items-center gap-2">
+                      <MapPin className="h-4 w-4" />
+                      {venue.location}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center gap-2 mb-3">
+                      <Users className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">
+                        Capacity: {venue.hosting_capacity} people
+                      </span>
+                    </div>
+                    {venue.notes && (
+                      <p className="text-sm text-muted-foreground line-clamp-3">
+                        {venue.notes}
+                      </p>
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      </main>
+
+      {/* Modals */}
+      <SubmitVenueModal
+        isOpen={showSubmitModal}
+        onClose={() => setShowSubmitModal(false)}
+        onSubmit={fetchVenues}
+      />
+
+      {selectedVenue && (
+        <ViewVenueModal
+          venue={selectedVenue}
+          isOpen={showViewModal}
+          onClose={() => setShowViewModal(false)}
+        />
+      )}
+    </div>
+  );
+};
+
+export default Venues;

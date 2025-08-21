@@ -336,6 +336,99 @@ export type Database = {
         }
         Relationships: []
       }
+      venue_submissions: {
+        Row: {
+          admin_notes: string | null
+          contact_information: string
+          cost_level: string
+          created_at: string
+          hosting_capacity: number
+          id: string
+          location: string
+          name: string
+          notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          submitted_at: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          contact_information: string
+          cost_level: string
+          created_at?: string
+          hosting_capacity: number
+          id?: string
+          location: string
+          name: string
+          notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          submitted_at?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          contact_information?: string
+          cost_level?: string
+          created_at?: string
+          hosting_capacity?: number
+          id?: string
+          location?: string
+          name?: string
+          notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          submitted_at?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      venues: {
+        Row: {
+          author_id: string
+          contact_information: string
+          cost_level: string
+          created_at: string
+          hosting_capacity: number
+          id: string
+          location: string
+          name: string
+          notes: string | null
+          updated_at: string
+        }
+        Insert: {
+          author_id: string
+          contact_information: string
+          cost_level: string
+          created_at?: string
+          hosting_capacity: number
+          id?: string
+          location: string
+          name: string
+          notes?: string | null
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string
+          contact_information?: string
+          cost_level?: string
+          created_at?: string
+          hosting_capacity?: number
+          id?: string
+          location?: string
+          name?: string
+          notes?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

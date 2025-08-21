@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, User, LogOut, Heart, Calendar, Users, BookOpen, Info } from "lucide-react";
+import { Menu, X, User, LogOut, Heart, Calendar, Users, BookOpen, Info, Building } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -28,6 +28,10 @@ function Navigation() {
     path: "/resources",
     label: "Resources",
     icon: BookOpen
+  }, {
+    path: "/venues",
+    label: "Venues",
+    icon: Building
   }, {
     path: "/about",
     label: "About",

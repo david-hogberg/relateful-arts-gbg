@@ -26,7 +26,8 @@ import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import ViewApplicationModal from "@/components/ViewApplicationModal";
 import { ManageResourceSubmissions } from "@/components/ManageResourceSubmissions";
-import { Loader2, Search, Users, FileText, Shield, BookOpen } from "lucide-react";
+import { ManageVenueSubmissions } from "@/components/ManageVenueSubmissions";
+import { Loader2, Search, Users, FileText, Shield, BookOpen, Building } from "lucide-react";
 
 interface FacilitatorApplication {
   id: string;
@@ -276,7 +277,7 @@ export default function Admin() {
           </div>
 
           <Tabs defaultValue="applications" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="applications" className="flex items-center gap-2">
                 <FileText className="h-4 w-4" />
                 Applications
@@ -284,6 +285,10 @@ export default function Admin() {
               <TabsTrigger value="resources" className="flex items-center gap-2">
                 <BookOpen className="h-4 w-4" />
                 Resources
+              </TabsTrigger>
+              <TabsTrigger value="venues" className="flex items-center gap-2">
+                <Building className="h-4 w-4" />
+                Venues
               </TabsTrigger>
               <TabsTrigger value="users" className="flex items-center gap-2">
                 <Users className="h-4 w-4" />
@@ -391,6 +396,20 @@ export default function Admin() {
                 </CardHeader>
                 <CardContent>
                   <ManageResourceSubmissions />
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="venues">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Venue Submissions</CardTitle>
+                  <CardDescription>
+                    Review and manage community venue submissions
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ManageVenueSubmissions />
                 </CardContent>
               </Card>
             </TabsContent>

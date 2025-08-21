@@ -9,6 +9,7 @@ import Events from "./pages/Events";
 import Facilitators from "./pages/Facilitators";
 import About from "./pages/About";
 import Resources from "./pages/Resources";
+import Venues from "./pages/Venues";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/facilitators" element={<Facilitators />} />
             <Route path="/about" element={<About />} />
             <Route path="/resources" element={<Resources />} />
+            <Route path="/venues" element={<Venues />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
