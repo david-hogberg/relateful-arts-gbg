@@ -76,17 +76,11 @@ const Facilitators = () => {
         <div className="container mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto">
             <div className="text-center">
-              <h1 className="text-5xl font-bold mb-4">Our Facilitators</h1>
+              <h1 className="text-5xl font-bold mb-4">Facilitators</h1>
               <p className="text-xl text-muted-foreground mb-8">
                 Meet the experienced practitioners and facilitators who guide our community. 
                 Each brings their unique approach and expertise to authentic relating practices.
               </p>
-            </div>
-            <div className="flex justify-center">
-              <Badge className="bg-primary/10 text-primary border-primary/20 px-4 py-2">
-                <Heart className="w-4 h-4 mr-2" />
-                Facilitator Gathering: Bi-Annual Community Coordination
-              </Badge>
             </div>
           </div>
         </div>
@@ -191,7 +185,7 @@ const Facilitators = () => {
               <Button 
                 size="lg" 
                 className="bg-gradient-hero shadow-warm"
-                onClick={() => navigate('/apply-facilitator')}
+                onClick={() => user ? navigate('/apply-facilitator') : navigate('/auth')}
               >
                 Apply to Join Our Facilitator Network
               </Button>

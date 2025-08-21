@@ -7,11 +7,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import { Loader2, Eye, EyeOff } from "lucide-react";
+import { Loader2, Eye, EyeOff, User, Settings, Edit } from "lucide-react";
 
 const workTypes = [
   'Circling',
@@ -42,6 +43,7 @@ const availableLanguages = [
 export default function EditFacilitatorProfile() {
   const { user, profile, loading } = useAuth();
   const navigate = useNavigate();
+  const [isEditing, setIsEditing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedWorkTypes, setSelectedWorkTypes] = useState<string[]>([]);
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
@@ -105,7 +107,9 @@ export default function EditFacilitatorProfile() {
         description: "Your facilitator profile has been successfully updated.",
       });
 
-      navigate('/facilitators');
+      setIsEditing(false);
+      // Refresh the page to show updated data
+      window.location.reload();
     } catch (error: any) {
       toast({
         title: "Update failed",
@@ -145,148 +149,273 @@ export default function EditFacilitatorProfile() {
     return null;
   }
 
-  return (
-    <div className="min-h-screen bg-gradient-warm">
-      <Navigation />
-      
-      <main className="container mx-auto px-4 py-8">
-        <div className="max-w-3xl mx-auto">
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Edit Facilitator Profile</CardTitle>
-                  <CardDescription>
-                    Update your public facilitator profile that appears on the Facilitators page
-                  </CardDescription>
-                </div>
-                <div className="flex items-center space-x-2">
-                  {isPublic ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
-                  <Switch
-                    checked={isPublic}
-                    onCheckedChange={setIsPublic}
-                  />
-                  <span className="text-sm">{isPublic ? 'Public' : 'Private'}</span>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="title">Professional Title</Label>
-                  <Input
-                    id="title"
-                    value={formData.title}
-                    onChange={(e) => setFormData({...formData, title: e.target.value})}
-                    placeholder="e.g. Circling Facilitator & Coach"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="public_bio">Public Bio *</Label>
-                  <Textarea
-                    id="public_bio"
-                    value={formData.public_bio}
-                    onChange={(e) => setFormData({...formData, public_bio: e.target.value})}
-                    placeholder="Write a brief bio that will be displayed on your public profile..."
-                    className="min-h-24"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="approach">Facilitation Approach</Label>
-                  <Textarea
-                    id="approach"
-                    value={formData.approach}
-                    onChange={(e) => setFormData({...formData, approach: e.target.value})}
-                    placeholder="Describe your unique approach to facilitation and what participants can expect..."
-                    className="min-h-24"
-                  />
-                </div>
-
-                <div className="space-y-3">
-                  <Label>Work Types / Specialties *</Label>
-                  <div className="grid grid-cols-2 gap-3">
-                    {workTypes.map((workType) => (
-                      <div key={workType} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={workType}
-                          checked={selectedWorkTypes.includes(workType)}
-                          onCheckedChange={() => handleWorkTypeToggle(workType)}
-                        />
-                        <Label htmlFor={workType} className="text-sm">
-                          {workType}
-                        </Label>
-                      </div>
-                    ))}
+  if (isEditing) {
+    return (
+      <div className="min-h-screen bg-gradient-warm">
+        <Navigation />
+        
+        <main className="container mx-auto px-4 py-8">
+          <div className="max-w-3xl mx-auto">
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Edit Facilitator Profile</CardTitle>
+                    <CardDescription>
+                      Update your public facilitator profile that appears on the Facilitators page
+                    </CardDescription>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    {isPublic ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+                    <Switch
+                      checked={isPublic}
+                      onCheckedChange={setIsPublic}
+                    />
+                    <span className="text-sm">{isPublic ? 'Public' : 'Private'}</span>
                   </div>
                 </div>
-
-                <div className="space-y-3">
-                  <Label>Languages *</Label>
-                  <div className="grid grid-cols-3 gap-3">
-                    {availableLanguages.map((language) => (
-                      <div key={language} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={language}
-                          checked={selectedLanguages.includes(language)}
-                          onCheckedChange={() => handleLanguageToggle(language)}
-                        />
-                        <Label htmlFor={language} className="text-sm">
-                          {language}
-                        </Label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="space-y-2">
-                    <Label htmlFor="contact_email">Contact Email *</Label>
+                    <Label htmlFor="title">Professional Title</Label>
                     <Input
-                      id="contact_email"
-                      value={formData.contact_email}
-                      onChange={(e) => setFormData({...formData, contact_email: e.target.value})}
-                      type="email"
-                      placeholder="your@email.com"
+                      id="title"
+                      value={formData.title}
+                      onChange={(e) => setFormData({...formData, title: e.target.value})}
+                      placeholder="e.g. Circling Facilitator & Coach"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="public_bio">Public Bio *</Label>
+                    <Textarea
+                      id="public_bio"
+                      value={formData.public_bio}
+                      onChange={(e) => setFormData({...formData, public_bio: e.target.value})}
+                      placeholder="Write a brief bio that will be displayed on your public profile..."
+                      className="min-h-24"
                       required
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="website">Website</Label>
-                    <Input
-                      id="website"
-                      value={formData.website}
-                      onChange={(e) => setFormData({...formData, website: e.target.value})}
-                      type="url"
-                      placeholder="https://yourwebsite.com"
+                    <Label htmlFor="approach">Facilitation Approach</Label>
+                    <Textarea
+                      id="approach"
+                      value={formData.approach}
+                      onChange={(e) => setFormData({...formData, approach: e.target.value})}
+                      placeholder="Describe your unique approach to facilitation and what participants can expect..."
+                      className="min-h-24"
                     />
                   </div>
-                </div>
 
-                <div className="flex gap-4">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => navigate('/facilitators')}
-                    className="flex-1"
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting || selectedWorkTypes.length === 0 || selectedLanguages.length === 0}
-                    className="flex-1"
-                  >
-                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Save Profile
-                  </Button>
+                  <div className="space-y-3">
+                    <Label>Work Types / Specialties *</Label>
+                    <div className="grid grid-cols-2 gap-3">
+                      {workTypes.map((workType) => (
+                        <div key={workType} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={workType}
+                            checked={selectedWorkTypes.includes(workType)}
+                            onCheckedChange={() => handleWorkTypeToggle(workType)}
+                          />
+                          <Label htmlFor={workType} className="text-sm">
+                            {workType}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <Label>Languages *</Label>
+                    <div className="grid grid-cols-3 gap-3">
+                      {availableLanguages.map((language) => (
+                        <div key={language} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={language}
+                            checked={selectedLanguages.includes(language)}
+                            onCheckedChange={() => handleLanguageToggle(language)}
+                          />
+                          <Label htmlFor={language} className="text-sm">
+                            {language}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="contact_email">Contact Email *</Label>
+                      <Input
+                        id="contact_email"
+                        value={formData.contact_email}
+                        onChange={(e) => setFormData({...formData, contact_email: e.target.value})}
+                        type="email"
+                        placeholder="your@email.com"
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="website">Website</Label>
+                      <Input
+                        id="website"
+                        value={formData.website}
+                        onChange={(e) => setFormData({...formData, website: e.target.value})}
+                        type="url"
+                        placeholder="https://yourwebsite.com"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setIsEditing(false)}
+                      className="flex-1"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting || selectedWorkTypes.length === 0 || selectedLanguages.length === 0}
+                      className="flex-1"
+                    >
+                      {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                      Save Profile
+                    </Button>
+                  </div>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-warm">
+      <Navigation />
+      
+      <main className="container mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto space-y-6">
+          <div className="flex items-center gap-3 mb-8">
+            <User className="h-8 w-8 text-primary" />
+            <div>
+              <h1 className="text-3xl font-bold text-foreground">
+                Facilitator Profile
+              </h1>
+              <p className="text-muted-foreground">
+                Manage your public facilitator profile and visibility
+              </p>
+            </div>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            {/* Profile Information Card */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Settings className="h-5 w-5" />
+                  Profile Information
+                </CardTitle>
+                <CardDescription>Your public facilitator profile details</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div>
+                  <span className="font-medium">Full Name:</span> {profile.full_name}
                 </div>
-              </form>
-            </CardContent>
-          </Card>
+                <div>
+                  <span className="font-medium">Professional Title:</span> {profile.title || 'Not set'}
+                </div>
+                <div>
+                  <span className="font-medium">Contact Email:</span> {profile.contact_email || profile.email}
+                </div>
+                {profile.website && (
+                  <div>
+                    <span className="font-medium">Website:</span>
+                    <a 
+                      href={profile.website} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="ml-2 text-primary hover:underline"
+                    >
+                      {profile.website}
+                    </a>
+                  </div>
+                )}
+                <div>
+                  <span className="font-medium">Profile Visibility:</span>
+                  <Badge variant={isPublic ? "default" : "secondary"} className="ml-2">
+                    {isPublic ? 'Public' : 'Private'}
+                  </Badge>
+                </div>
+                {profile.public_bio && (
+                  <div>
+                    <span className="font-medium">Public Bio:</span>
+                    <p className="mt-1 text-sm text-muted-foreground">{profile.public_bio}</p>
+                  </div>
+                )}
+                {profile.approach && (
+                  <div>
+                    <span className="font-medium">Facilitation Approach:</span>
+                    <p className="mt-1 text-sm text-muted-foreground italic">"{profile.approach}"</p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Specialties & Languages Card */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Edit className="h-5 w-5" />
+                  Specialties & Languages
+                </CardTitle>
+                <CardDescription>Your areas of expertise and language capabilities</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {profile.work_types && profile.work_types.length > 0 && (
+                  <div>
+                    <span className="font-medium">Work Types:</span>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {profile.work_types.map((workType, index) => (
+                        <Badge key={index} variant="outline" className="text-xs">
+                          {workType}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {profile.languages && profile.languages.length > 0 && (
+                  <div>
+                    <span className="font-medium">Languages:</span>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {profile.languages.map((language, index) => (
+                        <Badge key={index} variant="secondary" className="text-xs">
+                          {language}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                <Button 
+                  variant="outline" 
+                  className="w-full mt-4"
+                  onClick={() => setIsEditing(true)}
+                >
+                  <Edit className="w-4 h-4 mr-2" />
+                  Edit Profile
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </main>
     </div>
