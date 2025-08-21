@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function Navigation() {
+function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const { user, profile, signOut } = useAuth();
@@ -124,4 +124,5 @@ export function Navigation() {
   );
 }
 
+export { Navigation };
 export default Navigation;
