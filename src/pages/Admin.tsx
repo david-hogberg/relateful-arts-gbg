@@ -76,8 +76,28 @@ export default function Admin() {
       const { data, error } = await supabase
         .from('facilitator_applications')
         .select(`
-          *,
-          profiles(full_name, email)
+          *
+        `)
+        .order('submitted_at', { ascending: false });
+
+      if (error) throw error;
+
+      // Fetch user profiles separately and merge with applications
+      const userIds = data?.map(app => app.user_id) || [];
+      const { data: profiles, error: profilesError } = await supabase
+        .from('profiles')
+        .select('user_id, full_name, email')
+        .in('user_id', userIds);
+
+      if (profilesError) throw profilesError;
+
+      // Merge applications with profile data
+      const applicationsWithProfiles = data?.map(app => ({
+        ...app,
+        profiles: profiles?.find(p => p.user_id === app.user_id)
+      })) || [];
+
+      setApplications(applicationsWithProfiles);
         `)
         .order('submitted_at', { ascending: false });
 
