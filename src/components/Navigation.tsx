@@ -66,12 +66,23 @@ function Navigation() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem asChild>
-                    <Link to="/dashboard">Dashboard</Link>
+                    <Link to="/profile">Profile</Link>
                   </DropdownMenuItem>
-                  {profile?.role === 'admin' && (
+                  <DropdownMenuItem asChild>
+                    <Link to="/my-events">My Events</Link>
+                  </DropdownMenuItem>
+                  {(profile?.role === 'facilitator' || profile?.role === 'admin') && (
                     <DropdownMenuItem asChild>
-                      <Link to="/admin">Admin Panel</Link>
+                      <Link to="/manage-events">Manage Events</Link>
                     </DropdownMenuItem>
+                  )}
+                  {profile?.role === 'admin' && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem asChild>
+                        <Link to="/admin">Admin Panel</Link>
+                      </DropdownMenuItem>
+                    </>
                   )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => signOut()}>

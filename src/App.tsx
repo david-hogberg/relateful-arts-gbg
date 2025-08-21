@@ -11,6 +11,9 @@ import About from "./pages/About";
 import Resources from "./pages/Resources";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+import MyEvents from "./pages/MyEvents";
+import ManageEvents from "./pages/ManageEvents";
 import ApplyFacilitator from "./pages/ApplyFacilitator";
 import Admin from "./pages/Admin";
 import EmailConfirmation from "./pages/EmailConfirmation";
@@ -33,6 +36,9 @@ const App = () => (
             <Route path="/resources" element={<Resources />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/my-events" element={<MyEvents />} />
+            <Route path="/manage-events" element={<ManageEvents />} />
             <Route path="/apply-facilitator" element={<ApplyFacilitator />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/email-confirmation" element={<EmailConfirmation />} />
