@@ -58,7 +58,7 @@ function Navigation() {
           </Link>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden lg:flex items-center space-x-1">
             {navItems.map(({
             path,
             label,
@@ -115,14 +115,14 @@ function Navigation() {
               </Button>}
 
             {/* Mobile Menu Button */}
-            <Button variant="ghost" size="sm" className="md:hidden" onClick={handleMobileMenuToggle}>
+            <Button variant="ghost" size="sm" className="lg:hidden" onClick={handleMobileMenuToggle}>
               {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
 
         {/* Mobile Menu */}
-        {isOpen && <div className="mt-4 md:hidden">
+        {isOpen && <div className="mt-4 lg:hidden">
             <div className="flex flex-col space-y-2 pb-4">
               {navItems.map(({
             path,
