@@ -6,12 +6,24 @@ import { useAuth } from "@/hooks/useAuth";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation();
   const {
     user,
     profile,
     signOut
   } = useAuth();
+
+  // Close mobile menu when dropdown opens and vice versa
+  const handleDropdownChange = (open: boolean) => {
+    setDropdownOpen(open);
+    if (open) setIsOpen(false);
+  };
+
+  const handleMobileMenuToggle = () => {
+    setIsOpen(!isOpen);
+    if (!isOpen) setDropdownOpen(false);
+  };
   const navItems = [{
     path: "/",
     label: "Home",
@@ -61,7 +73,7 @@ function Navigation() {
 
           {/* Auth Section */}
           <div className="flex items-center space-x-4">
-            {user ? <DropdownMenu>
+            {user ? <DropdownMenu open={dropdownOpen} onOpenChange={handleDropdownChange}>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="sm" className="flex items-center gap-2">
                     <User className="h-4 w-4" />
@@ -103,7 +115,7 @@ function Navigation() {
               </Button>}
 
             {/* Mobile Menu Button */}
-            <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
+            <Button variant="ghost" size="sm" className="md:hidden" onClick={handleMobileMenuToggle}>
               {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>

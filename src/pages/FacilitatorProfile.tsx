@@ -350,21 +350,25 @@ export default function FacilitatorProfile() {
               </div>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Profile Image */}
-              {(profile as any).image_url && (
-                <div className="flex justify-center">
-                  <img
-                    src={(profile as any).image_url}
-                    alt={profile.full_name}
-                    className="w-32 h-32 object-cover rounded-full border-4 border-primary/20 shadow-lg"
-                  />
+              <div className="flex items-start space-x-6">
+                {/* Profile Image */}
+                <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0">
+                  {(profile as any)?.image_url ? (
+                    <img 
+                      src={(profile as any).image_url} 
+                      alt={profile.full_name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <User className="w-12 h-12 text-primary" />
+                  )}
                 </div>
-              )}
-              
-              <div className="space-y-3">
-                <div>
-                  <span className="font-medium">Full Name:</span> {profile.full_name}
-                </div>
+                
+                {/* Profile Info */}
+                <div className="flex-1 space-y-3">
+                  <div>
+                    <span className="font-medium">Full Name:</span> {profile.full_name}
+                  </div>
               <div>
                 <span className="font-medium">Professional Title:</span> {profile.title || 'Not set'}
               </div>
@@ -426,6 +430,7 @@ export default function FacilitatorProfile() {
                   </div>
                 </div>
               )}
+                </div>
               </div>
             </CardContent>
           </Card>

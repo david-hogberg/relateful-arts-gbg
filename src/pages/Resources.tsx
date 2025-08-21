@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Book, Video, FileText, ExternalLink, User, Calendar, Plus, Eye, Filter, Edit, Trash2 } from 'lucide-react';
+import { Book, Video, FileText, ExternalLink, User, Calendar, Plus, Eye, Filter, Edit, Trash2, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -144,27 +144,30 @@ export default function Resources() {
 
       <div className="container mx-auto px-6 py-12">
         {/* Submit New Resource Section */}
-        <section className="bg-muted/50 rounded-lg p-8 mb-12">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4">Share Your Knowledge</h2>
-            <p className="text-muted-foreground mb-6">
-              Have a valuable resource to share with the authentic relating community? 
-              Submit your articles, guides, or external resources for others to discover.
-            </p>
+        <Card className="border-dashed border-2 border-primary/20 mb-12">
+          <CardHeader className="text-center">
+            <CardTitle className="flex items-center justify-center gap-2">
+              <BookOpen className="h-6 w-6" />
+              Share Your Knowledge
+            </CardTitle>
+            <CardDescription>
+              Submit your articles, guides, or external resources for others to discover
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-center">
             <Button 
-              size="lg" 
-              className="flex items-center gap-2"
+              size="lg"
               onClick={() => user ? setSubmitModalOpen(true) : toast({
                 title: "Sign in required",
                 description: "Please sign in to submit resources.",
                 variant: "destructive",
               })}
             >
-              <Plus className="h-5 w-5" />
+              <Plus className="h-5 w-5 mr-2" />
               Submit Your Resource
             </Button>
-          </div>
-        </section>
+          </CardContent>
+        </Card>
 
         {/* Tag Filter */}
         {availableTags.length > 0 && (
