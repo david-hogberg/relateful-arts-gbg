@@ -98,7 +98,11 @@ function Navigation() {
           <div className="flex items-center space-x-4">
             {user ? <DropdownMenu open={!isMobile && dropdownOpen} onOpenChange={!isMobile ? handleDropdownChange : undefined}>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="flex items-center gap-2" disabled={isMobile && isOpen}>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className={`flex items-center gap-2 ${isMobile ? 'hidden' : ''}`}
+                  >
                     <User className="h-4 w-4" />
                     <span className="hidden sm:inline">
                       {profile?.full_name || 'Profile'}
