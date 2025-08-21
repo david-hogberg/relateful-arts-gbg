@@ -125,12 +125,6 @@ export default function Resources() {
               From beginner guides to advanced practices, find content that supports 
               your journey in authentic relating and circling.
             </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              <Badge className="bg-green-100 text-green-800 border-green-200">Beginner</Badge>
-              <Badge className="bg-primary/10 text-primary border-primary/20">Intermediate</Badge>
-              <Badge className="bg-orange-100 text-orange-800 border-orange-200">Advanced</Badge>
-              <Badge className="bg-purple-100 text-purple-800 border-purple-200">Facilitator</Badge>
-            </div>
           </div>
         </div>
       </section>
