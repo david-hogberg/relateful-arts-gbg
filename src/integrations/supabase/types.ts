@@ -94,81 +94,132 @@ export type Database = {
       facilitator_applications: {
         Row: {
           admin_notes: string | null
+          approach: string | null
           availability: string | null
           certifications: string | null
+          contact_email: string | null
           contact_references: string | null
           experience_description: string
           id: string
+          languages: string[] | null
           preferred_practice_types: string[] | null
+          public_bio: string | null
           reviewed_at: string | null
           reviewed_by: string | null
           status: Database["public"]["Enums"]["application_status"]
           submitted_at: string
+          title: string | null
           user_id: string
+          website: string | null
+          work_types: string[] | null
+          years_experience: number | null
         }
         Insert: {
           admin_notes?: string | null
+          approach?: string | null
           availability?: string | null
           certifications?: string | null
+          contact_email?: string | null
           contact_references?: string | null
           experience_description: string
           id?: string
+          languages?: string[] | null
           preferred_practice_types?: string[] | null
+          public_bio?: string | null
           reviewed_at?: string | null
           reviewed_by?: string | null
           status?: Database["public"]["Enums"]["application_status"]
           submitted_at?: string
+          title?: string | null
           user_id: string
+          website?: string | null
+          work_types?: string[] | null
+          years_experience?: number | null
         }
         Update: {
           admin_notes?: string | null
+          approach?: string | null
           availability?: string | null
           certifications?: string | null
+          contact_email?: string | null
           contact_references?: string | null
           experience_description?: string
           id?: string
+          languages?: string[] | null
           preferred_practice_types?: string[] | null
+          public_bio?: string | null
           reviewed_at?: string | null
           reviewed_by?: string | null
           status?: Database["public"]["Enums"]["application_status"]
           submitted_at?: string
+          title?: string | null
           user_id?: string
+          website?: string | null
+          work_types?: string[] | null
+          years_experience?: number | null
         }
         Relationships: []
       }
       profiles: {
         Row: {
+          approach: string | null
           bio: string | null
+          contact_email: string | null
           created_at: string
           email: string
           full_name: string
           id: string
+          is_public_profile: boolean | null
+          languages: string[] | null
           phone: string | null
+          public_bio: string | null
           role: Database["public"]["Enums"]["user_role"]
+          title: string | null
           updated_at: string
           user_id: string
+          website: string | null
+          work_types: string[] | null
+          years_experience: number | null
         }
         Insert: {
+          approach?: string | null
           bio?: string | null
+          contact_email?: string | null
           created_at?: string
           email: string
           full_name: string
           id?: string
+          is_public_profile?: boolean | null
+          languages?: string[] | null
           phone?: string | null
+          public_bio?: string | null
           role?: Database["public"]["Enums"]["user_role"]
+          title?: string | null
           updated_at?: string
           user_id: string
+          website?: string | null
+          work_types?: string[] | null
+          years_experience?: number | null
         }
         Update: {
+          approach?: string | null
           bio?: string | null
+          contact_email?: string | null
           created_at?: string
           email?: string
           full_name?: string
           id?: string
+          is_public_profile?: boolean | null
+          languages?: string[] | null
           phone?: string | null
+          public_bio?: string | null
           role?: Database["public"]["Enums"]["user_role"]
+          title?: string | null
           updated_at?: string
           user_id?: string
+          website?: string | null
+          work_types?: string[] | null
+          years_experience?: number | null
         }
         Relationships: []
       }

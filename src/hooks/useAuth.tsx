@@ -12,6 +12,16 @@ interface Profile {
   role: 'user' | 'facilitator' | 'admin';
   created_at: string;
   updated_at: string;
+  // Facilitator-specific fields
+  title?: string;
+  public_bio?: string;
+  work_types?: string[];
+  languages?: string[];
+  contact_email?: string;
+  website?: string;
+  years_experience?: number;
+  approach?: string;
+  is_public_profile?: boolean;
 }
 
 interface AuthContextType {

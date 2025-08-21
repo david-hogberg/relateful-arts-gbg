@@ -14,6 +14,7 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import MyEvents from "./pages/MyEvents";
 import ManageEvents from "./pages/ManageEvents";
+import EditFacilitatorProfile from "./pages/EditFacilitatorProfile";
 import ApplyFacilitator from "./pages/ApplyFacilitator";
 import Admin from "./pages/Admin";
 import EmailConfirmation from "./pages/EmailConfirmation";
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/my-events" element={<MyEvents />} />
             <Route path="/manage-events" element={<ManageEvents />} />
             <Route path="/apply-facilitator" element={<ApplyFacilitator />} />
+            <Route path="/edit-facilitator-profile" element={<EditFacilitatorProfile />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/email-confirmation" element={<EmailConfirmation />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

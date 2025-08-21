@@ -8,9 +8,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Switch } from "@/components/ui/switch";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react";
+import { Loader2, Eye, EyeOff } from "lucide-react";
 
 const workTypes = [
   'Circling',
@@ -38,18 +39,43 @@ const availableLanguages = [
   'Other'
 ];
 
-export default function ApplyFacilitator() {
+export default function EditFacilitatorProfile() {
   const { user, profile, loading } = useAuth();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedWorkTypes, setSelectedWorkTypes] = useState<string[]>([]);
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+  const [isPublic, setIsPublic] = useState(true);
+  const [formData, setFormData] = useState({
+    title: '',
+    public_bio: '',
+    approach: '',
+    contact_email: '',
+    website: '',
+    years_experience: ''
+  });
 
   useEffect(() => {
-    if (!loading && (!user || profile?.role !== 'user')) {
+    if (!loading && (!user || (profile?.role !== 'facilitator' && profile?.role !== 'admin'))) {
       navigate('/');
     }
   }, [user, profile, loading, navigate]);
+
+  useEffect(() => {
+    if (profile) {
+      setFormData({
+        title: profile.title || '',
+        public_bio: profile.public_bio || '',
+        approach: profile.approach || '',
+        contact_email: profile.contact_email || profile.email,
+        website: profile.website || '',
+        years_experience: profile.years_experience?.toString() || ''
+      });
+      setSelectedWorkTypes(profile.work_types || []);
+      setSelectedLanguages(profile.languages || []);
+      setIsPublic(profile.is_public_profile !== false);
+    }
+  }, [profile]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -57,40 +83,35 @@ export default function ApplyFacilitator() {
 
     setIsSubmitting(true);
 
-    const formData = new FormData(e.currentTarget);
-    const applicationData = {
-      user_id: user.id,
-      title: formData.get('title') as string,
-      public_bio: formData.get('public_bio') as string,
-      experience_description: formData.get('experience') as string,
-      years_experience: parseInt(formData.get('years_experience') as string) || null,
-      certifications: formData.get('certifications') as string,
+    const updateData = {
+      title: formData.title,
+      public_bio: formData.public_bio,
+      approach: formData.approach,
+      contact_email: formData.contact_email,
+      website: formData.website,
+      years_experience: formData.years_experience ? parseInt(formData.years_experience) : null,
       work_types: selectedWorkTypes,
-      preferred_practice_types: selectedWorkTypes, // Keep for backward compatibility
       languages: selectedLanguages,
-      approach: formData.get('approach') as string,
-      contact_email: formData.get('contact_email') as string,
-      website: formData.get('website') as string,
-      availability: formData.get('availability') as string,
-      contact_references: formData.get('references') as string,
+      is_public_profile: isPublic
     };
 
     try {
       const { error } = await supabase
-        .from('facilitator_applications')
-        .insert([applicationData]);
+        .from('profiles')
+        .update(updateData)
+        .eq('user_id', user.id);
 
       if (error) throw error;
 
       toast({
-        title: "Application submitted!",
-        description: "Your facilitator application has been submitted for review.",
+        title: "Profile updated!",
+        description: "Your facilitator profile has been successfully updated.",
       });
 
-      navigate('/dashboard');
+      navigate('/facilitators');
     } catch (error: any) {
       toast({
-        title: "Submission failed",
+        title: "Update failed",
         description: error.message,
         variant: "destructive",
       });
@@ -132,13 +153,25 @@ export default function ApplyFacilitator() {
       <Navigation />
       
       <main className="container mx-auto px-4 py-8">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <Card>
             <CardHeader>
-              <CardTitle>Apply to Become a Facilitator</CardTitle>
-              <CardDescription>
-                Share your experience and help us understand how you'd contribute to our community
-              </CardDescription>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Edit Facilitator Profile</CardTitle>
+                  <CardDescription>
+                    Update your public facilitator profile that appears on the Facilitators page
+                  </CardDescription>
+                </div>
+                <div className="flex items-center space-x-2">
+                  {isPublic ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+                  <Switch
+                    checked={isPublic}
+                    onCheckedChange={setIsPublic}
+                  />
+                  <span className="text-sm">{isPublic ? 'Public' : 'Private'}</span>
+                </div>
+              </div>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -147,7 +180,8 @@ export default function ApplyFacilitator() {
                     <Label htmlFor="title">Professional Title</Label>
                     <Input
                       id="title"
-                      name="title"
+                      value={formData.title}
+                      onChange={(e) => setFormData({...formData, title: e.target.value})}
                       placeholder="e.g. Circling Facilitator & Coach"
                     />
                   </div>
@@ -156,7 +190,8 @@ export default function ApplyFacilitator() {
                     <Label htmlFor="years_experience">Years of Experience</Label>
                     <Input
                       id="years_experience"
-                      name="years_experience"
+                      value={formData.years_experience}
+                      onChange={(e) => setFormData({...formData, years_experience: e.target.value})}
                       type="number"
                       min="0"
                       placeholder="e.g. 5"
@@ -168,20 +203,10 @@ export default function ApplyFacilitator() {
                   <Label htmlFor="public_bio">Public Bio *</Label>
                   <Textarea
                     id="public_bio"
-                    name="public_bio"
+                    value={formData.public_bio}
+                    onChange={(e) => setFormData({...formData, public_bio: e.target.value})}
                     placeholder="Write a brief bio that will be displayed on your public profile..."
                     className="min-h-24"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="experience">Experience Description *</Label>
-                  <Textarea
-                    id="experience"
-                    name="experience"
-                    placeholder="Please describe your experience with authentic relating, circling, or related practices in detail..."
-                    className="min-h-32"
                     required
                   />
                 </div>
@@ -190,7 +215,8 @@ export default function ApplyFacilitator() {
                   <Label htmlFor="approach">Facilitation Approach</Label>
                   <Textarea
                     id="approach"
-                    name="approach"
+                    value={formData.approach}
+                    onChange={(e) => setFormData({...formData, approach: e.target.value})}
                     placeholder="Describe your unique approach to facilitation and what participants can expect..."
                     className="min-h-24"
                   />
@@ -237,7 +263,8 @@ export default function ApplyFacilitator() {
                     <Label htmlFor="contact_email">Contact Email *</Label>
                     <Input
                       id="contact_email"
-                      name="contact_email"
+                      value={formData.contact_email}
+                      onChange={(e) => setFormData({...formData, contact_email: e.target.value})}
                       type="email"
                       placeholder="your@email.com"
                       required
@@ -245,51 +272,22 @@ export default function ApplyFacilitator() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="website">Website (optional)</Label>
+                    <Label htmlFor="website">Website</Label>
                     <Input
                       id="website"
-                      name="website"
+                      value={formData.website}
+                      onChange={(e) => setFormData({...formData, website: e.target.value})}
                       type="url"
                       placeholder="https://yourwebsite.com"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="certifications">Certifications & Training</Label>
-                  <Textarea
-                    id="certifications"
-                    name="certifications"
-                    placeholder="List any relevant certifications, training programs, or qualifications..."
-                    className="min-h-24"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="availability">Availability</Label>
-                  <Textarea
-                    id="availability"
-                    name="availability"
-                    placeholder="When are you typically available to facilitate? (days, times, frequency)"
-                    className="min-h-24"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="references">References</Label>
-                  <Textarea
-                    id="references"
-                    name="references"
-                    placeholder="Please provide contact information for references (optional but helpful)"
-                    className="min-h-24"
-                  />
-                </div>
-
                 <div className="flex gap-4">
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => navigate('/dashboard')}
+                    onClick={() => navigate('/facilitators')}
                     className="flex-1"
                   >
                     Cancel
@@ -300,7 +298,7 @@ export default function ApplyFacilitator() {
                     className="flex-1"
                   >
                     {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Submit Application
+                    Save Profile
                   </Button>
                 </div>
               </form>
