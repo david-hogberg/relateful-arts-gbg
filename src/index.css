@@ -2,58 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Relateful Arts Design System - Scandinavian minimalism with warm touches
-Clean, natural, and welcoming aesthetic inspired by Nordic design principles.
+/* Relateful Arts Design System - Scandinavian minimalism with warm red touches
+Clean Nordic aesthetic with authentic terracotta warmth.
 All colors MUST be HSL for consistency.
 */
 
 @layer base {
   :root {
-    /* Pure, natural color palette inspired by Scandinavian nature */
+    /* Clean, natural color palette with warm red undertones */
     --background: 0 0% 99%;
-    --foreground: 210 10% 23%;
+    --foreground: 15 8% 25%;
 
     --card: 0 0% 98%;
-    --card-foreground: 210 10% 23%;
+    --card-foreground: 15 8% 25%;
 
     --popover: 0 0% 98%;
-    --popover-foreground: 210 10% 23%;
+    --popover-foreground: 15 8% 25%;
 
-    /* Warm stone primary - natural and grounding like Nordic granite */
-    --primary: 210 12% 45%;
+    /* Warm terracotta primary - authentic Nordic warmth */
+    --primary: 12 65% 55%;
     --primary-foreground: 0 0% 99%;
-    --primary-glow: 210 15% 55%;
+    --primary-glow: 12 75% 65%;
 
-    /* Soft natural secondary - inspired by Nordic birch */
-    --secondary: 45 12% 90%;
-    --secondary-foreground: 210 10% 23%;
+    /* Soft natural secondary - inspired by Nordic clay */
+    --secondary: 25 15% 88%;
+    --secondary-foreground: 15 8% 25%;
 
-    /* Clean neutral muted tones */
-    --muted: 210 8% 95%;
-    --muted-foreground: 210 8% 58%;
+    /* Clean neutral muted tones with warmth */
+    --muted: 20 10% 94%;
+    --muted-foreground: 15 8% 58%;
 
-    /* Subtle sage accent - Nordic forest undertones */
-    --accent: 135 8% 92%;
-    --accent-foreground: 210 10% 23%;
+    /* Subtle warm accent */
+    --accent: 15 12% 92%;
+    --accent-foreground: 15 8% 25%;
 
     --destructive: 0 65% 55%;
     --destructive-foreground: 0 0% 99%;
 
-    --border: 210 8% 90%;
-    --input: 210 8% 90%;
-    --ring: 210 12% 45%;
+    --border: 20 8% 88%;
+    --input: 20 8% 88%;
+    --ring: 12 65% 55%;
 
     --radius: 0.5rem;
 
-    /* Subtle, architectural gradients */
+    /* Warm, architectural gradients */
     --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
     --gradient-warm: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
     --gradient-gentle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--accent) / 0.3));
     --gradient-subtle: linear-gradient(180deg, hsl(var(--card)), hsl(var(--muted) / 0.5));
 
-    /* Clean, architectural shadows */
-    --shadow-elegant: 0 2px 20px -4px hsl(var(--foreground) / 0.08);
-    --shadow-glow: 0 4px 32px -8px hsl(var(--primary) / 0.12);
+    /* Clean, warm shadows */
+    --shadow-elegant: 0 2px 20px -4px hsl(var(--primary) / 0.08);
+    --shadow-glow: 0 4px 32px -8px hsl(var(--primary) / 0.15);
     --shadow-soft: 0 1px 8px -2px hsl(var(--foreground) / 0.04);
 
     /* Smooth, natural transitions */
@@ -61,52 +61,52 @@ All colors MUST be HSL for consistency.
     --transition-gentle: all 0.2s ease-out;
 
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 210 10% 23%;
-    --sidebar-primary: 210 12% 45%;
+    --sidebar-foreground: 15 8% 25%;
+    --sidebar-primary: 12 65% 55%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 210 8% 95%;
-    --sidebar-accent-foreground: 210 10% 23%;
-    --sidebar-border: 210 8% 90%;
-    --sidebar-ring: 210 12% 45%;
+    --sidebar-accent: 20 10% 94%;
+    --sidebar-accent-foreground: 15 8% 25%;
+    --sidebar-border: 20 8% 88%;
+    --sidebar-ring: 12 65% 55%;
   }
 
   .dark {
-    --background: 210 15% 8%;
-    --foreground: 210 8% 92%;
+    --background: 15 12% 8%;
+    --foreground: 15 8% 92%;
 
-    --card: 210 15% 9%;
-    --card-foreground: 210 8% 92%;
+    --card: 15 12% 9%;
+    --card-foreground: 15 8% 92%;
 
-    --popover: 210 15% 9%;
-    --popover-foreground: 210 8% 92%;
+    --popover: 15 12% 9%;
+    --popover-foreground: 15 8% 92%;
 
-    --primary: 210 8% 85%;
-    --primary-foreground: 210 15% 8%;
+    --primary: 12 65% 65%;
+    --primary-foreground: 15 12% 8%;
 
-    --secondary: 210 12% 15%;
-    --secondary-foreground: 210 8% 92%;
+    --secondary: 15 15% 15%;
+    --secondary-foreground: 15 8% 92%;
 
-    --muted: 210 12% 12%;
-    --muted-foreground: 210 8% 65%;
+    --muted: 15 12% 12%;
+    --muted-foreground: 15 8% 65%;
 
-    --accent: 210 12% 14%;
-    --accent-foreground: 210 8% 92%;
+    --accent: 15 12% 14%;
+    --accent-foreground: 15 8% 92%;
 
     --destructive: 0 65% 55%;
-    --destructive-foreground: 210 8% 92%;
+    --destructive-foreground: 15 8% 92%;
 
-    --border: 210 12% 15%;
-    --input: 210 12% 15%;
-    --ring: 210 8% 85%;
+    --border: 15 12% 15%;
+    --input: 15 12% 15%;
+    --ring: 12 65% 65%;
     
-    --sidebar-background: 210 15% 8%;
-    --sidebar-foreground: 210 8% 92%;
-    --sidebar-primary: 210 8% 85%;
-    --sidebar-primary-foreground: 210 15% 8%;
-    --sidebar-accent: 210 12% 12%;
-    --sidebar-accent-foreground: 210 8% 92%;
-    --sidebar-border: 210 12% 15%;
-    --sidebar-ring: 210 8% 85%;
+    --sidebar-background: 15 12% 8%;
+    --sidebar-foreground: 15 8% 92%;
+    --sidebar-primary: 12 65% 65%;
+    --sidebar-primary-foreground: 15 12% 8%;
+    --sidebar-accent: 15 12% 12%;
+    --sidebar-accent-foreground: 15 8% 92%;
+    --sidebar-border: 15 12% 15%;
+    --sidebar-ring: 12 65% 65%;
   }
 }
 
