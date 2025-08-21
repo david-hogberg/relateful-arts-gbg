@@ -39,10 +39,8 @@ export default function Auth() {
         variant: "destructive",
       });
     } else {
-      toast({
-        title: "Account created!",
-        description: "Please check your email to verify your account.",
-      });
+      // Redirect to confirmation page
+      navigate(`/email-confirmation?email=${encodeURIComponent(email)}`);
     }
 
     setIsLoading(false);
