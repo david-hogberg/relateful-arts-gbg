@@ -1,10 +1,21 @@
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { Menu, X, User, LogOut, Heart, Calendar, Users, BookOpen, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Heart, Calendar, Users, BookOpen, Info } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-const Navigation = () => {
+export function Navigation() {
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  
+  const { user, profile, signOut } = useAuth();
+
   const navItems = [
     { path: "/", label: "Home", icon: Heart },
     { path: "/events", label: "Events", icon: Calendar },
@@ -24,6 +35,7 @@ const Navigation = () => {
             </span>
           </Link>
           
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
             {navItems.map(({ path, label, icon: Icon }) => (
               <Button
@@ -40,13 +52,76 @@ const Navigation = () => {
             ))}
           </div>
 
-          <Button variant="outline" className="hidden md:block">
-            Join Community
-          </Button>
+          {/* Auth Section */}
+          <div className="flex items-center space-x-4">
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    <span className="hidden sm:inline">
+                      {profile?.full_name || 'Profile'}
+                    </span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem asChild>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </DropdownMenuItem>
+                  {profile?.role === 'admin' && (
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin">Admin Panel</Link>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => signOut()}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button asChild size="sm">
+                <Link to="/auth">Sign In</Link>
+              </Button>
+            )}
+
+            {/* Mobile Menu Button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="md:hidden"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
+          </div>
         </div>
+
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="mt-4 md:hidden">
+            <div className="flex flex-col space-y-2 pb-4">
+              {navItems.map(({ path, label, icon: Icon }) => (
+                <Button
+                  key={path}
+                  variant={location.pathname === path ? "default" : "ghost"}
+                  asChild
+                  className="justify-start"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <Link to={path} className="flex items-center space-x-2">
+                    <Icon className="w-4 h-4" />
+                    <span>{label}</span>
+                  </Link>
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
-};
+}
 
 export default Navigation;
