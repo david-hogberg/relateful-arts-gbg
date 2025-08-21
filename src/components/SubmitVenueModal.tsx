@@ -5,6 +5,7 @@ import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Label } from './ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { ImageUpload } from './ImageUpload';
 import { supabase } from '../integrations/supabase/client';
 import { useAuth } from '../hooks/useAuth';
 import { useToast } from '../hooks/use-toast';
@@ -30,6 +31,7 @@ export const SubmitVenueModal: React.FC<SubmitVenueModalProps> = ({
     contact_information: '',
     cost_level: '',
     notes: '',
+    image_url: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,6 +55,7 @@ export const SubmitVenueModal: React.FC<SubmitVenueModalProps> = ({
             contact_information: formData.contact_information,
             cost_level: formData.cost_level,
             notes: formData.notes || null,
+            image_url: formData.image_url || null,
           }]);
 
         if (error) throw error;
@@ -73,6 +76,7 @@ export const SubmitVenueModal: React.FC<SubmitVenueModalProps> = ({
             contact_information: formData.contact_information,
             cost_level: formData.cost_level,
             notes: formData.notes || null,
+            image_url: formData.image_url || null,
           }]);
 
         if (error) throw error;
@@ -91,6 +95,7 @@ export const SubmitVenueModal: React.FC<SubmitVenueModalProps> = ({
         contact_information: '',
         cost_level: '',
         notes: '',
+        image_url: '',
       });
 
       onSubmit();
@@ -128,6 +133,14 @@ export const SubmitVenueModal: React.FC<SubmitVenueModalProps> = ({
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-4">
+            <ImageUpload
+              bucket="venue-images"
+              currentImage={formData.image_url}
+              onImageUploaded={(url) => handleChange('image_url', url)}
+              onImageRemoved={() => handleChange('image_url', '')}
+              label="Venue Image"
+            />
+            
             <div>
               <Label htmlFor="name">Venue Name *</Label>
               <Input

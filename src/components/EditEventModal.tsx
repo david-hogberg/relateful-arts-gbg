@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ImageUpload } from "@/components/ImageUpload";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
@@ -23,6 +24,7 @@ interface EditEventModalProps {
     type: "workshop" | "group_session" | "retreat";
     max_participants: number;
     price: number;
+    image_url?: string;
   } | null;
 }
 
@@ -37,6 +39,7 @@ const EditEventModal = ({ open, onOpenChange, onEventUpdated, event }: EditEvent
     type: "" as "workshop" | "group_session" | "retreat",
     max_participants: 20,
     price: 0,
+    image_url: "",
   });
 
   useEffect(() => {
@@ -50,6 +53,7 @@ const EditEventModal = ({ open, onOpenChange, onEventUpdated, event }: EditEvent
         type: event.type,
         max_participants: event.max_participants,
         price: event.price,
+        image_url: event.image_url || "",
       });
     }
   }, [event, open]);
@@ -81,6 +85,7 @@ const EditEventModal = ({ open, onOpenChange, onEventUpdated, event }: EditEvent
           type: formData.type,
           max_participants: formData.max_participants,
           price: formData.price,
+          image_url: formData.image_url || null,
         })
         .eq('id', event.id);
 
@@ -117,6 +122,14 @@ const EditEventModal = ({ open, onOpenChange, onEventUpdated, event }: EditEvent
         
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid gap-4">
+            <ImageUpload
+              bucket="event-images"
+              currentImage={formData.image_url}
+              onImageUploaded={(url) => setFormData(prev => ({ ...prev, image_url: url }))}
+              onImageRemoved={() => setFormData(prev => ({ ...prev, image_url: "" }))}
+              label="Event Image"
+            />
+            
             <div>
               <Label htmlFor="title">Event Title *</Label>
               <Input

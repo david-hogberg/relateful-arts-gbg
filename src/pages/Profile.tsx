@@ -47,12 +47,25 @@ export default function Profile() {
           <Card>
             <CardHeader>
               <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="flex items-center gap-2">
-                    <Settings className="h-5 w-5" />
-                    Profile Information
-                  </CardTitle>
-                  <CardDescription>Your community profile details</CardDescription>
+                <div className="flex items-center space-x-4">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center overflow-hidden">
+                    {(profile as any)?.image_url ? (
+                      <img 
+                        src={(profile as any).image_url} 
+                        alt={profile.full_name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <User className="w-8 h-8 text-primary" />
+                    )}
+                  </div>
+                  <div>
+                    <CardTitle className="flex items-center gap-2">
+                      <Settings className="h-5 w-5" />
+                      Profile Information
+                    </CardTitle>
+                    <CardDescription>Your community profile details</CardDescription>
+                  </div>
                 </div>
                 <Button variant="outline" onClick={() => setEditProfileOpen(true)}>
                   Edit Profile

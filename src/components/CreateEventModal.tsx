@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ImageUpload } from "@/components/ImageUpload";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -28,6 +29,7 @@ const CreateEventModal = ({ open, onOpenChange, onEventCreated }: CreateEventMod
     type: "" as "workshop" | "group_session" | "retreat",
     max_participants: 20,
     price: 0,
+    image_url: "",
   });
 
   const resetForm = () => {
@@ -40,6 +42,7 @@ const CreateEventModal = ({ open, onOpenChange, onEventCreated }: CreateEventMod
       type: "" as "workshop" | "group_session" | "retreat",
       max_participants: 20,
       price: 0,
+      image_url: "",
     });
   };
 
@@ -78,6 +81,7 @@ const CreateEventModal = ({ open, onOpenChange, onEventCreated }: CreateEventMod
           type: formData.type,
           max_participants: formData.max_participants,
           price: formData.price,
+          image_url: formData.image_url || null,
         });
 
       if (error) throw error;
@@ -121,6 +125,14 @@ const CreateEventModal = ({ open, onOpenChange, onEventCreated }: CreateEventMod
         
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid gap-4">
+            <ImageUpload
+              bucket="event-images"
+              currentImage={formData.image_url}
+              onImageUploaded={(url) => setFormData(prev => ({ ...prev, image_url: url }))}
+              onImageRemoved={() => setFormData(prev => ({ ...prev, image_url: "" }))}
+              label="Event Image"
+            />
+            
             <div>
               <Label htmlFor="title">Event Title *</Label>
               <Input

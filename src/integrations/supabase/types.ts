@@ -53,6 +53,7 @@ export type Database = {
           description: string | null
           facilitator_id: string
           id: string
+          image_url: string | null
           location: string
           max_participants: number
           price: number
@@ -67,6 +68,7 @@ export type Database = {
           description?: string | null
           facilitator_id: string
           id?: string
+          image_url?: string | null
           location: string
           max_participants?: number
           price?: number
@@ -81,6 +83,7 @@ export type Database = {
           description?: string | null
           facilitator_id?: string
           id?: string
+          image_url?: string | null
           location?: string
           max_participants?: number
           price?: number
@@ -101,6 +104,7 @@ export type Database = {
           contact_references: string | null
           experience_description: string
           id: string
+          image_url: string | null
           languages: string[] | null
           preferred_practice_types: string[] | null
           public_bio: string | null
@@ -123,6 +127,7 @@ export type Database = {
           contact_references?: string | null
           experience_description: string
           id?: string
+          image_url?: string | null
           languages?: string[] | null
           preferred_practice_types?: string[] | null
           public_bio?: string | null
@@ -145,6 +150,7 @@ export type Database = {
           contact_references?: string | null
           experience_description?: string
           id?: string
+          image_url?: string | null
           languages?: string[] | null
           preferred_practice_types?: string[] | null
           public_bio?: string | null
@@ -169,6 +175,7 @@ export type Database = {
           email: string
           full_name: string
           id: string
+          image_url: string | null
           is_public_profile: boolean | null
           languages: string[] | null
           phone: string | null
@@ -189,6 +196,7 @@ export type Database = {
           email: string
           full_name: string
           id?: string
+          image_url?: string | null
           is_public_profile?: boolean | null
           languages?: string[] | null
           phone?: string | null
@@ -209,6 +217,7 @@ export type Database = {
           email?: string
           full_name?: string
           id?: string
+          image_url?: string | null
           is_public_profile?: boolean | null
           languages?: string[] | null
           phone?: string | null
@@ -231,6 +240,7 @@ export type Database = {
           created_at: string
           description: string
           id: string
+          image_url: string | null
           reviewed_at: string | null
           reviewed_by: string | null
           status: string
@@ -249,6 +259,7 @@ export type Database = {
           created_at?: string
           description: string
           id?: string
+          image_url?: string | null
           reviewed_at?: string | null
           reviewed_by?: string | null
           status?: string
@@ -267,6 +278,7 @@ export type Database = {
           created_at?: string
           description?: string
           id?: string
+          image_url?: string | null
           reviewed_at?: string | null
           reviewed_by?: string | null
           status?: string
@@ -297,6 +309,7 @@ export type Database = {
           created_at: string
           description: string
           id: string
+          image_url: string | null
           publish_date: string
           tags: string[]
           title: string
@@ -312,6 +325,7 @@ export type Database = {
           created_at?: string
           description: string
           id?: string
+          image_url?: string | null
           publish_date?: string
           tags?: string[]
           title: string
@@ -327,6 +341,7 @@ export type Database = {
           created_at?: string
           description?: string
           id?: string
+          image_url?: string | null
           publish_date?: string
           tags?: string[]
           title?: string
@@ -344,6 +359,7 @@ export type Database = {
           created_at: string
           hosting_capacity: number
           id: string
+          image_url: string | null
           location: string
           name: string
           notes: string | null
@@ -361,6 +377,7 @@ export type Database = {
           created_at?: string
           hosting_capacity: number
           id?: string
+          image_url?: string | null
           location: string
           name: string
           notes?: string | null
@@ -378,6 +395,7 @@ export type Database = {
           created_at?: string
           hosting_capacity?: number
           id?: string
+          image_url?: string | null
           location?: string
           name?: string
           notes?: string | null
@@ -398,6 +416,7 @@ export type Database = {
           created_at: string
           hosting_capacity: number
           id: string
+          image_url: string | null
           location: string
           name: string
           notes: string | null
@@ -410,6 +429,7 @@ export type Database = {
           created_at?: string
           hosting_capacity: number
           id?: string
+          image_url?: string | null
           location: string
           name: string
           notes?: string | null
@@ -422,6 +442,7 @@ export type Database = {
           created_at?: string
           hosting_capacity?: number
           id?: string
+          image_url?: string | null
           location?: string
           name?: string
           notes?: string | null

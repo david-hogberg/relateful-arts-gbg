@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { ImageUpload } from "@/components/ImageUpload";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
@@ -27,6 +28,7 @@ export default function EditProfileModal({ open, onOpenChange }: EditProfileModa
     full_name: profile?.full_name || "",
     phone: profile?.phone || "",
     bio: profile?.bio || "",
+    image_url: (profile as any)?.image_url || "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -70,6 +72,15 @@ export default function EditProfileModal({ open, onOpenChange }: EditProfileModa
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">
+          <ImageUpload
+            bucket="profile-images"
+            folder={user?.id}
+            currentImage={formData.image_url}
+            onImageUploaded={(url) => setFormData(prev => ({ ...prev, image_url: url }))}
+            onImageRemoved={() => setFormData(prev => ({ ...prev, image_url: "" }))}
+            label="Profile Picture"
+          />
+          
           <div>
             <Label htmlFor="full_name">Full Name</Label>
             <Input

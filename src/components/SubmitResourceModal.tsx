@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
+import { ImageUpload } from '@/components/ImageUpload';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
@@ -53,6 +54,7 @@ export function SubmitResourceModal({ open, onOpenChange }: SubmitResourceModalP
   const [content, setContent] = useState('');
   const [url, setUrl] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [imageUrl, setImageUrl] = useState('');
 
   const canPublishDirectly = profile?.role === 'facilitator' || profile?.role === 'admin';
 
@@ -111,6 +113,7 @@ export function SubmitResourceModal({ open, onOpenChange }: SubmitResourceModalP
             content: resourceType === 'article' ? content : null,
             url: resourceType === 'link' ? url : null,
             tags: selectedTags,
+            image_url: imageUrl || null,
           });
 
         if (error) throw error;
@@ -132,6 +135,7 @@ export function SubmitResourceModal({ open, onOpenChange }: SubmitResourceModalP
             content: resourceType === 'article' ? content : null,
             url: resourceType === 'link' ? url : null,
             tags: selectedTags,
+            image_url: imageUrl || null,
           });
 
         if (error) throw error;
@@ -149,6 +153,7 @@ export function SubmitResourceModal({ open, onOpenChange }: SubmitResourceModalP
       setContent('');
       setUrl('');
       setSelectedTags([]);
+      setImageUrl('');
       onOpenChange(false);
     } catch (error: any) {
       toast({
@@ -207,6 +212,14 @@ export function SubmitResourceModal({ open, onOpenChange }: SubmitResourceModalP
               className="min-h-20"
             />
           </div>
+
+          <ImageUpload
+            bucket="resource-images"
+            currentImage={imageUrl}
+            onImageUploaded={(url) => setImageUrl(url)}
+            onImageRemoved={() => setImageUrl('')}
+            label="Resource Image"
+          />
 
           <Tabs value={resourceType} onValueChange={(value) => setResourceType(value as 'article' | 'link')}>
             <TabsList>

@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
+import { ImageUpload } from "@/components/ImageUpload";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { Loader2, Eye, EyeOff, User, Settings, Edit } from "lucide-react";
@@ -53,7 +54,8 @@ export default function EditFacilitatorProfile() {
     public_bio: '',
     approach: '',
     contact_email: '',
-    website: ''
+    website: '',
+    image_url: ''
   });
 
   useEffect(() => {
@@ -69,7 +71,8 @@ export default function EditFacilitatorProfile() {
         public_bio: profile.public_bio || '',
         approach: profile.approach || '',
         contact_email: profile.contact_email || profile.email,
-        website: profile.website || ''
+        website: profile.website || '',
+        image_url: (profile as any).image_url || ''
       });
       setSelectedWorkTypes(profile.work_types || []);
       setSelectedLanguages(profile.languages || []);
@@ -89,6 +92,7 @@ export default function EditFacilitatorProfile() {
       approach: formData.approach,
       contact_email: formData.contact_email,
       website: formData.website,
+      image_url: formData.image_url,
       work_types: selectedWorkTypes,
       languages: selectedLanguages,
       is_public_profile: isPublic
@@ -177,6 +181,15 @@ export default function EditFacilitatorProfile() {
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  <ImageUpload
+                    bucket="profile-images"
+                    folder={user?.id}
+                    currentImage={formData.image_url}
+                    onImageUploaded={(url) => setFormData(prev => ({ ...prev, image_url: url }))}
+                    onImageRemoved={() => setFormData(prev => ({ ...prev, image_url: "" }))}
+                    label="Profile Picture"
+                  />
+                  
                   <div className="space-y-2">
                     <Label htmlFor="title">Professional Title</Label>
                     <Input
