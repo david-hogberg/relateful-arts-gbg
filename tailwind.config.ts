@@ -66,12 +66,14 @@ export default {
 				'gradient-hero': 'var(--gradient-hero)',
 				'gradient-warm': 'var(--gradient-warm)',
 				'gradient-gentle': 'var(--gradient-gentle)',
-				'gradient-subtle': 'var(--gradient-subtle)'
+				'gradient-subtle': 'var(--gradient-subtle)',
+				'gradient-cozy': 'var(--gradient-cozy)'
 			},
 			boxShadow: {
 				'elegant': 'var(--shadow-elegant)',
 				'glow': 'var(--shadow-glow)',
-				'soft': 'var(--shadow-soft)'
+				'soft': 'var(--shadow-soft)',
+				'cozy': 'var(--shadow-cozy)'
 			},
 			transitionProperty: {
 				'smooth': 'var(--transition-smooth)',

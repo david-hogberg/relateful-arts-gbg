@@ -12,9 +12,6 @@ const About = () => {
       <section className="page-header">
         <div className="page-header-content">
           <div className="page-header-inner">
-            <div className="flex justify-center mb-6">
-              <Heart className="w-16 h-16 text-primary" />
-            </div>
             <h1 className="page-title">About Relateful Arts</h1>
             <p className="page-description">
               We are a community of practitioners, facilitators, and seekers dedicated to exploring 
