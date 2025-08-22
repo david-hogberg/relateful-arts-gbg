@@ -74,11 +74,6 @@ const Home = () => {
       <section className="page-section bg-background">
         <div className="page-section-content">
           <div className="max-w-5xl mx-auto text-center">
-            <div className="flex justify-center mb-8">
-              <div className="p-4 bg-primary/15 rounded-2xl">
-                <Heart className="w-16 h-16 text-primary" />
-              </div>
-            </div>
             <h2 className="page-title">Our Community Values</h2>
             <p className="page-description max-w-4xl mx-auto">
               We believe in creating spaces where people can show up authentically, practice vulnerable communication, 
@@ -131,9 +126,6 @@ const Home = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild className="inviting-button text-lg px-8 py-4 h-auto">
                 <Link to="/events">Explore Events</Link>
-              </Button>
-              <Button size="lg" asChild className="btn-outline-primary text-lg px-8 py-4 h-auto">
-                <Link to="/cozy-demo">See Our Design</Link>
               </Button>
             </div>
           </div>

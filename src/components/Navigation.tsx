@@ -54,10 +54,6 @@ function Navigation() {
     path: "/about",
     label: "About",
     icon: Info
-  }, {
-    path: "/cozy-demo",
-    label: "Design Demo",
-    icon: Star
   }];
   return (
     <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-primary/10 shadow-cozy">
