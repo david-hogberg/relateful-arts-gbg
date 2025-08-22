@@ -5,7 +5,7 @@ import heroImage from "@/assets/hero-community.jpg";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-cozy">
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-cozy py-16">
       <div className="absolute inset-0 bg-gradient-warm opacity-85" />
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-25" 
@@ -16,20 +16,20 @@ const HeroSection = () => {
       
       <div className="container mx-auto px-6 relative z-10 text-center">
         <div className="max-w-5xl mx-auto">
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-6">
             <div className="flex items-center space-x-3 bg-primary/15 px-6 py-3 rounded-full border border-primary/25 shadow-soft">
               <Heart className="w-6 h-6 text-primary" />
               <span className="text-primary font-semibold text-lg">Relateful Community in Gothenburg</span>
             </div>
           </div>
           
-          <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight">
+          <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight">
             <span className="text-foreground leading-tight">Relateful Arts</span>
             <br />
             <span className="text-foreground leading-tight">Gothenburg</span>
           </h1>
           
-          <p className="text-2xl md:text-3xl text-muted-foreground mb-12 leading-relaxed max-w-4xl mx-auto font-medium">
+          <p className="text-2xl md:text-3xl text-muted-foreground mb-10 leading-relaxed max-w-4xl mx-auto font-medium">
             A warm, welcoming platform for deepening interpersonal practices and building meaningful connections in and around Gothenburg, Sweden.
           </p>
           
@@ -54,7 +54,7 @@ const HeroSection = () => {
             </Button>
           </div>
           
-          <div className="mt-16 flex justify-center">
+          <div className="mt-12 flex justify-center">
             <div className="flex items-center space-x-8 text-muted-foreground">
               <div className="flex items-center space-x-2">
                 <Users className="w-5 h-5 text-primary" />
