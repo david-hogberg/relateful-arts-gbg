@@ -107,8 +107,8 @@ const Venues: React.FC = () => {
       <div className="page-section-content py-12">
         {/* Submit Venue Section */}
         <div className="form-section">
-          <Card className="form-card">
-            <CardHeader className="form-card-header">
+          <Card className="card-elegant">
+            <CardHeader className="card-content-wrapper text-center">
               <CardTitle className="flex items-center justify-center gap-2">
                 <Building className="h-6 w-6" />
                 Share Your Space
@@ -117,7 +117,7 @@ const Venues: React.FC = () => {
                 Register your venue to help the community find great spaces for events
               </CardDescription>
             </CardHeader>
-            <CardContent className="form-card-content">
+            <CardContent className="card-content-wrapper text-center">
               <Button onClick={() => setShowSubmitModal(true)} size="lg">
                 Register a Venue
               </Button>
@@ -154,18 +154,21 @@ const Venues: React.FC = () => {
                       className="card-image"
                     />
                     <div className="card-image-overlay" />
+                    <Badge className="card-badge-overlay">
+                      {venue.cost_level}
+                    </Badge>
                   </div>
                 )}
                 
                 <CardHeader className="card-content-wrapper">
-                  <CardTitle className="flex items-start justify-between">
-                    <span className="text-lg">{venue.name}</span>
-                    {!venue.image_url && (
+                  {!venue.image_url && (
+                    <div className="flex items-start justify-between mb-4">
                       <Badge className="tag-primary">
                         {venue.cost_level}
                       </Badge>
-                    )}
-                  </CardTitle>
+                    </div>
+                  )}
+                  <CardTitle className="text-lg">{venue.name}</CardTitle>
                   <CardDescription className="flex items-center gap-2 text-muted-foreground">
                     <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
                     <span className="line-clamp-2">{venue.location}</span>

@@ -102,7 +102,29 @@ const Facilitators = () => {
             <div className="responsive-grid">
               {facilitators.map((facilitator) => (
                 <Card key={facilitator.id} className="card-elegant h-full flex flex-col">
-                  <CardHeader className="card-content-wrapper pt-8 pb-4">
+                  {/* Profile Image Banner */}
+                  {facilitator.image_url && (
+                    <div className="card-image-container">
+                      <img 
+                        src={facilitator.image_url} 
+                        alt={facilitator.full_name}
+                        className="card-image"
+                      />
+                      <div className="card-image-overlay" />
+                      <Badge className="card-badge-overlay">
+                        {facilitator.title || 'Facilitator'}
+                      </Badge>
+                    </div>
+                  )}
+                  
+                  <CardHeader className="card-content-wrapper">
+                    {!facilitator.image_url && (
+                      <div className="flex items-start justify-between mb-4">
+                        <Badge className="tag-primary">
+                          {facilitator.title || 'Facilitator'}
+                        </Badge>
+                      </div>
+                    )}
                     <div className="text-center">
                       {/* Profile Image - Centered and larger */}
                       {facilitator.image_url ? (

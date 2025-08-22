@@ -142,8 +142,8 @@ export default function Resources() {
 
       <div className="page-section-content py-12">
         {/* Submit New Resource Section */}
-        <Card className="form-card form-section">
-          <CardHeader className="form-card-header">
+        <Card className="card-elegant form-section">
+          <CardHeader className="card-content-wrapper text-center">
             <CardTitle className="flex items-center justify-center gap-2">
               <BookOpen className="h-6 w-6" />
               Share Your Knowledge
@@ -152,7 +152,7 @@ export default function Resources() {
               Submit your articles, guides, or external resources for others to discover
             </CardDescription>
           </CardHeader>
-          <CardContent className="form-card-content">
+          <CardContent className="card-content-wrapper text-center">
             <Button 
               size="lg"
               onClick={() => user ? setSubmitModalOpen(true) : toast({
@@ -318,19 +318,19 @@ export default function Resources() {
             <h2 className="text-3xl font-bold mb-8 text-center">Recommended External Resources</h2>
             
             <div className="responsive-grid-wide">
-              <Card className="shadow-card">
-                <CardHeader>
+              <Card className="card-elegant">
+                <CardHeader className="card-content-wrapper">
                   <CardTitle className="flex items-center">
                     <ExternalLink className="w-5 h-5 mr-2 text-primary" />
                     Authentic Relating Global
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="card-content-wrapper">
                   <CardDescription className="mb-4 leading-relaxed">
                     The international community for authentic relating with resources, 
                     training programs, and connections to practitioners worldwide.
                   </CardDescription>
-                  <Button variant="outline" size="sm" asChild>
+                  <Button variant="outline" size="sm" className="btn-outline-primary" asChild>
                     <a href="https://authentic-relating-global.org" target="_blank" rel="noopener noreferrer">
                       Visit Website
                     </a>
@@ -338,19 +338,19 @@ export default function Resources() {
                 </CardContent>
               </Card>
               
-              <Card className="shadow-card">
-                <CardHeader>
+              <Card className="card-elegant">
+                <CardHeader className="card-content-wrapper">
                   <CardTitle className="flex items-center">
                     <ExternalLink className="w-5 h-5 mr-2 text-primary" />
                     Circling Institute
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="card-content-wrapper">
                   <CardDescription className="mb-4 leading-relaxed">
                     Training and certification programs for circling facilitators, 
                     plus extensive resources on the practice and philosophy.
                   </CardDescription>
-                  <Button variant="outline" size="sm" asChild>
+                  <Button variant="outline" size="sm" className="btn-outline-primary" asChild>
                     <a href="https://circlinginstitute.com" target="_blank" rel="noopener noreferrer">
                       Visit Website
                     </a>
