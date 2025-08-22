@@ -160,6 +160,17 @@ const Events = () => {
     });
   };
 
+  const formatTime = (timeString: string) => {
+    // If time is in HH:MM:SS format, extract just HH:MM
+    if (timeString && timeString.includes(':')) {
+      const parts = timeString.split(':');
+      if (parts.length >= 2) {
+        return `${parts[0]}:${parts[1]}`;
+      }
+    }
+    return timeString;
+  };
+
   return (
     <div className="min-h-screen">
       <Navigation />
@@ -265,7 +276,7 @@ const Events = () => {
                     </div>
                     <div className="flex items-center text-muted-foreground">
                       <Clock className="w-5 h-5 mr-3 text-primary" />
-                      <span>{event.time}</span>
+                      <span>{formatTime(event.time)}</span>
                     </div>
                     <div className="flex items-center text-muted-foreground">
                       <MapPin className="w-5 h-5 mr-3 text-primary" />
