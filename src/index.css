@@ -393,4 +393,105 @@ All colors MUST be HSL for consistency.
     transform: translateY(-3px);
     box-shadow: var(--shadow-glow);
   }
+
+  /* Profile and Admin page specific styling */
+  .profile-header {
+    @apply text-center mb-8;
+  }
+
+  .profile-title {
+    @apply text-3xl font-bold text-foreground mb-3;
+  }
+
+  .profile-description {
+    @apply text-muted-foreground max-w-2xl mx-auto;
+  }
+
+  .admin-tabs {
+    @apply grid w-full grid-cols-4 bg-gradient-subtle border border-primary/10 rounded-xl p-1;
+  }
+
+  .admin-tab-trigger {
+    @apply flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-colors rounded-lg py-2;
+  }
+
+  .profile-card {
+    @apply card-elegant;
+  }
+
+  .profile-form {
+    @apply space-y-6;
+  }
+
+  .profile-field {
+    @apply flex items-center gap-3 p-4 bg-gradient-subtle rounded-xl border border-primary/10 transition-all duration-300 hover:shadow-cozy hover:border-primary/20;
+  }
+
+  .profile-field-icon {
+    @apply w-8 h-8 text-primary p-2 bg-primary/15 rounded-lg;
+  }
+
+  .profile-field-label {
+    @apply font-semibold text-foreground min-w-[120px];
+  }
+
+  .profile-field-value {
+    @apply text-foreground flex-1;
+  }
+
+  .profile-field-group {
+    @apply space-y-4;
+  }
+
+  .profile-field-row {
+    @apply flex items-center gap-3 p-4 bg-gradient-subtle rounded-xl border border-primary/10 transition-all duration-300 hover:shadow-cozy hover:border-primary/20;
+  }
+
+  .profile-field-row-icon {
+    @apply w-8 h-8 text-primary p-2 bg-primary/15 rounded-lg flex-shrink-0;
+  }
+
+  .profile-field-row-content {
+    @apply flex-1;
+  }
+
+  .profile-field-row-label {
+    @apply font-semibold text-foreground mb-1;
+  }
+
+  .profile-field-row-value {
+    @apply text-foreground;
+  }
+
+  .profile-field-row-description {
+    @apply text-sm text-muted-foreground mt-1;
+  }
+
+  .profile-section {
+    @apply space-y-4;
+  }
+
+  .profile-section-title {
+    @apply text-lg font-semibold text-foreground mb-3 flex items-center gap-2;
+  }
+
+  .profile-section-title-icon {
+    @apply w-8 h-8 text-primary;
+  }
+
+  .profile-badge {
+    @apply inline-flex items-center gap-2 px-3 py-1 bg-primary/15 text-primary border border-primary/25 rounded-full text-sm font-medium;
+  }
+
+  .profile-badge-icon {
+    @apply w-5 h-5;
+  }
+
+  .profile-link {
+    @apply text-primary hover:text-primary-glow underline transition-colors duration-200;
+  }
+
+  .profile-divider {
+    @apply h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent my-6;
+  }
 }

@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Checkbox } from "@/components/ui/checkbox";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react";
+import { Loader2, Calendar, Clock, MapPin, Users, ExternalLink, Plus, Award, Briefcase, Languages, Globe, FileText, Clock3 } from "lucide-react";
 
 const workTypes = [
   'Circling',
@@ -129,11 +129,20 @@ export default function ApplyFacilitator() {
       
       <main className="page-section-content py-8">
         <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-foreground mb-3">
+              Apply to Become a Facilitator
+            </h1>
+            <p className="text-muted-foreground">
+              Share your experience and help us understand how you'd contribute to our community
+            </p>
+          </div>
+          
           <Card className="card-elegant">
             <CardHeader>
-              <CardTitle>Apply to Become a Facilitator</CardTitle>
+              <CardTitle>Application Form</CardTitle>
               <CardDescription>
-                Share your experience and help us understand how you'd contribute to our community
+                Please fill out the form below with your details
               </CardDescription>
             </CardHeader>
             <CardContent>

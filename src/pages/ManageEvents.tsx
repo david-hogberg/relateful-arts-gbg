@@ -8,7 +8,7 @@ import Navigation from "@/components/Navigation";
 import CreateEventModal from "@/components/CreateEventModal";
 import EditEventModal from "@/components/EditEventModal";
 import ViewParticipantsModal from "@/components/ViewParticipantsModal";
-import { Loader2, Calendar, Clock, MapPin, Plus, Edit, Trash2, Users } from "lucide-react";
+import { Loader2, Calendar, Clock, MapPin, Plus, Edit, Trash2, Users, DollarSign, Target } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
@@ -217,28 +217,28 @@ export default function ManageEvents() {
       
       <main className="page-section-content py-12">
         <div className="max-w-4xl mx-auto space-y-6">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-3">
-              <Calendar className="h-8 w-8 text-primary" />
-              <div>
-                <h1 className="text-3xl font-bold text-foreground">
-                  Manage Events
-                </h1>
-                <p className="text-muted-foreground">
-                  Create, edit and manage your events
-                </p>
-              </div>
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-foreground mb-3">
+              Manage Events
+            </h1>
+            <p className="text-muted-foreground">
+              Create, edit and manage your events
+            </p>
+            <div className="mt-6">
+              <Button onClick={() => setCreateEventOpen(true)} className="btn-primary-gradient">
+                <Plus className="w-4 h-4 mr-2" />
+                Create Event
+              </Button>
             </div>
-            <Button onClick={() => setCreateEventOpen(true)} className="btn-primary-gradient">
-              <Plus className="w-4 h-4 mr-2" />
-              Create Event
-            </Button>
           </div>
 
           {/* Events Section */}
-          <Card className="card-elegant">
+          <Card className="profile-card">
             <CardHeader>
-              <CardTitle>Your Events</CardTitle>
+              <div className="profile-section-title">
+                <Calendar className="profile-section-title-icon" />
+                Your Events
+              </div>
               <CardDescription>Events you're facilitating and their registration status</CardDescription>
             </CardHeader>
             <CardContent>
@@ -251,29 +251,29 @@ export default function ManageEvents() {
                   <p className="empty-state-description">
                     You haven't created any events yet.
                   </p>
-                  <Button onClick={() => setCreateEventOpen(true)}>
+                  <Button onClick={() => setCreateEventOpen(true)} className="btn-primary-gradient">
                     <Plus className="w-4 h-4 mr-2" />
                     Create Your First Event
                   </Button>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <div className="text-sm text-muted-foreground mb-4">
+                  <div className="text-sm text-muted-foreground mb-4 p-3 bg-gradient-subtle rounded-lg border border-primary/10">
                     {events.filter(e => !e.is_past).length} upcoming event(s), {events.filter(e => e.is_past).length} past event(s)
                   </div>
                   {events.map((event) => (
-                    <Card key={event.id} className={`card-elegant ${event.is_past ? 'opacity-60' : ''}`}>
+                    <Card key={event.id} className={`profile-card ${event.is_past ? 'opacity-60' : ''}`}>
                       <CardContent className="pt-6">
                         <div className="flex items-start justify-between">
-                          <div className="space-y-2 flex-1">
+                          <div className="space-y-3 flex-1">
                             <div className="flex items-center gap-2">
-                              <Badge className={getTypeColor(event.type)}>
+                              <span className="profile-badge">
                                 {event.type.replace('_', ' ')}
-                              </Badge>
+                              </span>
                               {event.is_past && (
-                                <Badge variant="secondary" className="text-xs">
+                                <span className="profile-badge bg-muted/20 text-muted-foreground border-muted/30">
                                   Past Event
-                                </Badge>
+                                </span>
                               )}
                               <Button
                                 variant="outline"
@@ -291,27 +291,32 @@ export default function ManageEvents() {
                                 {event.description}
                               </p>
                             )}
-                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                              <div className="flex items-center gap-1">
-                                <Calendar className="w-4 h-4" />
-                                <span>{formatDate(event.date)}</span>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                              <div className="profile-field">
+                                <Calendar className="profile-field-icon" />
+                                <span className="profile-field-label">Date</span>
+                                <span className="profile-field-value">{formatDate(event.date)}</span>
                               </div>
-                              <div className="flex items-center gap-1">
-                                <Clock className="w-4 h-4" />
-                                <span>{event.time}</span>
+                              <div className="profile-field">
+                                <Clock className="profile-field-icon" />
+                                <span className="profile-field-label">Time</span>
+                                <span className="profile-field-value">{event.time}</span>
                               </div>
-                              <div className="flex items-center gap-1">
-                                <MapPin className="w-4 h-4" />
-                                <span>{event.location}</span>
+                              <div className="profile-field">
+                                <MapPin className="profile-field-icon" />
+                                <span className="profile-field-label">Location</span>
+                                <span className="profile-field-value">{event.location}</span>
                               </div>
                             </div>
                             {event.price > 0 && (
-                              <p className="text-sm font-medium">
-                                Price: ${event.price}
-                              </p>
+                              <div className="profile-field">
+                                <DollarSign className="profile-field-icon" />
+                                <span className="profile-field-label">Price</span>
+                                <span className="profile-field-value">${event.price}</span>
+                              </div>
                             )}
                           </div>
-                          <div className="flex gap-2">
+                          <div className="flex gap-2 ml-4">
                             <Button
                               variant="outline"
                               size="sm"

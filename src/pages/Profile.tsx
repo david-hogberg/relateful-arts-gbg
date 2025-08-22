@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import EditProfileModal from "@/components/EditProfileModal";
-import { Loader2, User, Settings } from "lucide-react";
+import { Loader2, User, Settings, Mail, Phone, Calendar, Award, FileText } from "lucide-react";
 
 export default function Profile() {
   const { user, profile, loading } = useAuth();
@@ -35,30 +35,15 @@ export default function Profile() {
       
       <main className="page-section-content py-12">
         <div className="max-w-4xl mx-auto space-y-6">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center overflow-hidden">
-              {(profile as any)?.image_url ? (
-                <img 
-                  src={(profile as any).image_url} 
-                  alt={profile.full_name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <User className="w-8 w-8 text-primary" />
-              )}
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">
-                Your Profile
-              </h1>
-              <p className="text-muted-foreground">
-                Manage your personal information
-              </p>
-            </div>
+          <div className="profile-header">
+            <h1 className="profile-title">Your Profile</h1>
+            <p className="profile-description">
+              Manage your personal information
+            </p>
           </div>
 
           {/* Profile Information Card */}
-          <Card className="card-elegant">
+          <Card className="profile-card">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
@@ -72,33 +57,75 @@ export default function Profile() {
                 </Button>
               </div>
             </CardHeader>
-            <CardContent className="space-y-3">
-              <div>
-                <span className="font-medium">Full Name:</span> {profile.full_name}
-              </div>
-              <div>
-                <span className="font-medium">Email:</span> {profile.email}
-              </div>
-              {profile.phone && (
-                <div>
-                  <span className="font-medium">Phone:</span> {profile.phone}
+            <CardContent className="profile-form">
+              <div className="profile-section">
+                <div className="profile-section-title">
+                  <User className="profile-section-title-icon" />
+                  Personal Information
                 </div>
-              )}
+                <div className="profile-field-group">
+                  <div className="profile-field">
+                    <User className="profile-field-icon" />
+                    <span className="profile-field-label">Full Name</span>
+                    <span className="profile-field-value">{profile.full_name}</span>
+                  </div>
+                  <div className="profile-field">
+                    <Mail className="profile-field-icon" />
+                    <span className="profile-field-label">Email</span>
+                    <span className="profile-field-value">{profile.email}</span>
+                  </div>
+                  {profile.phone && (
+                    <div className="profile-field">
+                      <Phone className="profile-field-icon" />
+                      <span className="profile-field-label">Phone</span>
+                      <span className="profile-field-value">{profile.phone}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
               {profile.bio && (
-                <div>
-                  <span className="font-medium">Bio:</span>
-                  <p className="mt-1 text-sm text-muted-foreground">{profile.bio}</p>
-                </div>
+                <>
+                  <div className="profile-divider" />
+                  <div className="profile-section">
+                    <div className="profile-section-title">
+                      <FileText className="profile-section-title-icon" />
+                      About You
+                    </div>
+                    <div className="profile-field-row">
+                      <FileText className="profile-field-row-icon" />
+                      <div className="profile-field-row-content">
+                        <div className="profile-field-row-label">Bio</div>
+                        <div className="profile-field-row-value">{profile.bio}</div>
+                      </div>
+                    </div>
+                  </div>
+                </>
               )}
-              <div>
-                <span className="font-medium">Role:</span>
-                <Badge variant="secondary" className="ml-2 capitalize">
-                  {profile.role}
-                </Badge>
-              </div>
-              <div>
-                <span className="font-medium">Member since:</span>{' '}
-                {new Date(profile.created_at).toLocaleDateString()}
+
+              <div className="profile-divider" />
+              <div className="profile-section">
+                <div className="profile-section-title">
+                  <Award className="profile-section-title-icon" />
+                  Account Details
+                </div>
+                <div className="profile-field-group">
+                  <div className="profile-field">
+                    <Award className="profile-field-icon" />
+                    <span className="profile-field-label">Role</span>
+                    <div className="profile-field-value">
+                      <span className="profile-badge">
+                        <Award className="profile-badge-icon" />
+                        {profile.role}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="profile-field">
+                    <Calendar className="profile-field-icon" />
+                    <span className="profile-field-label">Member Since</span>
+                    <span className="profile-field-value">{new Date(profile.created_at).toLocaleDateString()}</span>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mail, CheckCircle, AlertCircle, Loader2, Home, User } from "lucide-react";
+import { Mail, CheckCircle, AlertCircle, Loader2, Home, User, RefreshCw } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
 import { useAuth } from "@/hooks/useAuth";
@@ -139,6 +139,7 @@ export default function EmailConfirmation() {
           <CardContent className="space-y-4">
             {email && (
               <Button onClick={resendConfirmation} className="w-full btn-outline-primary" variant="outline">
+                <RefreshCw className="w-4 h-4 mr-2" />
                 Resend Confirmation Email
               </Button>
             )}
@@ -178,6 +179,7 @@ export default function EmailConfirmation() {
           <div className="space-y-2">
             {email && (
               <Button onClick={resendConfirmation} className="w-full btn-outline-primary" variant="outline">
+                <RefreshCw className="w-4 h-4 mr-2" />
                 Resend Confirmation Email
               </Button>
             )}

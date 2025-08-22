@@ -13,7 +13,7 @@ import { Switch } from "@/components/ui/switch";
 import { ImageUpload } from "@/components/ImageUpload";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import { Loader2, Eye, EyeOff, User, Settings, Edit } from "lucide-react";
+import { Loader2, Eye, EyeOff, User, Settings, Edit, Mail, Globe, Award, Languages, Briefcase, FileText } from "lucide-react";
 
 const workTypes = [
   'Circling',
@@ -321,26 +321,13 @@ export default function FacilitatorProfile() {
       
       <main className="page-section-content py-12">
         <div className="max-w-4xl mx-auto space-y-6">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center overflow-hidden">
-              {(profile as any)?.image_url ? (
-                <img 
-                  src={(profile as any).image_url} 
-                  alt={profile.full_name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <User className="w-8 w-8 text-primary" />
-              )}
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">
-                Facilitator Profile
-              </h1>
-              <p className="text-muted-foreground">
-                Manage your public facilitator profile and visibility
-              </p>
-            </div>
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-foreground mb-3">
+              Facilitator Profile
+            </h1>
+            <p className="text-muted-foreground">
+              Manage your public facilitator profile and visibility
+            </p>
           </div>
 
           {/* Facilitator Profile Card */}
@@ -364,72 +351,142 @@ export default function FacilitatorProfile() {
               </div>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="space-y-3">
-                <div>
-                  <span className="font-medium">Full Name:</span> {profile.full_name}
+              <div className="profile-section">
+                <div className="profile-section-title">
+                  <User className="profile-section-title-icon" />
+                  Basic Information
                 </div>
-                <div>
-                  <span className="font-medium">Professional Title:</span> {profile.title || 'Not set'}
-                </div>
-                <div>
-                  <span className="font-medium">Contact Email:</span> {profile.contact_email || profile.email}
-                </div>
-                {profile.website && (
-                  <div>
-                    <span className="font-medium">Website:</span>
-                    <a 
-                      href={profile.website} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="ml-2 text-primary underline"
-                    >
-                      {profile.website}
-                    </a>
+                <div className="profile-field-group">
+                  <div className="profile-field">
+                    <User className="profile-field-icon" />
+                    <span className="profile-field-label">Full Name</span>
+                    <span className="profile-field-value">{profile.full_name}</span>
                   </div>
-                )}
-                <div>
-                  <span className="font-medium">Profile Visibility:</span>
-                  <Badge variant={isPublic ? "default" : "secondary"} className="ml-2">
-                    {isPublic ? 'Public' : 'Private'}
-                  </Badge>
-                </div>
-                {profile.public_bio && (
-                  <div>
-                    <span className="font-medium">Public Bio:</span>
-                    <p className="mt-1 text-sm text-muted-foreground">{profile.public_bio}</p>
+                  <div className="profile-field">
+                    <Award className="profile-field-icon" />
+                    <span className="profile-field-label">Professional Title</span>
+                    <span className="profile-field-value">{profile.title || 'Not set'}</span>
                   </div>
-                )}
-                {profile.approach && (
-                  <div>
-                    <span className="font-medium">Facilitation Approach:</span>
-                    <p className="mt-1 text-sm text-muted-foreground italic">"{profile.approach}"</p>
+                  <div className="profile-field">
+                    <Mail className="profile-field-icon" />
+                    <span className="profile-field-label">Contact Email</span>
+                    <span className="profile-field-value">{profile.contact_email || profile.email}</span>
                   </div>
-                )}
-                {profile.work_types && profile.work_types.length > 0 && (
-                  <div>
-                    <span className="font-medium">Work Types:</span>
-                    <div className="tag-container mt-2">
-                      {profile.work_types.map((workType, index) => (
-                        <Badge key={index} variant="outline" className="tag-primary">
-                          {workType}
-                        </Badge>
-                      ))}
+                  {profile.website && (
+                    <div className="profile-field">
+                      <Globe className="profile-field-icon" />
+                      <span className="profile-field-label">Website</span>
+                      <span className="profile-field-value">
+                        <a 
+                          href={profile.website} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="profile-link"
+                        >
+                          {profile.website}
+                        </a>
+                      </span>
+                    </div>
+                  )}
+                  <div className="profile-field">
+                    <Eye className="profile-field-icon" />
+                    <span className="profile-field-label">Profile Visibility</span>
+                    <div className="profile-field-value">
+                      <span className={`profile-badge ${isPublic ? 'bg-primary/20' : 'bg-muted/20'}`}>
+                        {isPublic ? 'Public' : 'Private'}
+                      </span>
                     </div>
                   </div>
-                )}
-                {profile.languages && profile.languages.length > 0 && (
-                  <div>
-                    <span className="font-medium">Languages:</span>
-                    <div className="tag-container mt-2">
-                      {profile.languages.map((language, index) => (
-                        <Badge key={index} variant="secondary" className="tag-item">
-                          {language}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                </div>
               </div>
+
+              {profile.public_bio && (
+                <>
+                  <div className="profile-divider" />
+                  <div className="profile-section">
+                    <div className="profile-section-title">
+                      <FileText className="profile-section-title-icon" />
+                      Public Profile
+                    </div>
+                    <div className="profile-field-row">
+                      <FileText className="profile-field-row-icon" />
+                      <div className="profile-field-row-content">
+                        <div className="profile-field-row-label">Public Bio</div>
+                        <div className="profile-field-row-value">{profile.public_bio}</div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {profile.approach && (
+                <>
+                  <div className="profile-divider" />
+                  <div className="profile-section">
+                    <div className="profile-section-title">
+                      <Briefcase className="profile-section-title-icon" />
+                      Facilitation Approach
+                    </div>
+                    <div className="profile-field-row">
+                      <Briefcase className="profile-field-row-icon" />
+                      <div className="profile-field-row-content">
+                        <div className="profile-field-row-label">Your Approach</div>
+                        <div className="profile-field-row-value italic">"{profile.approach}"</div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {profile.work_types && profile.work_types.length > 0 && (
+                <>
+                  <div className="profile-divider" />
+                  <div className="profile-section">
+                    <div className="profile-section-title">
+                      <Briefcase className="profile-section-title-icon" />
+                      Specialties
+                    </div>
+                    <div className="profile-field-row">
+                      <Briefcase className="profile-field-row-icon" />
+                      <div className="profile-field-row-content">
+                        <div className="profile-field-row-label">Work Types</div>
+                        <div className="tag-container mt-2">
+                          {profile.work_types.map((workType, index) => (
+                            <span key={index} className="profile-badge">
+                              {workType}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {profile.languages && profile.languages.length > 0 && (
+                <>
+                  <div className="profile-divider" />
+                  <div className="profile-section">
+                    <div className="profile-section-title">
+                      <Languages className="profile-section-title-icon" />
+                      Languages
+                    </div>
+                    <div className="profile-field-row">
+                      <Languages className="profile-field-row-icon" />
+                      <div className="profile-field-row-content">
+                        <div className="profile-field-row-label">Spoken Languages</div>
+                        <div className="tag-container mt-2">
+                          {profile.languages.map((language, index) => (
+                            <span key={index} className="profile-badge bg-secondary/20 text-secondary-foreground border-secondary/30">
+                              {language}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
             </CardContent>
           </Card>
         </div>

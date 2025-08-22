@@ -266,31 +266,28 @@ export default function Admin() {
       
       <main className="page-section-content py-12">
         <div className="max-w-6xl mx-auto space-y-8">
-          <div className="flex items-center gap-3 mb-8">
-            <Shield className="h-8 w-8 text-primary" />
-            <div>
-              <h1 className="page-title">Admin Dashboard</h1>
-              <p className="page-description">
-                Manage facilitator applications and user roles
-              </p>
-            </div>
+          <div className="profile-header">
+            <h1 className="profile-title">Admin Dashboard</h1>
+            <p className="profile-description">
+              Manage facilitator applications and user roles
+            </p>
           </div>
 
           <Tabs defaultValue="applications" className="space-y-8">
-            <TabsList className="grid w-full grid-cols-4 bg-gradient-subtle border border-primary/10">
-              <TabsTrigger value="applications" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-colors">
+            <TabsList className="admin-tabs">
+              <TabsTrigger value="applications" className="admin-tab-trigger">
                 <FileText className="h-4 w-4" />
                 Applications
               </TabsTrigger>
-              <TabsTrigger value="resources" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-colors">
+              <TabsTrigger value="resources" className="admin-tab-trigger">
                 <BookOpen className="h-4 w-4" />
                 Resources
               </TabsTrigger>
-              <TabsTrigger value="venues" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-colors">
+              <TabsTrigger value="venues" className="admin-tab-trigger">
                 <Building className="h-4 w-4" />
                 Venues
               </TabsTrigger>
-              <TabsTrigger value="users" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-colors">
+              <TabsTrigger value="users" className="admin-tab-trigger">
                 <Users className="h-4 w-4" />
                 Users
               </TabsTrigger>
