@@ -77,7 +77,7 @@ export default function Admin() {
 
   useEffect(() => {
     if (!loading && (!user || profile?.role !== 'admin')) {
-      navigate('/dashboard');
+              navigate('/profile');
     }
   }, [user, profile, loading, navigate]);
 

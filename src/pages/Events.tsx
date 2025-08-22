@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,6 +29,7 @@ interface Event {
 
 const Events = () => {
   const { user, profile } = useAuth();
+  const navigate = useNavigate();
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [registering, setRegistering] = useState<string | null>(null);
@@ -324,7 +325,7 @@ const Events = () => {
               <Button 
                 size="lg" 
                 className="bg-gradient-hero shadow-warm"
-                onClick={() => user ? window.location.href = '/apply-facilitator' : window.location.href = '/auth'}
+                onClick={() => user ? navigate('/apply-facilitator') : navigate('/auth')}
               >
                 Apply to Host Events
               </Button>

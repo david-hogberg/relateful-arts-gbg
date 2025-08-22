@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mail, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { Mail, CheckCircle, AlertCircle, Loader2, Home, User } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
 import { useAuth } from "@/hooks/useAuth";
@@ -21,13 +21,8 @@ export default function EmailConfirmation() {
       setVerificationStatus('success');
       toast({
         title: "Email verified!",
-        description: "Your email has been successfully verified. Redirecting to dashboard...",
+        description: "Your email has been successfully verified. Choose where you'd like to go next.",
       });
-      
-      // Redirect to dashboard after successful verification
-      setTimeout(() => {
-        navigate('/dashboard');
-      }, 2000);
     } else if (!loading && !user) {
       // Check URL hash for error or success indicators
       const hash = window.location.hash;
@@ -40,7 +35,7 @@ export default function EmailConfirmation() {
         });
       }
     }
-  }, [user, loading, navigate]);
+  }, [user, loading]);
 
   const resendConfirmation = async () => {
     if (!email) {
@@ -102,15 +97,25 @@ export default function EmailConfirmation() {
             </div>
             <CardTitle className="text-2xl">Email Verified!</CardTitle>
             <CardDescription>
-              Your email has been successfully verified. You'll be redirected to the dashboard shortly.
+              Your email has been successfully verified. Choose where you'd like to go next.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-3">
             <Button 
-              onClick={() => navigate('/dashboard')} 
+              onClick={() => navigate('/profile')} 
               className="w-full"
+              variant="default"
             >
-              Go to Dashboard
+              <User className="w-4 h-4 mr-2" />
+              Go to Profile
+            </Button>
+            <Button 
+              onClick={() => navigate('/')} 
+              className="w-full"
+              variant="ghost"
+            >
+              <Home className="w-4 h-4 mr-2" />
+              Go to Home
             </Button>
           </CardContent>
         </Card>
