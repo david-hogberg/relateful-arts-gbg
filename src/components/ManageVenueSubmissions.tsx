@@ -185,42 +185,44 @@ export const ManageVenueSubmissions: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <Badge variant="outline">
+          {submissions.filter(s => s.status === 'pending').length} pending
+        </Badge>
+      </div>
+
       {submissions.length === 0 ? (
-        <div className="text-center py-12">
-          <Building className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-foreground mb-2">No venue submissions</h3>
-          <p className="text-muted-foreground">Venue submissions will appear here for review.</p>
+        <div className="text-center py-8">
+          <p className="text-muted-foreground">No venue submissions yet.</p>
         </div>
       ) : (
         submissions.map((submission) => (
-          <Card key={submission.id} className="overflow-hidden">
-            <CardHeader>
-              <div className="flex justify-between items-start">
-                <div>
-                  <CardTitle className="flex items-center gap-2 mb-2">
-                    <Building className="h-5 w-5" />
-                    {submission.name}
-                  </CardTitle>
-                  <div className="flex gap-2 mb-2">
-                    <Badge className={getStatusColor(submission.status)}>
-                      {submission.status}
-                    </Badge>
-                    <Badge className={getCostLevelColor(submission.cost_level)}>
-                      {submission.cost_level}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    Submitted by {submission.profiles?.full_name || 'Unknown'} ({submission.profiles?.email || 'No email'})
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    <Calendar className="h-4 w-4 inline mr-1" />
-                    {formatDate(submission.submitted_at)}
-                  </p>
+          <div key={submission.id} className="p-6 bg-gradient-subtle rounded-lg border border-primary/10 mb-4">
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <h3 className="text-xl font-semibold flex items-center gap-2 mb-2">
+                  <Building className="h-5 w-5" />
+                  {submission.name}
+                </h3>
+                <div className="flex gap-2 mb-2">
+                  <Badge className={getStatusColor(submission.status)}>
+                    {submission.status}
+                  </Badge>
+                  <Badge className={getCostLevelColor(submission.cost_level)}>
+                    {submission.cost_level}
+                  </Badge>
                 </div>
+                <p className="text-sm text-muted-foreground">
+                  Submitted by {submission.profiles?.full_name || 'Unknown'} ({submission.profiles?.email || 'No email'})
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  <Calendar className="h-4 w-4 inline mr-1" />
+                  {formatDate(submission.submitted_at)}
+                </p>
               </div>
-            </CardHeader>
+            </div>
 
-            <CardContent className="space-y-4">
+            <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex items-start gap-2">
                   <MapPin className="h-4 w-4 text-muted-foreground mt-1 flex-shrink-0" />
@@ -269,7 +271,7 @@ export const ManageVenueSubmissions: React.FC = () => {
                   <Button
                     onClick={() => handleSubmissionAction(submission.id, 'approve')}
                     disabled={processingId === submission.id}
-                    className="bg-green-600 hover:bg-green-700"
+                    className="bg-green-600"
                   >
                     {processingId === submission.id ? 'Processing...' : 'Approve'}
                   </Button>
@@ -282,8 +284,8 @@ export const ManageVenueSubmissions: React.FC = () => {
                   </Button>
                 </div>
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         ))
       )}
     </div>

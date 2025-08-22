@@ -237,9 +237,9 @@ export default function Admin() {
 
   const getRoleColor = (role: string) => {
     switch (role) {
-      case 'admin': return 'bg-destructive';
-      case 'facilitator': return 'bg-success';
-      default: return 'bg-secondary';
+      case 'admin': return 'bg-red-600 text-white hover:bg-red-700';
+      case 'facilitator': return 'bg-orange-600 text-white hover:bg-orange-700';
+      default: return 'bg-yellow-600 text-white hover:bg-yellow-700';
     }
   };
 
@@ -264,40 +264,40 @@ export default function Admin() {
     <div className="min-h-screen bg-gradient-warm">
       <Navigation />
       
-      <main className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto space-y-6">
+      <main className="container mx-auto px-6 py-12">
+        <div className="max-w-6xl mx-auto space-y-8">
           <div className="flex items-center gap-3 mb-8">
             <Shield className="h-8 w-8 text-primary" />
             <div>
-              <h1 className="text-3xl font-bold text-foreground">Admin Dashboard</h1>
-              <p className="text-muted-foreground">
+              <h1 className="text-5xl font-bold text-foreground">Admin Dashboard</h1>
+              <p className="text-xl text-muted-foreground">
                 Manage facilitator applications and user roles
               </p>
             </div>
           </div>
 
-          <Tabs defaultValue="applications" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="applications" className="flex items-center gap-2">
+          <Tabs defaultValue="applications" className="space-y-8">
+            <TabsList className="grid w-full grid-cols-4 bg-gradient-subtle border border-primary/10">
+              <TabsTrigger value="applications" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-colors">
                 <FileText className="h-4 w-4" />
                 Applications
               </TabsTrigger>
-              <TabsTrigger value="resources" className="flex items-center gap-2">
+              <TabsTrigger value="resources" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-colors">
                 <BookOpen className="h-4 w-4" />
                 Resources
               </TabsTrigger>
-              <TabsTrigger value="venues" className="flex items-center gap-2">
+              <TabsTrigger value="venues" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-colors">
                 <Building className="h-4 w-4" />
                 Venues
               </TabsTrigger>
-              <TabsTrigger value="users" className="flex items-center gap-2">
+              <TabsTrigger value="users" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-colors">
                 <Users className="h-4 w-4" />
                 Users
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="applications">
-              <Card>
+              <Card className="bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant">
                 <CardHeader>
                   <CardTitle>Facilitator Applications</CardTitle>
                   <CardDescription>
@@ -329,7 +329,7 @@ export default function Admin() {
                           {applications.map((application) => (
                             <TableRow 
                               key={application.id}
-                              className="cursor-pointer hover:bg-muted/50"
+                              className="cursor-pointer transition-colors"
                               onClick={() => handleViewApplication(application)}
                             >
                               <TableCell className="font-medium">
@@ -387,7 +387,7 @@ export default function Admin() {
             </TabsContent>
 
             <TabsContent value="resources">
-              <Card>
+              <Card className="bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant">
                 <CardHeader>
                   <CardTitle>Resource Submissions</CardTitle>
                   <CardDescription>
@@ -401,7 +401,7 @@ export default function Admin() {
             </TabsContent>
 
             <TabsContent value="venues">
-              <Card>
+              <Card className="bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant">
                 <CardHeader>
                   <CardTitle>Venue Submissions</CardTitle>
                   <CardDescription>
@@ -415,7 +415,7 @@ export default function Admin() {
             </TabsContent>
 
             <TabsContent value="users">
-              <Card>
+              <Card className="bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant">
                 <CardHeader>
                   <CardTitle>User Management</CardTitle>
                   <CardDescription>
@@ -423,7 +423,7 @@ export default function Admin() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="mb-4">
+                  <div className="mb-6">
                     <div className="relative">
                       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                       <Input
@@ -453,7 +453,7 @@ export default function Admin() {
                         </TableHeader>
                         <TableBody>
                           {filteredUsers.map((user) => (
-                            <TableRow key={user.id}>
+                            <TableRow key={user.id} className="transition-colors">
                               <TableCell className="font-medium">
                                 {user.full_name}
                               </TableCell>

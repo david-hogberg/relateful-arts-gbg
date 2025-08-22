@@ -210,7 +210,6 @@ export function ManageResourceSubmissions() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Resource Submissions</h2>
         <Badge variant="outline">
           {submissions.filter(s => s.status === 'pending').length} pending
         </Badge>
@@ -223,7 +222,7 @@ export function ManageResourceSubmissions() {
       ) : (
         <div className="space-y-4">
           {submissions.map((submission) => (
-            <Card key={submission.id} className="p-4">
+            <div key={submission.id} className="p-6 bg-gradient-subtle rounded-lg border border-primary/10">
               <div className="flex justify-between items-start mb-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
@@ -298,20 +297,7 @@ export function ManageResourceSubmissions() {
                   </>
                 )}
               </div>
-
-              {submission.status === 'pending' && (
-                <div className="mt-3 space-y-2">
-                  <Label htmlFor={`notes-${submission.id}`}>Admin Notes (optional)</Label>
-                  <Textarea
-                    id={`notes-${submission.id}`}
-                    value={adminNotes}
-                    onChange={(e) => setAdminNotes(e.target.value)}
-                    placeholder="Add notes for the submitter..."
-                    className="min-h-20"
-                  />
-                </div>
-              )}
-            </Card>
+            </div>
           ))}
         </div>
       )}
