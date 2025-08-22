@@ -144,9 +144,9 @@ export default function FacilitatorProfile() {
     return (
       <div className="min-h-screen bg-gradient-warm">
         <Navigation />
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin" />
-          <span className="ml-2">Loading profile...</span>
+        <div className="loading-container">
+          <Loader2 className="loading-spinner" />
+          <span className="loading-text">Loading profile...</span>
         </div>
       </div>
     );
@@ -161,9 +161,9 @@ export default function FacilitatorProfile() {
       <div className="min-h-screen bg-gradient-warm">
         <Navigation />
         
-        <main className="container mx-auto px-6 py-12">
+        <main className="page-section-content py-12">
           <div className="max-w-3xl mx-auto">
-            <Card>
+            <Card className="card-elegant">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div>
@@ -293,7 +293,7 @@ export default function FacilitatorProfile() {
                       type="button"
                       variant="outline"
                       onClick={() => setIsEditing(false)}
-                      className="flex-1"
+                      className="flex-1 btn-outline-primary"
                     >
                       Cancel
                     </Button>
@@ -319,7 +319,7 @@ export default function FacilitatorProfile() {
     <div className="min-h-screen bg-gradient-warm">
       <Navigation />
       
-      <main className="container mx-auto px-6 py-12">
+      <main className="page-section-content py-12">
         <div className="max-w-4xl mx-auto space-y-6">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center overflow-hidden">
@@ -330,7 +330,7 @@ export default function FacilitatorProfile() {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <User className="w-8 h-8 text-primary" />
+                <User className="w-8 w-8 text-primary" />
               )}
             </div>
             <div>
@@ -344,7 +344,7 @@ export default function FacilitatorProfile() {
           </div>
 
           {/* Facilitator Profile Card */}
-          <Card>
+          <Card className="card-elegant">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
@@ -356,8 +356,9 @@ export default function FacilitatorProfile() {
                 <Button 
                   variant="outline" 
                   onClick={() => setIsEditing(true)}
+                  className="btn-outline-primary"
                 >
-                  <Edit className="w-4 h-4 mr-2" />
+                  <Edit className="w-4 w-4 mr-2" />
                   Edit Profile
                 </Button>
               </div>
@@ -380,7 +381,7 @@ export default function FacilitatorProfile() {
                       href={profile.website} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="ml-2 text-primary hover:underline"
+                      className="ml-2 text-primary underline"
                     >
                       {profile.website}
                     </a>
@@ -407,9 +408,9 @@ export default function FacilitatorProfile() {
                 {profile.work_types && profile.work_types.length > 0 && (
                   <div>
                     <span className="font-medium">Work Types:</span>
-                    <div className="flex flex-wrap gap-2 mt-2">
+                    <div className="tag-container mt-2">
                       {profile.work_types.map((workType, index) => (
-                        <Badge key={index} variant="outline" className="text-xs">
+                        <Badge key={index} variant="outline" className="tag-primary">
                           {workType}
                         </Badge>
                       ))}
@@ -419,9 +420,9 @@ export default function FacilitatorProfile() {
                 {profile.languages && profile.languages.length > 0 && (
                   <div>
                     <span className="font-medium">Languages:</span>
-                    <div className="flex flex-wrap gap-2 mt-2">
+                    <div className="tag-container mt-2">
                       {profile.languages.map((language, index) => (
-                        <Badge key={index} variant="secondary" className="text-xs">
+                        <Badge key={index} variant="secondary" className="tag-item">
                           {language}
                         </Badge>
                       ))}

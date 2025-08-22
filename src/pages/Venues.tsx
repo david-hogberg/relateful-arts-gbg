@@ -88,29 +88,27 @@ const Venues: React.FC = () => {
     }
   };
 
-
-
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
       
       {/* Header */}
-      <section className="py-16 bg-gradient-warm">
-        <div className="container mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-5xl font-bold mb-4">Community Venues</h1>
-            <p className="text-xl text-muted-foreground mb-8">
+      <section className="page-header">
+        <div className="page-header-content">
+          <div className="page-header-inner">
+            <h1 className="page-title">Community Venues</h1>
+            <p className="page-description">
               Discover and share community spaces for relating practices and events
             </p>
           </div>
         </div>
       </section>
 
-      <div className="container mx-auto px-6 py-12">
+      <div className="page-section-content py-12">
         {/* Submit Venue Section */}
-        <div className="mb-12">
-          <Card className="border-dashed border-2 border-primary/20">
-            <CardHeader className="text-center">
+        <div className="form-section">
+          <Card className="form-card">
+            <CardHeader className="form-card-header">
               <CardTitle className="flex items-center justify-center gap-2">
                 <Building className="h-6 w-6" />
                 Share Your Space
@@ -119,7 +117,7 @@ const Venues: React.FC = () => {
                 Register your venue to help the community find great spaces for events
               </CardDescription>
             </CardHeader>
-            <CardContent className="text-center">
+            <CardContent className="form-card-content">
               <Button onClick={() => setShowSubmitModal(true)} size="lg">
                 Register a Venue
               </Button>
@@ -129,43 +127,41 @@ const Venues: React.FC = () => {
 
         {/* Venues Grid */}
         {loading ? (
-          <div className="flex justify-center items-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin" />
-            <span className="ml-2">Loading venues...</span>
+          <div className="loading-container">
+            <Loader2 className="loading-spinner" />
+            <span className="loading-text">Loading venues...</span>
           </div>
         ) : venues.length === 0 ? (
-          <div className="text-center py-12">
-            <Building className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-foreground mb-2">No venues yet</h3>
-            <p className="text-muted-foreground">Be the first to register a venue for the community!</p>
+          <div className="empty-state">
+            <Building className="empty-state-icon" />
+            <h3 className="empty-state-title">No venues yet</h3>
+            <p className="empty-state-description">Be the first to register a venue for the community!</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="responsive-grid">
             {venues.map((venue) => (
               <Card 
                 key={venue.id} 
-                className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant transition-all duration-300 cursor-pointer"
+                className="group card-elegant cursor-pointer"
                 onClick={() => handleViewVenue(venue)}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-0 transition-opacity duration-300" />
-                
                 {/* Venue Image */}
                 {venue.image_url && (
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="card-image-container">
                     <img 
                       src={venue.image_url} 
                       alt={venue.name}
-                      className="w-full h-full object-cover transition-transform duration-300"
+                      className="card-image"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                    <div className="card-image-overlay" />
                   </div>
                 )}
                 
-                <CardHeader className="relative z-10">
+                <CardHeader className="card-content-wrapper">
                   <CardTitle className="flex items-start justify-between">
                     <span className="text-lg transition-colors">{venue.name}</span>
                     {!venue.image_url && (
-                      <Badge className="bg-primary/10 text-primary border-primary/20 transition-colors">
+                      <Badge className="tag-primary">
                         {venue.cost_level}
                       </Badge>
                     )}
@@ -175,28 +171,28 @@ const Venues: React.FC = () => {
                     <span className="line-clamp-2">{venue.location}</span>
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="relative z-10 space-y-4">
+                <CardContent className="card-content-wrapper space-y-4">
                   {/* Key Info Section */}
                   <div className="space-y-3">
                     {/* Capacity Info */}
-                    <div className="flex items-center gap-3 p-3 bg-gradient-subtle rounded-lg border border-primary/10">
-                      <div className="p-2 bg-primary/10 rounded-lg">
+                    <div className="info-item">
+                      <div className="info-icon">
                         <Users className="h-4 w-4 text-primary" />
                       </div>
-                      <div className="flex-1">
-                        <div className="text-sm font-medium text-foreground">Capacity</div>
-                        <div className="text-xs text-muted-foreground">{venue.hosting_capacity} people</div>
+                      <div className="info-content">
+                        <div className="info-label">Capacity</div>
+                        <div className="info-value">{venue.hosting_capacity} people</div>
                       </div>
                     </div>
                     
                     {/* Cost Level Info */}
-                    <div className="flex items-center gap-3 p-3 bg-gradient-subtle rounded-lg border border-primary/10">
-                      <div className="p-2 bg-primary/10 rounded-lg">
+                    <div className="info-item">
+                      <div className="info-icon">
                         <DollarSign className="h-4 w-4 text-primary" />
                       </div>
-                      <div className="flex-1">
-                        <div className="text-sm font-medium text-foreground">Cost Level</div>
-                        <div className="text-xs text-muted-foreground capitalize">{venue.cost_level} cost</div>
+                      <div className="info-content">
+                        <div className="info-label">Cost Level</div>
+                        <div className="info-value capitalize">{venue.cost_level} cost</div>
                       </div>
                     </div>
                   </div>
@@ -231,7 +227,7 @@ const Venues: React.FC = () => {
                         <Button 
                           variant="outline" 
                           size="sm"
-                          className="flex-1 border-primary/30 transition-all duration-200"
+                          className="flex-1 btn-outline-primary"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleEditVenue(venue);

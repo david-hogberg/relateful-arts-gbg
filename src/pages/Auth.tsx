@@ -75,7 +75,7 @@ export default function Auth() {
 
   return (
     <div className="min-h-screen bg-gradient-warm flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md card-elegant">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">Welcome to Relateful Arts</CardTitle>
           <CardDescription>
@@ -157,7 +157,7 @@ export default function Auth() {
           </Tabs>
           
           <div className="mt-4 text-center text-sm">
-            <Link to="/" className="text-primary hover:underline">
+            <Link to="/" className="text-primary underline">
               ← Back to home
             </Link>
           </div>

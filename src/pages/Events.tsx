@@ -176,15 +176,15 @@ const Events = () => {
       <Navigation />
       
       {/* Header */}
-      <section className="py-16 bg-gradient-warm">
-        <div className="container mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-5xl font-bold mb-4">Community Events</h1>
-            <p className="text-xl text-muted-foreground mb-8">
+      <section className="page-header">
+        <div className="page-header-content">
+          <div className="page-header-inner">
+            <h1 className="page-title">Community Events</h1>
+            <p className="page-description">
               Join our upcoming relateful sessions, workshops, and community gatherings.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-gradient-hero shadow-warm">
+              <Button size="lg" className="btn-primary-gradient">
                 <ExternalLink className="w-5 h-5 mr-2" />
                 Join WhatsApp for Updates
               </Button>
@@ -193,7 +193,7 @@ const Events = () => {
                   size="lg" 
                   variant="outline"
                   onClick={() => setCreateEventOpen(true)}
-                  className="border-primary/20"
+                  className="btn-outline-primary"
                 >
                   <Plus className="w-5 h-5 mr-2" />
                   Create Event
@@ -205,18 +205,18 @@ const Events = () => {
       </section>
 
       {/* Events Grid */}
-      <section className="py-12">
-        <div className="container mx-auto px-6">
+      <section className="page-section">
+        <div className="page-section-content">
           {loading ? (
-            <div className="flex justify-center items-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin" />
-              <span className="ml-2">Loading events...</span>
+            <div className="loading-container">
+              <Loader2 className="loading-spinner" />
+              <span className="loading-text">Loading events...</span>
             </div>
           ) : events.length === 0 ? (
-            <div className="text-center py-12">
-              <Calendar className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-foreground mb-2">No upcoming events found</h3>
-              <p className="text-muted-foreground mb-4">Check back soon for new events or be the first to create one!</p>
+            <div className="empty-state">
+              <Calendar className="empty-state-icon" />
+              <h3 className="empty-state-title">No upcoming events found</h3>
+              <p className="empty-state-description">Check back soon for new events or be the first to create one!</p>
               {canCreateEvents && (
                 <Button onClick={() => setCreateEventOpen(true)}>
                   <Plus className="w-5 h-5 mr-2" />
@@ -225,103 +225,121 @@ const Events = () => {
               )}
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="responsive-grid-wide">
               {events.map((event) => (
-              <Card key={event.id} className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant transition-all duration-300">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-0 transition-opacity duration-300" />
-                
-                {/* Event Banner Image */}
-                {event.image_url && (
-                  <div className="relative h-48 overflow-hidden">
-                    <img 
-                      src={event.image_url} 
-                      alt={event.title}
-                      className="w-full h-full object-cover transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-                    <Badge className="absolute top-3 right-3 bg-primary/90 text-white border-0 backdrop-blur-sm">
-                      {event.type.replace('_', ' ')}
-                    </Badge>
-                    <div className="absolute top-3 left-3 text-white bg-black/30 backdrop-blur-sm px-2 py-1 rounded">
-                      <div className="text-lg font-bold">
-                        {event.price === 0 ? 'Free' : `${event.price} SEK`}
-                      </div>
-                    </div>
-                  </div>
-                )}
-                
-                <CardHeader className="relative z-10">
-                  {!event.image_url && (
-                    <div className="flex items-start justify-between mb-4">
-                      <Badge className={getTypeColor(event.type)}>
+                <Card key={event.id} className="group card-elegant">
+                  {/* Event Banner Image */}
+                  {event.image_url && (
+                    <div className="card-image-container">
+                      <img 
+                        src={event.image_url} 
+                        alt={event.title}
+                        className="card-image"
+                      />
+                      <div className="card-image-overlay" />
+                      <Badge className="card-badge-overlay">
                         {event.type.replace('_', ' ')}
                       </Badge>
-                      <div className="text-right">
-                        <div className="text-2xl font-bold text-primary">
+                      <div className="card-price-overlay">
+                        <div className="text-lg font-bold">
                           {event.price === 0 ? 'Free' : `${event.price} SEK`}
                         </div>
                       </div>
                     </div>
                   )}
-                  <CardTitle className="text-2xl mb-2 transition-colors">{event.title}</CardTitle>
-                  <CardDescription className="text-lg">
-                    Facilitated by {event.facilitator_name}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="relative z-10">
-                  <div className="space-y-4 mb-6">
-                    <div className="flex items-center text-muted-foreground">
-                      <Calendar className="w-5 h-5 mr-3 text-primary" />
-                      <span>{formatDate(event.date)}</span>
-                    </div>
-                    <div className="flex items-center text-muted-foreground">
-                      <Clock className="w-5 h-5 mr-3 text-primary" />
-                      <span>{formatTime(event.time)}</span>
-                    </div>
-                    <div className="flex items-center text-muted-foreground">
-                      <MapPin className="w-5 h-5 mr-3 text-primary" />
-                      <span>{event.location}</span>
-                    </div>
-                    <div className="flex items-center text-muted-foreground">
-                      <Users className="w-5 h-5 mr-3 text-primary" />
-                      <span>{event.current_participants}/{event.max_participants} participants</span>
-                    </div>
-                  </div>
                   
-                  {event.description && (
-                    <p className="text-muted-foreground mb-6 leading-relaxed">
-                      {event.description}
-                    </p>
-                  )}
-                  
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    {event.is_registered ? (
-                      <Button variant="outline" className="flex-1" disabled>
-                        Already Registered
-                      </Button>
-                    ) : event.current_participants >= event.max_participants ? (
-                      <Button variant="outline" className="flex-1" disabled>
-                        Event Full
-                      </Button>
-                    ) : (
-                      <Button 
-                        className="flex-1"
-                        onClick={() => handleRegister(event.id)}
-                        disabled={registering === event.id}
-                      >
-                        {registering === event.id ? (
-                          <>
-                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                            Registering...
-                          </>
-                        ) : (
-                          'Register Now'
-                        )}
-                      </Button>
+                  <CardHeader className="card-content-wrapper">
+                    {!event.image_url && (
+                      <div className="flex items-start justify-between mb-4">
+                        <Badge className={getTypeColor(event.type)}>
+                          {event.type.replace('_', ' ')}
+                        </Badge>
+                        <div className="text-right">
+                          <div className="text-2xl font-bold text-primary">
+                            {event.price === 0 ? 'Free' : `${event.price} SEK`}
+                          </div>
+                        </div>
+                      </div>
                     )}
-                  </div>
-                </CardContent>
-              </Card>
+                    <CardTitle className="text-2xl mb-2 transition-colors">{event.title}</CardTitle>
+                    <CardDescription className="text-lg">
+                      Facilitated by {event.facilitator_name}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="card-content-wrapper">
+                    <div className="space-y-4 mb-6">
+                      <div className="info-item">
+                        <div className="info-icon">
+                          <Calendar className="w-5 h-5 text-primary" />
+                        </div>
+                        <div className="info-content">
+                          <div className="info-label">Date</div>
+                          <div className="info-value">{formatDate(event.date)}</div>
+                        </div>
+                      </div>
+                      <div className="info-item">
+                        <div className="info-icon">
+                          <Clock className="w-5 h-5 text-primary" />
+                        </div>
+                        <div className="info-content">
+                          <div className="info-label">Time</div>
+                          <div className="info-value">{formatTime(event.time)}</div>
+                        </div>
+                      </div>
+                      <div className="info-item">
+                        <div className="info-icon">
+                          <MapPin className="w-5 h-5 text-primary" />
+                        </div>
+                        <div className="info-content">
+                          <div className="info-label">Location</div>
+                          <div className="info-value">{event.location}</div>
+                        </div>
+                      </div>
+                      <div className="info-item">
+                        <div className="info-icon">
+                          <Users className="w-5 h-5 text-primary" />
+                        </div>
+                        <div className="info-content">
+                          <div className="info-label">Participants</div>
+                          <div className="info-value">{event.current_participants}/{event.max_participants}</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {event.description && (
+                      <p className="text-muted-foreground mb-6 leading-relaxed">
+                        {event.description}
+                      </p>
+                    )}
+                    
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      {event.is_registered ? (
+                        <Button variant="outline" className="flex-1" disabled>
+                          Already Registered
+                        </Button>
+                      ) : event.current_participants >= event.max_participants ? (
+                        <Button variant="outline" className="flex-1" disabled>
+                          Event Full
+                        </Button>
+                      ) : (
+                        <Button 
+                          className="flex-1"
+                          onClick={() => handleRegister(event.id)}
+                          disabled={registering === event.id}
+                        >
+                          {registering === event.id ? (
+                            <>
+                              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                              Registering...
+                            </>
+                          ) : (
+                            'Register Now'
+                          )}
+                        </Button>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           )}
@@ -335,7 +353,7 @@ const Events = () => {
               </p>
               <Button 
                 size="lg" 
-                className="bg-gradient-hero shadow-warm"
+                className="btn-primary-gradient"
                 onClick={() => user ? navigate('/apply-facilitator') : navigate('/auth')}
               >
                 Apply to Host Events

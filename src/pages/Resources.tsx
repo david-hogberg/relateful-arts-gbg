@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Book, Video, FileText, ExternalLink, User, Calendar, Plus, Eye, Filter, Edit, Trash2, BookOpen } from 'lucide-react';
+import { Book, Video, FileText, ExternalLink, User, Calendar, Plus, Eye, Filter, Edit, Trash2, BookOpen, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -129,21 +129,21 @@ export default function Resources() {
       <Navigation />
       
       {/* Header */}
-      <section className="py-16 bg-gradient-warm">
-        <div className="container mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-5xl font-bold mb-4">Community Resources</h1>
-            <p className="text-xl text-muted-foreground mb-8">
+      <section className="page-header">
+        <div className="page-header-content">
+          <div className="page-header-inner">
+            <h1 className="page-title">Community Resources</h1>
+            <p className="page-description">
               Explore articles, videos, and resources posted by our community members.
             </p>
           </div>
         </div>
       </section>
 
-      <div className="container mx-auto px-6 py-12">
+      <div className="page-section-content py-12">
         {/* Submit New Resource Section */}
-        <Card className="border-dashed border-2 border-primary/20 mb-12">
-          <CardHeader className="text-center">
+        <Card className="form-card form-section">
+          <CardHeader className="form-card-header">
             <CardTitle className="flex items-center justify-center gap-2">
               <BookOpen className="h-6 w-6" />
               Share Your Knowledge
@@ -152,7 +152,7 @@ export default function Resources() {
               Submit your articles, guides, or external resources for others to discover
             </CardDescription>
           </CardHeader>
-          <CardContent className="text-center">
+          <CardContent className="form-card-content">
             <Button 
               size="lg"
               onClick={() => user ? setSubmitModalOpen(true) : toast({
@@ -189,38 +189,37 @@ export default function Resources() {
 
         {/* Resources Grid */}
         {loading ? (
-          <div className="text-center py-8">
-            <p className="text-muted-foreground">Loading resources...</p>
+          <div className="loading-container">
+            <Loader2 className="loading-spinner" />
+            <span className="loading-text">Loading resources...</span>
           </div>
         ) : filteredResources.length === 0 ? (
-          <div className="text-center py-12">
-            <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-foreground mb-2">
+          <div className="empty-state">
+            <BookOpen className="empty-state-icon" />
+            <h3 className="empty-state-title">
               {selectedTag === 'all' ? 'No resources available yet' : `No resources found for tag "${selectedTag}"`}
             </h3>
-            <p className="text-muted-foreground">
+            <p className="empty-state-description">
               {selectedTag === 'all' ? 'Be the first to submit a resource for the community!' : 'Try selecting a different tag or check back later.'}
             </p>
           </div>
         ) : (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="responsive-grid">
             {filteredResources.map((resource) => (
-              <Card key={resource.id} className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant transition-all duration-300">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-0 transition-opacity duration-300" />
-                
+              <Card key={resource.id} className="group card-elegant">
                 {/* Resource Banner Image */}
                 {resource.image_url && (
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="card-image-container">
                     <img 
                       src={resource.image_url} 
                       alt={resource.title}
-                      className="w-full h-full object-cover transition-transform duration-300"
+                      className="card-image"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-                    <Badge className="absolute top-3 right-3 bg-primary/90 text-white border-0 backdrop-blur-sm">
+                    <div className="card-image-overlay" />
+                    <Badge className="card-badge-overlay">
                       {resource.category}
                     </Badge>
-                    <div className="absolute top-3 left-3 p-2 bg-black/50 backdrop-blur-sm rounded-lg border border-white/20">
+                    <div className="card-price-overlay">
                       <div className="text-white">
                         {getTypeIcon(resource.type)}
                       </div>
@@ -228,14 +227,14 @@ export default function Resources() {
                   </div>
                 )}
                 
-                <CardHeader className="relative z-10">
+                <CardHeader className="card-content-wrapper">
                   {!resource.image_url && (
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
                         <div className="p-2 bg-primary/10 rounded-lg text-primary shadow-soft">
                           {getTypeIcon(resource.type)}
                         </div>
-                        <Badge className="bg-primary/10 text-primary border-primary/20 transition-colors">
+                        <Badge className="tag-primary">
                           {resource.category}
                         </Badge>
                       </div>
@@ -244,19 +243,19 @@ export default function Resources() {
                   <CardTitle className="text-lg transition-colors">{resource.title}</CardTitle>
                   <CardDescription className="text-muted-foreground leading-relaxed">{resource.description}</CardDescription>
                 </CardHeader>
-                <CardContent className="relative z-10">
+                <CardContent className="card-content-wrapper">
                   {/* Tags Section */}
                   {resource.tags.length > 0 && (
                     <div className="mb-4">
                       <div className="text-sm font-medium text-foreground mb-2">Tags</div>
-                      <div className="flex flex-wrap gap-1">
+                      <div className="tag-container">
                         {resource.tags.slice(0, 3).map((tag) => (
-                          <Badge key={tag} variant="secondary" className="text-xs bg-accent/20 text-foreground border-accent/30">
+                          <Badge key={tag} variant="secondary" className="tag-item">
                             {tag}
                           </Badge>
                         ))}
                         {resource.tags.length > 3 && (
-                          <Badge variant="secondary" className="text-xs bg-accent/20 text-foreground border-accent/30">
+                          <Badge variant="secondary" className="tag-item">
                             +{resource.tags.length - 3}
                           </Badge>
                         )}
@@ -283,7 +282,7 @@ export default function Resources() {
                     <Button 
                       variant="outline" 
                       size="sm"
-                      className="flex-1 border-primary/30 transition-all duration-200"
+                      className="flex-1 btn-outline-primary"
                       onClick={() => handleViewResource(resource)}
                     >
                       <Eye className="h-4 w-4 mr-1" />
@@ -293,14 +292,14 @@ export default function Resources() {
                       <Button 
                         variant="outline" 
                         size="sm"
-                        className="border-primary/30 transition-all duration-200"
+                        className="btn-outline-primary"
                         onClick={() => handleEditResource(resource)}
                       >
                         <Edit className="h-4 w-4" />
                       </Button>
                     )}
                     {resource.type === 'link' && resource.url && (
-                      <Button variant="outline" size="sm" className="border-primary/30 transition-all duration-200" asChild>
+                      <Button variant="outline" size="sm" className="btn-outline-primary" asChild>
                         <a href={resource.url} target="_blank" rel="noopener noreferrer">
                           <ExternalLink className="h-4 w-4" />
                         </a>
@@ -318,7 +317,7 @@ export default function Resources() {
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold mb-8 text-center">Recommended External Resources</h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="responsive-grid-wide">
               <Card className="shadow-card">
                 <CardHeader>
                   <CardTitle className="flex items-center">

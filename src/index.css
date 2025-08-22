@@ -9,104 +9,73 @@ All colors MUST be HSL for consistency.
 
 @layer base {
   :root {
-    /* Clean, natural color palette with warm red undertones */
+    /* Core color palette */
     --background: 0 0% 99%;
     --foreground: 15 8% 25%;
-
     --card: 0 0% 98%;
     --card-foreground: 15 8% 25%;
-
     --popover: 0 0% 98%;
     --popover-foreground: 15 8% 25%;
 
-    /* Warm terracotta primary - authentic Nordic warmth */
+    /* Primary colors */
     --primary: 12 65% 55%;
     --primary-foreground: 0 0% 99%;
     --primary-glow: 12 75% 65%;
 
-    /* Soft natural secondary - inspired by Nordic clay */
+    /* Secondary and accent colors */
     --secondary: 25 15% 88%;
     --secondary-foreground: 15 8% 25%;
-
-    /* Clean neutral muted tones with warmth */
-    --muted: 20 10% 94%;
-    --muted-foreground: 15 8% 58%;
-
-    /* Subtle warm accent */
     --accent: 15 12% 92%;
     --accent-foreground: 15 8% 25%;
 
+    /* Neutral colors */
+    --muted: 20 10% 94%;
+    --muted-foreground: 15 8% 58%;
     --destructive: 0 65% 55%;
     --destructive-foreground: 0 0% 99%;
 
+    /* UI colors */
     --border: 20 8% 88%;
     --input: 20 8% 88%;
     --ring: 12 65% 55%;
-
     --radius: 0.5rem;
 
-    /* Warm, architectural gradients */
+    /* Gradients */
     --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
     --gradient-warm: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
     --gradient-gentle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--accent) / 0.3));
     --gradient-subtle: linear-gradient(180deg, hsl(var(--card)), hsl(var(--muted) / 0.5));
 
-    /* Clean, warm shadows */
+    /* Shadows */
     --shadow-elegant: 0 2px 20px -4px hsl(var(--primary) / 0.08);
     --shadow-glow: 0 4px 32px -8px hsl(var(--primary) / 0.15);
     --shadow-soft: 0 1px 8px -2px hsl(var(--foreground) / 0.04);
 
-    /* Smooth, natural transitions */
+    /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-gentle: all 0.2s ease-out;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 15 8% 25%;
-    --sidebar-primary: 12 65% 55%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 20 10% 94%;
-    --sidebar-accent-foreground: 15 8% 25%;
-    --sidebar-border: 20 8% 88%;
-    --sidebar-ring: 12 65% 55%;
   }
 
   .dark {
     --background: 15 12% 8%;
     --foreground: 15 8% 92%;
-
     --card: 15 12% 9%;
     --card-foreground: 15 8% 92%;
-
     --popover: 15 12% 9%;
     --popover-foreground: 15 8% 92%;
-
     --primary: 12 65% 65%;
     --primary-foreground: 15 12% 8%;
-
     --secondary: 15 15% 15%;
     --secondary-foreground: 15 8% 92%;
-
     --muted: 15 12% 12%;
     --muted-foreground: 15 8% 65%;
-
     --accent: 15 12% 14%;
     --accent-foreground: 15 8% 92%;
-
     --destructive: 0 65% 55%;
     --destructive-foreground: 15 8% 92%;
-
     --border: 15 12% 15%;
     --input: 15 12% 15%;
     --ring: 12 65% 65%;
-    
-    --sidebar-background: 15 12% 8%;
-    --sidebar-foreground: 15 8% 92%;
-    --sidebar-primary: 12 65% 65%;
-    --sidebar-primary-foreground: 15 12% 8%;
-    --sidebar-accent: 15 12% 12%;
-    --sidebar-accent-foreground: 15 8% 92%;
-    --sidebar-border: 15 12% 15%;
-    --sidebar-ring: 12 65% 65%;
   }
 }
 
@@ -120,5 +89,168 @@ All colors MUST be HSL for consistency.
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     font-optical-sizing: auto;
+  }
+}
+
+@layer components {
+  /* Page Layout Components */
+  .page-header {
+    @apply py-16 bg-gradient-warm;
+  }
+
+  .page-header-content {
+    @apply container mx-auto px-6;
+  }
+
+  .page-header-inner {
+    @apply text-center max-w-3xl mx-auto;
+  }
+
+  .page-title {
+    @apply text-5xl font-bold mb-4;
+  }
+
+  .page-description {
+    @apply text-xl text-muted-foreground mb-8;
+  }
+
+  .page-section {
+    @apply py-12;
+  }
+
+  .page-section-content {
+    @apply container mx-auto px-6;
+  }
+
+  /* Card Components */
+  .card-elegant {
+    @apply relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant transition-all duration-300;
+  }
+
+  .card-image-container {
+    @apply relative h-48 overflow-hidden;
+  }
+
+  .card-image {
+    @apply w-full h-full object-cover transition-transform duration-300;
+  }
+
+  .card-image-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent;
+  }
+
+  .card-badge-overlay {
+    @apply absolute top-3 right-3 bg-primary/90 text-white border-0 backdrop-blur-sm;
+  }
+
+  .card-price-overlay {
+    @apply absolute top-3 left-3 text-white bg-black/30 backdrop-blur-sm px-2 py-1 rounded;
+  }
+
+  .card-content-wrapper {
+    @apply relative z-10;
+  }
+
+  /* Info Display Components */
+  .info-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  .info-item {
+    @apply flex items-center gap-3 p-3 bg-gradient-subtle rounded-lg border border-primary/10;
+  }
+
+  .info-icon {
+    @apply p-2 bg-primary/10 rounded-lg;
+  }
+
+  .info-content {
+    @apply flex-1;
+  }
+
+  .info-label {
+    @apply text-sm font-medium text-foreground;
+  }
+
+  .info-value {
+    @apply text-xs text-muted-foreground;
+  }
+
+  /* Button Components */
+  .btn-primary-gradient {
+    @apply bg-gradient-hero shadow-glow transition-all duration-300;
+  }
+
+  .btn-outline-primary {
+    @apply border-primary/30 transition-all duration-200;
+  }
+
+  /* Loading States */
+  .loading-container {
+    @apply flex justify-center items-center py-12;
+  }
+
+  .loading-spinner {
+    @apply h-8 w-8 animate-spin;
+  }
+
+  .loading-text {
+    @apply ml-2;
+  }
+
+  /* Empty States */
+  .empty-state {
+    @apply text-center py-12;
+  }
+
+  .empty-state-icon {
+    @apply h-16 w-16 text-muted-foreground mx-auto mb-4;
+  }
+
+  .empty-state-title {
+    @apply text-xl font-semibold text-foreground mb-2;
+  }
+
+  .empty-state-description {
+    @apply text-muted-foreground mb-4;
+  }
+
+  /* Form Elements */
+  .form-section {
+    @apply mb-12;
+  }
+
+  .form-card {
+    @apply border-dashed border-2 border-primary/20;
+  }
+
+  .form-card-header {
+    @apply text-center;
+  }
+
+  .form-card-content {
+    @apply text-center;
+  }
+
+  /* Tag Components */
+  .tag-container {
+    @apply flex flex-wrap gap-1;
+  }
+
+  .tag-item {
+    @apply text-xs bg-accent/20 text-foreground border-accent/30;
+  }
+
+  .tag-primary {
+    @apply text-xs bg-primary/10 text-primary border-primary/20 transition-colors;
+  }
+
+  /* Responsive Utilities */
+  .responsive-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  .responsive-grid-wide {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-8;
   }
 }

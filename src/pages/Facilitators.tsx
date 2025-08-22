@@ -72,41 +72,37 @@ const Facilitators = () => {
       <Navigation />
       
       {/* Header */}
-      <section className="py-16 bg-gradient-warm">
-        <div className="container mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="text-center">
-              <h1 className="text-5xl font-bold mb-4">Facilitators</h1>
-              <p className="text-xl text-muted-foreground mb-8">
-                Meet the facilitators who guide the community. 
-                Each brings their unique approach and expertise to relating practices.
-              </p>
-            </div>
+      <section className="page-header">
+        <div className="page-header-content">
+          <div className="page-header-inner">
+            <h1 className="page-title">Facilitators</h1>
+            <p className="page-description">
+              Meet the facilitators who guide the community. 
+              Each brings their unique approach and expertise to relating practices.
+            </p>
           </div>
         </div>
       </section>
 
       {/* Facilitators Grid */}
-      <section className="py-12">
-        <div className="container mx-auto px-6">
+      <section className="page-section">
+        <div className="page-section-content">
           {loading ? (
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin" />
-              <span className="ml-2">Loading facilitators...</span>
+            <div className="loading-container">
+              <Loader2 className="loading-spinner" />
+              <span className="loading-text">Loading facilitators...</span>
             </div>
           ) : facilitators.length === 0 ? (
-            <div className="text-center py-12">
-              <Users className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-foreground mb-2">No Public Facilitator Profiles Yet</h3>
-              <p className="text-muted-foreground">Check back soon as facilitators update their public profiles.</p>
+            <div className="empty-state">
+              <Users className="empty-state-icon" />
+              <h3 className="empty-state-title">No Public Facilitator Profiles Yet</h3>
+              <p className="empty-state-description">Check back soon as facilitators update their public profiles.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div className="responsive-grid">
               {facilitators.map((facilitator) => (
-                <Card key={facilitator.id} className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant transition-all duration-300 h-full flex flex-col">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 transition-opacity duration-300" />
-                  
-                  <CardHeader className="relative z-10 pt-8 pb-4">
+                <Card key={facilitator.id} className="group card-elegant h-full flex flex-col">
+                  <CardHeader className="card-content-wrapper pt-8 pb-4">
                     <div className="text-center">
                       {/* Profile Image - Centered and larger */}
                       {facilitator.image_url ? (
@@ -131,14 +127,14 @@ const Facilitators = () => {
                       </CardDescription>
                     </div>
                   </CardHeader>
-                  <CardContent className="relative z-10 flex-1 flex flex-col">
+                  <CardContent className="card-content-wrapper flex-1 flex flex-col">
                     {/* Work Types - More prominent */}
                     {facilitator.work_types.length > 0 && (
                       <div className="mb-4">
                         <div className="text-sm font-medium text-foreground mb-2">Specialties</div>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="tag-container">
                           {facilitator.work_types.map((workType, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs bg-primary/10 text-primary border-primary/20 transition-colors">
+                            <Badge key={index} variant="secondary" className="tag-primary">
                               {workType}
                             </Badge>
                           ))}
@@ -172,9 +168,9 @@ const Facilitators = () => {
                     {facilitator.languages.length > 0 && (
                       <div className="mb-4">
                         <div className="text-sm font-medium text-foreground mb-2">Languages</div>
-                        <div className="flex flex-wrap gap-1">
+                        <div className="tag-container">
                           {facilitator.languages.map((language, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs">
+                            <Badge key={index} variant="secondary" className="tag-item">
                               {language}
                             </Badge>
                           ))}
@@ -186,7 +182,7 @@ const Facilitators = () => {
                     <div className="mt-auto space-y-2 pt-4 border-t border-border/50">
                       <Button 
                         variant="outline" 
-                        className="w-full text-sm group/btn border-primary/30 transition-all duration-200"
+                        className="w-full text-sm group/btn btn-outline-primary"
                         onClick={() => window.location.href = `mailto:${facilitator.contact_email}`}
                       >
                         <MessageCircle className="w-4 h-4 mr-2 transition-transform" />
@@ -218,7 +214,7 @@ const Facilitators = () => {
               </p>
               <Button 
                 size="lg" 
-                className="bg-gradient-hero shadow-warm"
+                className="btn-primary-gradient"
                 onClick={() => user ? navigate('/apply-facilitator') : navigate('/auth')}
               >
                 Apply to Join Our Facilitator Network

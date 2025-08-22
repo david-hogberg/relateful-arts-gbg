@@ -161,9 +161,9 @@ export default function MyEvents() {
     return (
       <div className="min-h-screen bg-gradient-warm">
         <Navigation />
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin" />
-          <span className="ml-2">Loading profile...</span>
+        <div className="loading-container">
+          <Loader2 className="loading-spinner" />
+          <span className="loading-text">Loading profile...</span>
         </div>
       </div>
     );
@@ -177,7 +177,7 @@ export default function MyEvents() {
     <div className="min-h-screen bg-gradient-warm">
       <Navigation />
       
-      <main className="container mx-auto px-6 py-12">
+      <main className="page-section-content py-12">
         <div className="max-w-4xl mx-auto space-y-6">
           <div className="flex items-center gap-3 mb-8">
             <Calendar className="h-8 w-8 text-primary" />
@@ -192,19 +192,19 @@ export default function MyEvents() {
           </div>
 
           {/* Events Section */}
-          <Card>
+          <Card className="card-elegant">
             <CardHeader>
               <CardTitle>Registered Events</CardTitle>
               <CardDescription>Events you've signed up for and your attendance history</CardDescription>
             </CardHeader>
             <CardContent>
               {loadingEvents ? (
-                <div className="flex justify-center py-8">
-                  <Loader2 className="h-6 w-6 animate-spin" />
+                <div className="loading-container">
+                  <Loader2 className="loading-spinner" />
                 </div>
               ) : userEvents.length === 0 ? (
-                <div className="text-center py-8">
-                  <p className="text-muted-foreground mb-4">
+                <div className="empty-state">
+                  <p className="empty-state-description">
                     You haven't registered for any events yet.
                   </p>
                   <Button onClick={() => navigate('/events')}>
@@ -217,7 +217,7 @@ export default function MyEvents() {
                     {userEvents.filter(e => !e.is_past).length} upcoming event(s), {userEvents.filter(e => e.is_past).length} past event(s)
                   </div>
                   {userEvents.map((event) => (
-                    <Card key={event.registration_id} className={`border ${event.is_past ? 'opacity-60' : ''}`}>
+                    <Card key={event.registration_id} className={`card-elegant ${event.is_past ? 'opacity-60' : ''}`}>
                       <CardContent className="pt-6">
                         <div className="flex items-start justify-between">
                           <div className="space-y-2 flex-1">

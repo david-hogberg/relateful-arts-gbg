@@ -29,12 +29,14 @@ const HeroSection = () => {
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed max-w-3xl mx-auto">A platform for deepening interpersonal practices in and around Gothenburg, Sweden.</p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" asChild className="bg-gradient-hero shadow-warm transition-warm hover:shadow-lg group">
+            <Button size="lg" asChild className="bg-gradient-hero shadow-warm transition-warm">
               <Link to="/events">
-                <Users className="w-5 h-5 mr-2" />
                 Explore Events
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-5 h-5 ml-2 transition-transform" />
               </Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild className="border-primary/20">
+              <Link to="/about">Learn More</Link>
             </Button>
           </div>
         </div>

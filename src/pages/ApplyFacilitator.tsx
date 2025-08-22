@@ -114,7 +114,7 @@ export default function ApplyFacilitator() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin" />
+        <Loader2 className="loading-spinner" />
       </div>
     );
   }
@@ -127,9 +127,9 @@ export default function ApplyFacilitator() {
     <div className="min-h-screen bg-gradient-warm">
       <Navigation />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="page-section-content py-8">
         <div className="max-w-2xl mx-auto">
-          <Card>
+          <Card className="card-elegant">
             <CardHeader>
               <CardTitle>Apply to Become a Facilitator</CardTitle>
               <CardDescription>
@@ -252,7 +252,7 @@ export default function ApplyFacilitator() {
                     type="button"
                     variant="outline"
                     onClick={() => navigate('/profile')}
-                    className="flex-1"
+                    className="flex-1 btn-outline-primary"
                   >
                     Cancel
                   </Button>

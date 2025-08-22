@@ -17,9 +17,9 @@ export default function Profile() {
     return (
       <div className="min-h-screen bg-gradient-warm">
         <Navigation />
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin" />
-          <span className="ml-2">Loading profile...</span>
+        <div className="loading-container">
+          <Loader2 className="loading-spinner" />
+          <span className="loading-text">Loading profile...</span>
         </div>
       </div>
     );
@@ -33,7 +33,7 @@ export default function Profile() {
     <div className="min-h-screen bg-gradient-warm">
       <Navigation />
       
-      <main className="container mx-auto px-6 py-12">
+      <main className="page-section-content py-12">
         <div className="max-w-4xl mx-auto space-y-6">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center overflow-hidden">
@@ -44,7 +44,7 @@ export default function Profile() {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <User className="w-8 h-8 text-primary" />
+                <User className="w-8 w-8 text-primary" />
               )}
             </div>
             <div>
@@ -58,7 +58,7 @@ export default function Profile() {
           </div>
 
           {/* Profile Information Card */}
-          <Card>
+          <Card className="card-elegant">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
@@ -67,7 +67,7 @@ export default function Profile() {
                   </CardTitle>
                   <CardDescription>Your community profile details</CardDescription>
                 </div>
-                <Button variant="outline" onClick={() => setEditProfileOpen(true)}>
+                <Button variant="outline" onClick={() => setEditProfileOpen(true)} className="btn-outline-primary">
                   Edit Profile
                 </Button>
               </div>

@@ -75,7 +75,7 @@ export default function EmailConfirmation() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-warm flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
+        <Card className="w-full max-w-md card-elegant">
           <CardContent className="flex flex-col items-center justify-center py-8">
             <Loader2 className="h-8 w-8 animate-spin text-primary mb-4" />
             <p className="text-center text-muted-foreground">
@@ -90,7 +90,7 @@ export default function EmailConfirmation() {
   if (verificationStatus === 'success') {
     return (
       <div className="min-h-screen bg-gradient-warm flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
+        <Card className="w-full max-w-md card-elegant">
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">
               <CheckCircle className="h-12 w-12 text-success" />
@@ -126,7 +126,7 @@ export default function EmailConfirmation() {
   if (verificationStatus === 'error') {
     return (
       <div className="min-h-screen bg-gradient-warm flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
+        <Card className="w-full max-w-md card-elegant">
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">
               <AlertCircle className="h-12 w-12 text-destructive" />
@@ -138,7 +138,7 @@ export default function EmailConfirmation() {
           </CardHeader>
           <CardContent className="space-y-4">
             {email && (
-              <Button onClick={resendConfirmation} className="w-full" variant="outline">
+              <Button onClick={resendConfirmation} className="w-full btn-outline-primary" variant="outline">
                 Resend Confirmation Email
               </Button>
             )}
@@ -154,7 +154,7 @@ export default function EmailConfirmation() {
   // Default state - waiting for email confirmation
   return (
     <div className="min-h-screen bg-gradient-warm flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md card-elegant">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
             <Mail className="h-12 w-12 text-primary" />
@@ -177,7 +177,7 @@ export default function EmailConfirmation() {
           
           <div className="space-y-2">
             {email && (
-              <Button onClick={resendConfirmation} className="w-full" variant="outline">
+              <Button onClick={resendConfirmation} className="w-full btn-outline-primary" variant="outline">
                 Resend Confirmation Email
               </Button>
             )}

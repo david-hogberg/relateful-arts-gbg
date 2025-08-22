@@ -237,9 +237,9 @@ export default function Admin() {
 
   const getRoleColor = (role: string) => {
     switch (role) {
-      case 'admin': return 'bg-red-600 text-white hover:bg-red-700';
-      case 'facilitator': return 'bg-orange-600 text-white hover:bg-orange-700';
-      default: return 'bg-yellow-600 text-white hover:bg-yellow-700';
+      case 'admin': return 'bg-red-600 text-white';
+      case 'facilitator': return 'bg-orange-600 text-white';
+      default: return 'bg-yellow-600 text-white';
     }
   };
 
@@ -251,7 +251,7 @@ export default function Admin() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin" />
+        <Loader2 className="loading-spinner" />
       </div>
     );
   }
@@ -264,13 +264,13 @@ export default function Admin() {
     <div className="min-h-screen bg-gradient-warm">
       <Navigation />
       
-      <main className="container mx-auto px-6 py-12">
+      <main className="page-section-content py-12">
         <div className="max-w-6xl mx-auto space-y-8">
           <div className="flex items-center gap-3 mb-8">
             <Shield className="h-8 w-8 text-primary" />
             <div>
-              <h1 className="text-5xl font-bold text-foreground">Admin Dashboard</h1>
-              <p className="text-xl text-muted-foreground">
+              <h1 className="page-title">Admin Dashboard</h1>
+              <p className="page-description">
                 Manage facilitator applications and user roles
               </p>
             </div>
@@ -297,7 +297,7 @@ export default function Admin() {
             </TabsList>
 
             <TabsContent value="applications">
-              <Card className="bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant">
+              <Card className="card-elegant">
                 <CardHeader>
                   <CardTitle>Facilitator Applications</CardTitle>
                   <CardDescription>
@@ -306,8 +306,8 @@ export default function Admin() {
                 </CardHeader>
                 <CardContent>
                   {loadingApplications ? (
-                    <div className="flex items-center justify-center py-8">
-                      <Loader2 className="h-6 w-6 animate-spin" />
+                    <div className="loading-container">
+                      <Loader2 className="loading-spinner" />
                     </div>
                   ) : applications.length === 0 ? (
                     <p className="text-center text-muted-foreground py-8">
@@ -387,7 +387,7 @@ export default function Admin() {
             </TabsContent>
 
             <TabsContent value="resources">
-              <Card className="bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant">
+              <Card className="card-elegant">
                 <CardHeader>
                   <CardTitle>Resource Submissions</CardTitle>
                   <CardDescription>
@@ -401,7 +401,7 @@ export default function Admin() {
             </TabsContent>
 
             <TabsContent value="venues">
-              <Card className="bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant">
+              <Card className="card-elegant">
                 <CardHeader>
                   <CardTitle>Venue Submissions</CardTitle>
                   <CardDescription>
@@ -415,7 +415,7 @@ export default function Admin() {
             </TabsContent>
 
             <TabsContent value="users">
-              <Card className="bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant">
+              <Card className="card-elegant">
                 <CardHeader>
                   <CardTitle>User Management</CardTitle>
                   <CardDescription>
@@ -436,8 +436,8 @@ export default function Admin() {
                   </div>
 
                   {loadingUsers ? (
-                    <div className="flex items-center justify-center py-8">
-                      <Loader2 className="h-6 w-6 animate-spin" />
+                    <div className="loading-container">
+                      <Loader2 className="loading-spinner" />
                     </div>
                   ) : (
                     <div className="overflow-x-auto">
