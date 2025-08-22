@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Calendar, Clock, MapPin, Users, ExternalLink, Plus, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -34,6 +35,7 @@ const Events = () => {
   const [loading, setLoading] = useState(true);
   const [registering, setRegistering] = useState<string | null>(null);
   const [createEventOpen, setCreateEventOpen] = useState(false);
+  const [confirmRegistration, setConfirmRegistration] = useState<Event | null>(null);
 
   useEffect(() => {
     fetchEvents();
@@ -110,13 +112,23 @@ const Events = () => {
       return;
     }
 
-    setRegistering(eventId);
+    // Find the event to show in confirmation
+    const event = events.find(e => e.id === eventId);
+    if (event) {
+      setConfirmRegistration(event);
+    }
+  };
+
+  const confirmAndRegister = async () => {
+    if (!confirmRegistration) return;
+
+    setRegistering(confirmRegistration.id);
     try {
       const { error } = await supabase
         .from('event_registrations')
         .insert({
-          event_id: eventId,
-          user_id: user.id,
+          event_id: confirmRegistration.id,
+          user_id: user!.id,
         });
 
       if (error) throw error;
@@ -126,6 +138,7 @@ const Events = () => {
         description: "Successfully registered for the event!",
       });
       
+      setConfirmRegistration(null);
       fetchEvents(); // Refresh events to update registration status
     } catch (error: any) {
       console.error('Error registering for event:', error);
@@ -368,6 +381,80 @@ const Events = () => {
         onOpenChange={setCreateEventOpen}
         onEventCreated={fetchEvents}
       />
+
+      {/* Registration Confirmation Dialog */}
+      <AlertDialog open={!!confirmRegistration} onOpenChange={() => setConfirmRegistration(null)}>
+        <AlertDialogContent className="max-w-md">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirm Event Registration</AlertDialogTitle>
+            <AlertDialogDescription>
+              Please review the event details before confirming your registration.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          
+          {confirmRegistration && (
+            <div className="space-y-4 py-4">
+              <div className="text-center">
+                <h3 className="font-semibold text-lg mb-2">{confirmRegistration.title}</h3>
+                <Badge className={getTypeColor(confirmRegistration.type)}>
+                  {confirmRegistration.type.replace('_', ' ')}
+                </Badge>
+              </div>
+              
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <Calendar className="w-4 h-4 text-primary" />
+                  <span className="text-sm">{formatDate(confirmRegistration.date)}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Clock className="w-4 h-4 text-primary" />
+                  <span className="text-sm">{formatTime(confirmRegistration.time)}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-4 h-4 text-primary" />
+                  <span className="text-sm">{confirmRegistration.location}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Users className="w-4 h-4 text-primary" />
+                  <span className="text-sm">
+                    {confirmRegistration.current_participants + 1}/{confirmRegistration.max_participants} participants
+                  </span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="w-4 h-4 text-primary font-bold">$</span>
+                  <span className="text-sm">
+                    {confirmRegistration.price === 0 ? 'Free' : `${confirmRegistration.price} SEK`}
+                  </span>
+                </div>
+              </div>
+
+              {confirmRegistration.description && (
+                <div className="text-sm text-muted-foreground bg-muted/20 p-3 rounded-lg">
+                  {confirmRegistration.description}
+                </div>
+              )}
+            </div>
+          )}
+          
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={confirmAndRegister}
+              disabled={registering === confirmRegistration?.id}
+              className="bg-primary hover:bg-primary/90"
+            >
+              {registering === confirmRegistration?.id ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Registering...
+                </>
+              ) : (
+                'Confirm Registration'
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

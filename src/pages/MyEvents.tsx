@@ -239,21 +239,27 @@ export default function MyEvents() {
                                 <div className="profile-field-row-value">{event.facilitator_name}</div>
                               </div>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                              <div className="profile-field">
-                                <Calendar className="profile-field-icon" />
-                                <span className="profile-field-label">Date</span>
-                                <span className="profile-field-value">{formatDate(event.date)}</span>
+                            <div className="space-y-3">
+                              <div className="profile-field-row">
+                                <Calendar className="profile-field-row-icon" />
+                                <div className="profile-field-row-content">
+                                  <div className="profile-field-row-label">Date</div>
+                                  <div className="profile-field-row-value">{formatDate(event.date)}</div>
+                                </div>
                               </div>
-                              <div className="profile-field">
-                                <Clock className="profile-field-icon" />
-                                <span className="profile-field-label">Time</span>
-                                <span className="profile-field-value">{event.time}</span>
+                              <div className="profile-field-row">
+                                <Clock className="profile-field-row-icon" />
+                                <div className="profile-field-row-content">
+                                  <div className="profile-field-row-label">Time</div>
+                                  <div className="profile-field-row-value">{event.time}</div>
+                                </div>
                               </div>
-                              <div className="profile-field">
-                                <MapPin className="profile-field-icon" />
-                                <span className="profile-field-label">Location</span>
-                                <span className="profile-field-value">{event.location}</span>
+                              <div className="profile-field-row">
+                                <MapPin className="profile-field-row-icon" />
+                                <div className="profile-field-row-content">
+                                  <div className="profile-field-row-label">Location</div>
+                                  <div className="profile-field-row-value">{event.location}</div>
+                                </div>
                               </div>
                             </div>
                           </div>
