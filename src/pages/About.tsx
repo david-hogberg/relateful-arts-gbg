@@ -23,42 +23,31 @@ const About = () => {
         </div>
       </section>
 
-      {/* What is Authentic Relating */}
+      {/* What is Relateful Arts */}
       <section className="page-section">
         <div className="page-section-content">
           <div className="max-w-4xl mx-auto">
-            <h2 className="page-title text-center">What is Authentic Relating?</h2>
+            <h2 className="page-title text-center">What is Relateful Arts?</h2>
             
-            <div className="responsive-grid-wide mb-16">
-              <div>
-                <h3 className="text-2xl font-semibold mb-4 text-primary">Authentic Relating</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  Authentic Relating is a practice of conscious communication that emphasizes being 
-                  real, present, and vulnerable in relationship. Through structured games, exercises, 
-                  and conversations, participants learn to express themselves authentically while 
-                  staying connected to others.
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  Key elements include sharing impact, speaking from curiosity rather than judgment, 
-                  and practicing consent in emotional intimacy. It's designed to help people break 
-                  through social conditioning to access more genuine ways of relating.
-                </p>
-              </div>
-              
-              <div>
-                <h3 className="text-2xl font-semibold mb-4 text-primary">Circling</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  Circling is an interpersonal meditation practice that focuses on being with 
-                  what's happening in the present moment between people. Participants sit in a 
-                  circle and practice staying present with their authentic experience while 
-                  witnessing others do the same.
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  It emphasizes dropping beneath surface-level conversation to explore what's 
-                  actually happening emotionally, somatically, and relationally in real-time. 
-                  The practice develops capacity for intimacy, presence, and authentic expression.
-                </p>
-              </div>
+            <div className="max-w-3xl mx-auto mb-16">
+              <h3 className="text-2xl font-semibold mb-4 text-primary text-center">The Art of Relating</h3>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                Relateful Arts is a practice of conscious connection that emphasizes being 
+                real, present, and vulnerable in relationship. Through structured games, exercises, 
+                and conversations, participants learn to express themselves authentically while 
+                staying connected to others.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                At its core, it's about relating artfully and curiously exploring what is present 
+                and what wants to emerge in connection with another. Key elements include sharing 
+                impact, speaking from curiosity rather than judgment, and practicing consent in 
+                emotional intimacy.
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                It's designed to help people break through social conditioning to access more 
+                genuine ways of relating, developing capacity for intimacy, presence, and authentic 
+                expression through interpersonal practices and group dynamics.
+              </p>
             </div>
           </div>
         </div>
