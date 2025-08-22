@@ -142,8 +142,12 @@ export default function FacilitatorProfile() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin" />
+      <div className="min-h-screen bg-gradient-warm">
+        <Navigation />
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin" />
+          <span className="ml-2">Loading profile...</span>
+        </div>
       </div>
     );
   }
@@ -157,7 +161,7 @@ export default function FacilitatorProfile() {
       <div className="min-h-screen bg-gradient-warm">
         <Navigation />
         
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto px-6 py-12">
           <div className="max-w-3xl mx-auto">
             <Card>
               <CardHeader>
@@ -315,10 +319,20 @@ export default function FacilitatorProfile() {
     <div className="min-h-screen bg-gradient-warm">
       <Navigation />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-6 py-12">
         <div className="max-w-4xl mx-auto space-y-6">
           <div className="flex items-center gap-3 mb-8">
-            <User className="h-8 w-8 text-primary" />
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center overflow-hidden">
+              {(profile as any)?.image_url ? (
+                <img 
+                  src={(profile as any).image_url} 
+                  alt={profile.full_name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <User className="w-8 h-8 text-primary" />
+              )}
+            </div>
             <div>
               <h1 className="text-3xl font-bold text-foreground">
                 Facilitator Profile
@@ -334,8 +348,7 @@ export default function FacilitatorProfile() {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle className="flex items-center gap-2">
-                    <Settings className="h-5 w-5" />
+                  <CardTitle>
                     Profile Information
                   </CardTitle>
                   <CardDescription>Your public facilitator profile details</CardDescription>
@@ -350,87 +363,71 @@ export default function FacilitatorProfile() {
               </div>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="flex items-start space-x-6">
-                {/* Profile Image */}
-                <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0">
-                  {(profile as any)?.image_url ? (
-                    <img 
-                      src={(profile as any).image_url} 
-                      alt={profile.full_name}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <User className="w-12 h-12 text-primary" />
-                  )}
+              <div className="space-y-3">
+                <div>
+                  <span className="font-medium">Full Name:</span> {profile.full_name}
                 </div>
-                
-                {/* Profile Info */}
-                <div className="flex-1 space-y-3">
+                <div>
+                  <span className="font-medium">Professional Title:</span> {profile.title || 'Not set'}
+                </div>
+                <div>
+                  <span className="font-medium">Contact Email:</span> {profile.contact_email || profile.email}
+                </div>
+                {profile.website && (
                   <div>
-                    <span className="font-medium">Full Name:</span> {profile.full_name}
+                    <span className="font-medium">Website:</span>
+                    <a 
+                      href={profile.website} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="ml-2 text-primary hover:underline"
+                    >
+                      {profile.website}
+                    </a>
                   </div>
-              <div>
-                <span className="font-medium">Professional Title:</span> {profile.title || 'Not set'}
-              </div>
-              <div>
-                <span className="font-medium">Contact Email:</span> {profile.contact_email || profile.email}
-              </div>
-              {profile.website && (
+                )}
                 <div>
-                  <span className="font-medium">Website:</span>
-                  <a 
-                    href={profile.website} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="ml-2 text-primary hover:underline"
-                  >
-                    {profile.website}
-                  </a>
+                  <span className="font-medium">Profile Visibility:</span>
+                  <Badge variant={isPublic ? "default" : "secondary"} className="ml-2">
+                    {isPublic ? 'Public' : 'Private'}
+                  </Badge>
                 </div>
-              )}
-              <div>
-                <span className="font-medium">Profile Visibility:</span>
-                <Badge variant={isPublic ? "default" : "secondary"} className="ml-2">
-                  {isPublic ? 'Public' : 'Private'}
-                </Badge>
-              </div>
-              {profile.public_bio && (
-                <div>
-                  <span className="font-medium">Public Bio:</span>
-                  <p className="mt-1 text-sm text-muted-foreground">{profile.public_bio}</p>
-                </div>
-              )}
-              {profile.approach && (
-                <div>
-                  <span className="font-medium">Facilitation Approach:</span>
-                  <p className="mt-1 text-sm text-muted-foreground italic">"{profile.approach}"</p>
-                </div>
-              )}
-              {profile.work_types && profile.work_types.length > 0 && (
-                <div>
-                  <span className="font-medium">Work Types:</span>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {profile.work_types.map((workType, index) => (
-                      <Badge key={index} variant="outline" className="text-xs">
-                        {workType}
-                      </Badge>
-                    ))}
+                {profile.public_bio && (
+                  <div>
+                    <span className="font-medium">Public Bio:</span>
+                    <p className="mt-1 text-sm text-muted-foreground">{profile.public_bio}</p>
                   </div>
-                </div>
-              )}
-              {profile.languages && profile.languages.length > 0 && (
-                <div>
-                  <span className="font-medium">Languages:</span>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {profile.languages.map((language, index) => (
-                      <Badge key={index} variant="secondary" className="text-xs">
-                        {language}
-                      </Badge>
-                    ))}
+                )}
+                {profile.approach && (
+                  <div>
+                    <span className="font-medium">Facilitation Approach:</span>
+                    <p className="mt-1 text-sm text-muted-foreground italic">"{profile.approach}"</p>
                   </div>
-                </div>
-              )}
-                </div>
+                )}
+                {profile.work_types && profile.work_types.length > 0 && (
+                  <div>
+                    <span className="font-medium">Work Types:</span>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {profile.work_types.map((workType, index) => (
+                        <Badge key={index} variant="outline" className="text-xs">
+                          {workType}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {profile.languages && profile.languages.length > 0 && (
+                  <div>
+                    <span className="font-medium">Languages:</span>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {profile.languages.map((language, index) => (
+                        <Badge key={index} variant="secondary" className="text-xs">
+                          {language}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>

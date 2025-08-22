@@ -15,8 +15,12 @@ export default function Profile() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin" />
+      <div className="min-h-screen bg-gradient-warm">
+        <Navigation />
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin" />
+          <span className="ml-2">Loading profile...</span>
+        </div>
       </div>
     );
   }
@@ -29,10 +33,20 @@ export default function Profile() {
     <div className="min-h-screen bg-gradient-warm">
       <Navigation />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-6 py-12">
         <div className="max-w-4xl mx-auto space-y-6">
           <div className="flex items-center gap-3 mb-8">
-            <User className="h-8 w-8 text-primary" />
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center overflow-hidden">
+              {(profile as any)?.image_url ? (
+                <img 
+                  src={(profile as any).image_url} 
+                  alt={profile.full_name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <User className="w-8 h-8 text-primary" />
+              )}
+            </div>
             <div>
               <h1 className="text-3xl font-bold text-foreground">
                 Your Profile
@@ -47,25 +61,11 @@ export default function Profile() {
           <Card>
             <CardHeader>
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center overflow-hidden">
-                    {(profile as any)?.image_url ? (
-                      <img 
-                        src={(profile as any).image_url} 
-                        alt={profile.full_name}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <User className="w-8 h-8 text-primary" />
-                    )}
-                  </div>
-                  <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <Settings className="h-5 w-5" />
-                      Profile Information
-                    </CardTitle>
-                    <CardDescription>Your community profile details</CardDescription>
-                  </div>
+                <div>
+                  <CardTitle>
+                    Profile Information
+                  </CardTitle>
+                  <CardDescription>Your community profile details</CardDescription>
                 </div>
                 <Button variant="outline" onClick={() => setEditProfileOpen(true)}>
                   Edit Profile

@@ -192,8 +192,12 @@ export default function ManageEvents() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin" />
+      <div className="min-h-screen bg-gradient-warm">
+        <Navigation />
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin" />
+          <span className="ml-2">Loading profile...</span>
+        </div>
       </div>
     );
   }
@@ -211,7 +215,7 @@ export default function ManageEvents() {
     <div className="min-h-screen bg-gradient-warm">
       <Navigation />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-6 py-12">
         <div className="max-w-4xl mx-auto space-y-6">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-3">
