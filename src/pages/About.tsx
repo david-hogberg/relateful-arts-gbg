@@ -74,7 +74,7 @@ const About = () => {
             <h2 className="text-4xl font-bold mb-12 text-center">Our Community Values</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              <Card className="shadow-card text-center">
+              <Card className="bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant text-center">
                 <CardHeader>
                   <Target className="w-12 h-12 text-primary mx-auto mb-4" />
                   <CardTitle>Authentic Presence</CardTitle>
@@ -87,7 +87,7 @@ const About = () => {
                 </CardContent>
               </Card>
               
-              <Card className="shadow-card text-center">
+              <Card className="bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant text-center">
                 <CardHeader>
                   <Heart className="w-12 h-12 text-primary mx-auto mb-4" />
                   <CardTitle>Conscious Boundaries</CardTitle>
@@ -100,7 +100,7 @@ const About = () => {
                 </CardContent>
               </Card>
               
-              <Card className="shadow-card text-center">
+              <Card className="bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant text-center">
                 <CardHeader>
                   <Users className="w-12 h-12 text-primary mx-auto mb-4" />
                   <CardTitle>Community Care</CardTitle>
@@ -124,7 +124,7 @@ const About = () => {
             <h2 className="text-4xl font-bold mb-12 text-center">How Our Community Works</h2>
             
             <div className="space-y-8">
-              <Card className="shadow-card">
+              <Card className="bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant">
                 <CardHeader>
                   <div className="flex items-center">
                     <Calendar className="w-6 h-6 text-primary mr-3" />
@@ -141,7 +141,7 @@ const About = () => {
                 </CardContent>
               </Card>
               
-              <Card className="shadow-card">
+              <Card className="bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant">
                 <CardHeader>
                   <div className="flex items-center">
                     <MessageCircle className="w-6 h-6 text-primary mr-3" />
@@ -157,7 +157,7 @@ const About = () => {
                 </CardContent>
               </Card>
               
-              <Card className="shadow-card">
+              <Card className="bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant">
                 <CardHeader>
                   <div className="flex items-center">
                     <Users className="w-6 h-6 text-primary mr-3" />
@@ -192,7 +192,7 @@ const About = () => {
                 <MessageCircle className="w-5 h-5 mr-2" />
                 Join WhatsApp Groups
               </Button>
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" className="border-primary/20">
                 <ExternalLink className="w-5 h-5 mr-2" />
                 Join Discord Server
               </Button>

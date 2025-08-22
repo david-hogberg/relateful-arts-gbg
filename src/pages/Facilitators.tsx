@@ -5,7 +5,7 @@ import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, ExternalLink, MessageCircle, Loader2, Users } from "lucide-react";
+import { Heart, ExternalLink, MessageCircle, Loader2, Users, User } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Facilitator {
@@ -103,8 +103,8 @@ const Facilitators = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
               {facilitators.map((facilitator) => (
-                <Card key={facilitator.id} className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <Card key={facilitator.id} className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant transition-all duration-300 h-full flex flex-col">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 transition-opacity duration-300" />
                   
                   <CardHeader className="relative z-10 pt-8 pb-4">
                     <div className="text-center">
@@ -118,12 +118,12 @@ const Facilitators = () => {
                           />
                         </div>
                       ) : (
-                        <div className="mx-auto w-24 h-24 rounded-full bg-gradient-primary flex items-center justify-center text-white font-semibold text-xl shadow-soft mb-4">
-                          {facilitator.full_name.split(' ').map(n => n[0]).join('')}
+                        <div className="mx-auto w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center shadow-soft mb-4">
+                          <User className="w-12 h-12 text-primary" />
                         </div>
                       )}
                       
-                      <CardTitle className="text-xl text-foreground group-hover:text-primary transition-colors mb-1">
+                      <CardTitle className="text-xl text-foreground transition-colors mb-1">
                         {facilitator.full_name}
                       </CardTitle>
                       <CardDescription className="text-base font-medium text-muted-foreground">
@@ -132,33 +132,46 @@ const Facilitators = () => {
                     </div>
                   </CardHeader>
                   <CardContent className="relative z-10 flex-1 flex flex-col">
-                    <div className="mb-4">
-                      <div className="flex flex-wrap gap-2">
-                        {facilitator.work_types.map((workType, index) => (
-                          <Badge key={index} variant="secondary" className="text-xs bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors">
-                            {workType}
-                          </Badge>
-                        ))}
+                    {/* Work Types - More prominent */}
+                    {facilitator.work_types.length > 0 && (
+                      <div className="mb-4">
+                        <div className="text-sm font-medium text-foreground mb-2">Specialties</div>
+                        <div className="flex flex-wrap gap-2">
+                          {facilitator.work_types.map((workType, index) => (
+                            <Badge key={index} variant="secondary" className="text-xs bg-primary/10 text-primary border-primary/20 transition-colors">
+                              {workType}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                    
-                    {facilitator.public_bio && (
-                      <p className="text-muted-foreground mb-4 leading-relaxed text-sm">
-                        {facilitator.public_bio}
-                      </p>
                     )}
                     
-                    {facilitator.approach && (
-                      <div className="mb-4 p-4 bg-gradient-subtle rounded-xl border border-primary/10 shadow-soft">
-                        <p className="text-sm italic text-foreground/90 leading-relaxed">
-                          "{facilitator.approach}"
+                    {/* Bio - Cleaner presentation */}
+                    {facilitator.public_bio && (
+                      <div className="mb-4">
+                        <div className="text-sm font-medium text-foreground mb-2">About</div>
+                        <p className="text-muted-foreground leading-relaxed text-sm">
+                          {facilitator.public_bio}
                         </p>
                       </div>
                     )}
                     
+                    {/* Approach - Highlighted quote */}
+                    {facilitator.approach && (
+                      <div className="mb-4">
+                        <div className="text-sm font-medium text-foreground mb-2">Approach</div>
+                        <div className="p-3 bg-gradient-subtle rounded-lg border border-primary/10">
+                          <p className="text-sm italic text-foreground/90 leading-relaxed">
+                            "{facilitator.approach}"
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Languages - Better organized */}
                     {facilitator.languages.length > 0 && (
                       <div className="mb-4">
-                        <div className="text-sm text-muted-foreground mb-2">Languages:</div>
+                        <div className="text-sm font-medium text-foreground mb-2">Languages</div>
                         <div className="flex flex-wrap gap-1">
                           {facilitator.languages.map((language, index) => (
                             <Badge key={index} variant="secondary" className="text-xs">
@@ -169,19 +182,20 @@ const Facilitators = () => {
                       </div>
                     )}
                     
-                    <div className="mt-auto space-y-2">
+                    {/* Contact Actions - Clearer separation */}
+                    <div className="mt-auto space-y-2 pt-4 border-t border-border/50">
                       <Button 
                         variant="outline" 
-                        className="w-full text-sm group/btn border-primary/30 hover:border-primary hover:bg-primary/5 transition-all duration-200"
+                        className="w-full text-sm group/btn border-primary/30 transition-all duration-200"
                         onClick={() => window.location.href = `mailto:${facilitator.contact_email}`}
                       >
-                        <MessageCircle className="w-4 h-4 mr-2 group-hover/btn:scale-110 transition-transform" />
+                        <MessageCircle className="w-4 h-4 mr-2 transition-transform" />
                         Contact {facilitator.full_name.split(' ')[0]}
                       </Button>
                       {facilitator.website && (
                         <Button 
                           variant="ghost" 
-                          className="w-full text-sm hover:bg-accent/20 transition-colors"
+                          className="w-full text-sm transition-colors"
                           onClick={() => window.open(facilitator.website, '_blank')}
                         >
                           <ExternalLink className="w-4 h-4 mr-2" />

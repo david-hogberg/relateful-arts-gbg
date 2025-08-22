@@ -144,10 +144,10 @@ const Venues: React.FC = () => {
             {venues.map((venue) => (
               <Card 
                 key={venue.id} 
-                className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant transition-all duration-300 cursor-pointer"
                 onClick={() => handleViewVenue(venue)}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-0 transition-opacity duration-300" />
                 
                 {/* Venue Image */}
                 {venue.image_url && (
@@ -155,20 +155,17 @@ const Venues: React.FC = () => {
                     <img 
                       src={venue.image_url} 
                       alt={venue.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-                    <Badge className="absolute top-3 right-3 bg-primary/90 text-white border-0 backdrop-blur-sm">
-                      {venue.cost_level}
-                    </Badge>
                   </div>
                 )}
                 
                 <CardHeader className="relative z-10">
                   <CardTitle className="flex items-start justify-between">
-                    <span className="text-lg group-hover:text-primary transition-colors">{venue.name}</span>
+                    <span className="text-lg transition-colors">{venue.name}</span>
                     {!venue.image_url && (
-                      <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors">
+                      <Badge className="bg-primary/10 text-primary border-primary/20 transition-colors">
                         {venue.cost_level}
                       </Badge>
                     )}
@@ -179,61 +176,69 @@ const Venues: React.FC = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="relative z-10 space-y-4">
-                  {/* Capacity Info */}
-                  <div className="flex items-center gap-3 p-3 bg-gradient-subtle rounded-lg border border-primary/10">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <Users className="h-4 w-4 text-primary" />
+                  {/* Key Info Section */}
+                  <div className="space-y-3">
+                    {/* Capacity Info */}
+                    <div className="flex items-center gap-3 p-3 bg-gradient-subtle rounded-lg border border-primary/10">
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <Users className="h-4 w-4 text-primary" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="text-sm font-medium text-foreground">Capacity</div>
+                        <div className="text-xs text-muted-foreground">{venue.hosting_capacity} people</div>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-medium text-foreground">Capacity</div>
-                      <div className="text-xs text-muted-foreground">{venue.hosting_capacity} people</div>
+                    
+                    {/* Cost Level Info */}
+                    <div className="flex items-center gap-3 p-3 bg-gradient-subtle rounded-lg border border-primary/10">
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <DollarSign className="h-4 w-4 text-primary" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="text-sm font-medium text-foreground">Cost Level</div>
+                        <div className="text-xs text-muted-foreground capitalize">{venue.cost_level} cost</div>
+                      </div>
                     </div>
                   </div>
                   
-                  {/* Contact Info */}
-                  <div className="flex items-center gap-3 p-3 bg-gradient-subtle rounded-lg border border-primary/10">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <DollarSign className="h-4 w-4 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-medium text-foreground">Cost Level</div>
-                      <div className="text-xs text-muted-foreground capitalize">{venue.cost_level} cost</div>
-                    </div>
-                  </div>
-                  
-                  {/* Contact Information */}
-                  {venue.contact_information && (
-                    <div className="p-3 bg-accent/10 rounded-lg border border-accent/20">
-                      <div className="text-xs font-medium text-foreground mb-1">Contact</div>
-                      <div className="text-xs text-muted-foreground line-clamp-2">{venue.contact_information}</div>
-                    </div>
-                  )}
-                  
-                  {/* Notes */}
-                  {venue.notes && (
-                    <div className="p-3 bg-muted/30 rounded-lg">
-                      <div className="text-xs font-medium text-foreground mb-1">Additional Notes</div>
-                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
-                        {venue.notes}
-                      </p>
+                  {/* Additional Information */}
+                  {(venue.contact_information || venue.notes) && (
+                    <div className="space-y-3">
+                      {/* Contact Information */}
+                      {venue.contact_information && (
+                        <div className="p-3 bg-accent/10 rounded-lg border border-accent/20">
+                          <div className="text-xs font-medium text-foreground mb-1">Contact Information</div>
+                          <div className="text-xs text-muted-foreground line-clamp-2">{venue.contact_information}</div>
+                        </div>
+                      )}
+                      
+                      {/* Notes */}
+                      {venue.notes && (
+                        <div className="p-3 bg-muted/30 rounded-lg">
+                          <div className="text-xs font-medium text-foreground mb-1">Additional Notes</div>
+                          <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
+                            {venue.notes}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   )}
                    
-                  {/* Edit/Delete Actions */}
+                  {/* Edit Actions */}
                   {canEditVenue(venue) && (
                     <div className="pt-3 border-t border-border/50">
                       <div className="flex gap-2">
                         <Button 
                           variant="outline" 
                           size="sm"
-                          className="flex-1 border-primary/30 hover:border-primary hover:bg-primary/5 transition-all duration-200"
+                          className="flex-1 border-primary/30 transition-all duration-200"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleEditVenue(venue);
                           }}
                         >
                           <Edit className="h-3 w-3 mr-1" />
-                          Edit
+                          Edit Venue
                         </Button>
                       </div>
                     </div>

@@ -205,8 +205,8 @@ export default function Resources() {
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredResources.map((resource) => (
-              <Card key={resource.id} className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-1">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <Card key={resource.id} className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant transition-all duration-300">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-0 transition-opacity duration-300" />
                 
                 {/* Resource Banner Image */}
                 {resource.image_url && (
@@ -214,13 +214,13 @@ export default function Resources() {
                     <img 
                       src={resource.image_url} 
                       alt={resource.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
                     <Badge className="absolute top-3 right-3 bg-primary/90 text-white border-0 backdrop-blur-sm">
                       {resource.category}
                     </Badge>
-                    <div className="absolute top-3 left-3 p-2 bg-black/30 backdrop-blur-sm rounded-lg">
+                    <div className="absolute top-3 left-3 p-2 bg-black/50 backdrop-blur-sm rounded-lg border border-white/20">
                       <div className="text-white">
                         {getTypeIcon(resource.type)}
                       </div>
@@ -232,70 +232,80 @@ export default function Resources() {
                   {!resource.image_url && (
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
-                        <div className="p-2 bg-gradient-primary rounded-lg text-white shadow-soft">
+                        <div className="p-2 bg-primary/10 rounded-lg text-primary shadow-soft">
                           {getTypeIcon(resource.type)}
                         </div>
-                        <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors">
+                        <Badge className="bg-primary/10 text-primary border-primary/20 transition-colors">
                           {resource.category}
                         </Badge>
                       </div>
                     </div>
                   )}
-                  <CardTitle className="text-lg group-hover:text-primary transition-colors">{resource.title}</CardTitle>
+                  <CardTitle className="text-lg transition-colors">{resource.title}</CardTitle>
                   <CardDescription className="text-muted-foreground leading-relaxed">{resource.description}</CardDescription>
                 </CardHeader>
                 <CardContent className="relative z-10">
-                  <div className="flex flex-wrap gap-1 mb-4">
-                    {resource.tags.slice(0, 3).map((tag) => (
-                      <Badge key={tag} variant="secondary" className="text-xs bg-accent/20 text-foreground border-accent/30">
-                        {tag}
-                      </Badge>
-                    ))}
-                    {resource.tags.length > 3 && (
-                      <Badge variant="secondary" className="text-xs bg-accent/20 text-foreground border-accent/30">
-                        +{resource.tags.length - 3}
-                      </Badge>
-                    )}
-                  </div>
-                  <div className="flex items-center justify-between text-sm text-muted-foreground">
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-1">
-                        <User className="h-4 w-4" />
-                        {resource.author_name}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
-                        {formatDate(resource.publish_date)}
+                  {/* Tags Section */}
+                  {resource.tags.length > 0 && (
+                    <div className="mb-4">
+                      <div className="text-sm font-medium text-foreground mb-2">Tags</div>
+                      <div className="flex flex-wrap gap-1">
+                        {resource.tags.slice(0, 3).map((tag) => (
+                          <Badge key={tag} variant="secondary" className="text-xs bg-accent/20 text-foreground border-accent/30">
+                            {tag}
+                          </Badge>
+                        ))}
+                        {resource.tags.length > 3 && (
+                          <Badge variant="secondary" className="text-xs bg-accent/20 text-foreground border-accent/30">
+                            +{resource.tags.length - 3}
+                          </Badge>
+                        )}
                       </div>
                     </div>
-                    <div className="flex gap-2">
+                  )}
+                  
+                  {/* Author & Date Info */}
+                  <div className="mb-4 p-3 bg-gradient-subtle rounded-lg border border-primary/10">
+                    <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-2">
+                        <User className="h-4 w-4 text-primary" />
+                        <span className="font-medium text-foreground">{resource.author_name}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Calendar className="h-4 w-4 text-primary" />
+                        <span className="text-muted-foreground">{formatDate(resource.publish_date)}</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Action Buttons */}
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      className="flex-1 border-primary/30 transition-all duration-200"
+                      onClick={() => handleViewResource(resource)}
+                    >
+                      <Eye className="h-4 w-4 mr-1" />
+                      View Details
+                    </Button>
+                    {canEditResource(resource) && (
                       <Button 
                         variant="outline" 
                         size="sm"
-                        className="border-primary/30 hover:border-primary hover:bg-primary/5 transition-all duration-200"
-                        onClick={() => handleViewResource(resource)}
+                        className="border-primary/30 transition-all duration-200"
+                        onClick={() => handleEditResource(resource)}
                       >
-                        <Eye className="h-4 w-4 mr-1" />
-                        View
+                        <Edit className="h-4 w-4" />
                       </Button>
-                      {canEditResource(resource) && (
-                        <Button 
-                          variant="outline" 
-                          size="sm"
-                          className="border-primary/30 hover:border-primary hover:bg-primary/5 transition-all duration-200"
-                          onClick={() => handleEditResource(resource)}
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                      )}
-                      {resource.type === 'link' && resource.url && (
-                        <Button variant="outline" size="sm" className="border-primary/30 hover:border-primary hover:bg-primary/5 transition-all duration-200" asChild>
-                          <a href={resource.url} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="h-4 w-4" />
-                          </a>
-                        </Button>
-                      )}
-                    </div>
+                    )}
+                    {resource.type === 'link' && resource.url && (
+                      <Button variant="outline" size="sm" className="border-primary/30 transition-all duration-200" asChild>
+                        <a href={resource.url} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="h-4 w-4" />
+                        </a>
+                      </Button>
+                    )}
                   </div>
                 </CardContent>
               </Card>

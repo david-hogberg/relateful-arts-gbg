@@ -193,7 +193,7 @@ const Events = () => {
                   size="lg" 
                   variant="outline"
                   onClick={() => setCreateEventOpen(true)}
-                  className="border-primary/20 hover:bg-primary/10"
+                  className="border-primary/20"
                 >
                   <Plus className="w-5 h-5 mr-2" />
                   Create Event
@@ -227,8 +227,8 @@ const Events = () => {
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {events.map((event) => (
-              <Card key={event.id} className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant hover:shadow-glow transition-all duration-300 hover:-translate-y-1">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <Card key={event.id} className="group relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-elegant transition-all duration-300">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-0 transition-opacity duration-300" />
                 
                 {/* Event Banner Image */}
                 {event.image_url && (
@@ -236,7 +236,7 @@ const Events = () => {
                     <img 
                       src={event.image_url} 
                       alt={event.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
                     <Badge className="absolute top-3 right-3 bg-primary/90 text-white border-0 backdrop-blur-sm">
@@ -263,7 +263,7 @@ const Events = () => {
                       </div>
                     </div>
                   )}
-                  <CardTitle className="text-2xl mb-2 group-hover:text-primary transition-colors">{event.title}</CardTitle>
+                  <CardTitle className="text-2xl mb-2 transition-colors">{event.title}</CardTitle>
                   <CardDescription className="text-lg">
                     Facilitated by {event.facilitator_name}
                   </CardDescription>
