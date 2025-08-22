@@ -7,7 +7,7 @@ import { SubmitVenueModal } from '../components/SubmitVenueModal';
 import { ViewVenueModal } from '../components/ViewVenueModal';
 import { EditVenueModal } from '../components/EditVenueModal';
 import { supabase } from '../integrations/supabase/client';
-import { MapPin, Users, DollarSign, Building, Edit, Trash2 } from 'lucide-react';
+import { MapPin, Users, DollarSign, Building, Edit, Trash2, Loader2 } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
 import { useAuth } from '../hooks/useAuth';
 
@@ -88,16 +88,7 @@ const Venues: React.FC = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navigation />
-        <div className="flex justify-center items-center h-64">
-          <div className="text-lg">Loading venues...</div>
-        </div>
-      </div>
-    );
-  }
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -137,7 +128,12 @@ const Venues: React.FC = () => {
         </div>
 
         {/* Venues Grid */}
-        {venues.length === 0 ? (
+        {loading ? (
+          <div className="flex justify-center items-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin" />
+            <span className="ml-2">Loading venues...</span>
+          </div>
+        ) : venues.length === 0 ? (
           <div className="text-center py-12">
             <Building className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-foreground mb-2">No venues yet</h3>
