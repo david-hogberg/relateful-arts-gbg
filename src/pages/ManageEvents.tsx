@@ -281,7 +281,7 @@ export default function ManageEvents() {
                                 className="text-xs h-6 px-2 btn-outline-primary"
                                 onClick={() => handleViewParticipants(event)}
                               >
-                                <Users className="w-3 h-3 mr-1" />
+                                <Users className="w-3 w-3 mr-1" />
                                 {event.registration_count}/{event.max_participants}
                               </Button>
                             </div>

@@ -227,7 +227,7 @@ const Events = () => {
           ) : (
             <div className="responsive-grid-wide">
               {events.map((event) => (
-                <Card key={event.id} className="group card-elegant">
+                <Card key={event.id} className="card-elegant">
                   {/* Event Banner Image */}
                   {event.image_url && (
                     <div className="card-image-container">
@@ -261,7 +261,7 @@ const Events = () => {
                         </div>
                       </div>
                     )}
-                    <CardTitle className="text-2xl mb-2 transition-colors">{event.title}</CardTitle>
+                    <CardTitle className="text-2xl mb-2">{event.title}</CardTitle>
                     <CardDescription className="text-lg">
                       Facilitated by {event.facilitator_name}
                     </CardDescription>

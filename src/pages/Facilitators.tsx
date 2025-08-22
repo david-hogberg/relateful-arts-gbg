@@ -101,7 +101,7 @@ const Facilitators = () => {
           ) : (
             <div className="responsive-grid">
               {facilitators.map((facilitator) => (
-                <Card key={facilitator.id} className="group card-elegant h-full flex flex-col">
+                <Card key={facilitator.id} className="card-elegant h-full flex flex-col">
                   <CardHeader className="card-content-wrapper pt-8 pb-4">
                     <div className="text-center">
                       {/* Profile Image - Centered and larger */}
@@ -119,7 +119,7 @@ const Facilitators = () => {
                         </div>
                       )}
                       
-                      <CardTitle className="text-xl text-foreground transition-colors mb-1">
+                      <CardTitle className="text-xl text-foreground mb-1">
                         {facilitator.full_name}
                       </CardTitle>
                       <CardDescription className="text-base font-medium text-muted-foreground">
@@ -182,16 +182,16 @@ const Facilitators = () => {
                     <div className="mt-auto space-y-2 pt-4 border-t border-border/50">
                       <Button 
                         variant="outline" 
-                        className="w-full text-sm group/btn btn-outline-primary"
+                        className="w-full text-sm btn-outline-primary"
                         onClick={() => window.location.href = `mailto:${facilitator.contact_email}`}
                       >
-                        <MessageCircle className="w-4 h-4 mr-2 transition-transform" />
+                        <MessageCircle className="w-4 h-4 mr-2" />
                         Contact {facilitator.full_name.split(' ')[0]}
                       </Button>
                       {facilitator.website && (
                         <Button 
                           variant="ghost" 
-                          className="w-full text-sm transition-colors"
+                          className="w-full text-sm"
                           onClick={() => window.open(facilitator.website, '_blank')}
                         >
                           <ExternalLink className="w-4 h-4 mr-2" />

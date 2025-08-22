@@ -43,9 +43,9 @@ const Home = () => {
           
           <div className="responsive-grid">
             {features.map((feature, index) => (
-              <Card key={index} className="card-elegant cursor-pointer group hover:scale-105 transition-all duration-500">
+              <Card key={index} className="card-elegant cursor-pointer">
                 <CardHeader className="text-center p-6">
-                  <div className="mx-auto mb-6 p-4 bg-primary/15 rounded-2xl w-fit group-hover:bg-primary/20 transition-all duration-300">
+                  <div className="mx-auto mb-6 p-4 bg-primary/15 rounded-2xl w-fit">
                     <feature.icon className="w-10 h-10 text-primary" />
                   </div>
                   <CardTitle className="text-2xl mb-3">{feature.title}</CardTitle>
@@ -57,10 +57,10 @@ const Home = () => {
                   <Button 
                     variant="ghost" 
                     asChild 
-                    className="btn-outline-primary rounded-full px-6 py-2 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300"
+                    className="btn-outline-primary rounded-full px-6 py-2"
                   >
                     <Link to={feature.link} className="flex items-center">
-                      Learn More <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                      Learn More <ArrowRight className="w-4 h-4 ml-2" />
                     </Link>
                   </Button>
                 </CardContent>
@@ -87,21 +87,21 @@ const Home = () => {
             </p>
             
             <div className="responsive-grid mt-16">
-              <div className="text-center p-6 bg-gradient-subtle rounded-2xl border border-primary/10 hover:shadow-cozy transition-all duration-300">
+              <div className="text-center p-6 bg-gradient-subtle rounded-2xl border border-primary/10">
                 <div className="w-16 h-16 bg-primary/15 rounded-2xl flex items-center justify-center mx-auto mb-4">
                   <Star className="w-8 h-8 text-primary" />
                 </div>
                 <h3 className="text-xl font-semibold mb-3 text-primary">Authentic Presence</h3>
                 <p className="text-muted-foreground leading-relaxed">Creating safe spaces for genuine expression and vulnerable sharing</p>
               </div>
-              <div className="text-center p-6 bg-gradient-subtle rounded-2xl border border-primary/10 hover:shadow-cozy transition-all duration-300">
+              <div className="text-center p-6 bg-gradient-subtle rounded-2xl border border-primary/10">
                 <div className="w-16 h-16 bg-primary/15 rounded-2xl flex items-center justify-center mx-auto mb-4">
                   <Heart className="w-8 h-8 text-primary" />
                 </div>
                 <h3 className="text-xl font-semibold mb-3 text-primary">Conscious Boundaries</h3>
                 <p className="text-muted-foreground leading-relaxed">Honoring boundaries while inviting growth and connection</p>
               </div>
-              <div className="text-center p-6 bg-gradient-subtle rounded-2xl border border-primary/10 hover:shadow-cozy transition-all duration-300">
+              <div className="text-center p-6 bg-gradient-subtle rounded-2xl border border-primary/10">
                 <div className="w-16 h-16 bg-primary/15 rounded-2xl flex items-center justify-center mx-auto mb-4">
                   <Users className="w-8 h-8 text-primary" />
                 </div>

@@ -142,7 +142,7 @@ const Venues: React.FC = () => {
             {venues.map((venue) => (
               <Card 
                 key={venue.id} 
-                className="group card-elegant cursor-pointer"
+                className="card-elegant cursor-pointer"
                 onClick={() => handleViewVenue(venue)}
               >
                 {/* Venue Image */}
@@ -159,7 +159,7 @@ const Venues: React.FC = () => {
                 
                 <CardHeader className="card-content-wrapper">
                   <CardTitle className="flex items-start justify-between">
-                    <span className="text-lg transition-colors">{venue.name}</span>
+                    <span className="text-lg">{venue.name}</span>
                     {!venue.image_url && (
                       <Badge className="tag-primary">
                         {venue.cost_level}

@@ -206,7 +206,7 @@ export default function Resources() {
         ) : (
           <div className="responsive-grid">
             {filteredResources.map((resource) => (
-              <Card key={resource.id} className="group card-elegant">
+              <Card key={resource.id} className="card-elegant">
                 {/* Resource Banner Image */}
                 {resource.image_url && (
                   <div className="card-image-container">
@@ -240,7 +240,7 @@ export default function Resources() {
                       </div>
                     </div>
                   )}
-                  <CardTitle className="text-lg transition-colors">{resource.title}</CardTitle>
+                  <CardTitle className="text-lg">{resource.title}</CardTitle>
                   <CardDescription className="text-muted-foreground leading-relaxed">{resource.description}</CardDescription>
                 </CardHeader>
                 <CardContent className="card-content-wrapper">

@@ -198,11 +198,6 @@ All colors MUST be HSL for consistency.
     border: 1px solid hsl(var(--border));
   }
 
-  .card-elegant:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-glow);
-  }
-
   .card-image-container {
     @apply relative h-52 overflow-hidden;
     border-radius: 1rem 1rem 0 0;
@@ -210,10 +205,6 @@ All colors MUST be HSL for consistency.
 
   .card-image {
     @apply w-full h-full object-cover transition-transform duration-500;
-  }
-
-  .card-elegant:hover .card-image {
-    transform: scale(1.05);
   }
 
   .card-image-overlay {
@@ -244,11 +235,6 @@ All colors MUST be HSL for consistency.
     box-shadow: var(--shadow-soft);
   }
 
-  .info-item:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-elegant);
-  }
-
   .info-icon {
     @apply p-3 bg-primary/15 rounded-xl;
     color: hsl(var(--primary));
@@ -272,21 +258,10 @@ All colors MUST be HSL for consistency.
     border: none;
   }
 
-  .btn-primary-gradient:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-glow);
-  }
-
   .btn-outline-primary {
     @apply border-primary/40 transition-all duration-300 rounded-full px-6 py-3 font-medium;
     background: transparent;
     color: hsl(var(--primary));
-  }
-
-  .btn-outline-primary:hover {
-    background: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
-    transform: translateY(-2px);
   }
 
   /* Loading States - Warm and friendly */
@@ -350,18 +325,8 @@ All colors MUST be HSL for consistency.
     transition: var(--transition-gentle);
   }
 
-  .tag-item:hover {
-    background: hsl(var(--accent) / 0.4);
-    transform: translateY(-1px);
-  }
-
   .tag-primary {
     @apply text-sm bg-primary/15 text-primary border-primary/25 px-3 py-1 rounded-full transition-all duration-200;
-  }
-
-  .tag-primary:hover {
-    background: hsl(var(--primary) / 0.25);
-    transform: translateY(-1px);
   }
 
   /* Responsive Utilities */
@@ -387,11 +352,6 @@ All colors MUST be HSL for consistency.
   .inviting-button {
     @apply bg-gradient-to-r from-primary to-primary-glow text-white font-medium px-8 py-4 rounded-full transition-all duration-300;
     box-shadow: var(--shadow-elegant);
-  }
-
-  .inviting-button:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-glow);
   }
 
   /* Profile and Admin page specific styling */
@@ -424,7 +384,7 @@ All colors MUST be HSL for consistency.
   }
 
   .profile-field {
-    @apply flex items-center gap-3 p-4 bg-gradient-subtle rounded-xl border border-primary/10 transition-all duration-300 hover:shadow-cozy hover:border-primary/20;
+    @apply flex items-center gap-3 p-4 bg-gradient-subtle rounded-xl border border-primary/10 transition-all duration-300;
   }
 
   .profile-field-icon {
@@ -444,7 +404,7 @@ All colors MUST be HSL for consistency.
   }
 
   .profile-field-row {
-    @apply flex items-center gap-3 p-4 bg-gradient-subtle rounded-xl border border-primary/10 transition-all duration-300 hover:shadow-cozy hover:border-primary/20;
+    @apply flex items-center gap-3 p-4 bg-gradient-subtle rounded-xl border border-primary/10 transition-all duration-300;
   }
 
   .profile-field-row-icon {
@@ -488,7 +448,7 @@ All colors MUST be HSL for consistency.
   }
 
   .profile-link {
-    @apply text-primary hover:text-primary-glow underline transition-colors duration-200;
+    @apply text-primary underline transition-colors duration-200;
   }
 
   .profile-divider {
