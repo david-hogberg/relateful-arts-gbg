@@ -174,12 +174,13 @@ const Facilitators = () => {
                       </div>
                     )}
                     
-                    {/* Approach - Highlighted quote */}
+                    {/* Approach - Elegant presentation */}
                     {facilitator.approach && (
                       <div className="mb-4">
                         <div className="text-sm font-medium text-foreground mb-2">Approach</div>
-                        <div className="p-3 bg-gradient-subtle rounded-lg border border-primary/10">
-                          <p className="text-sm italic text-foreground/90 leading-relaxed">
+                        <div className="relative">
+                          <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/40 to-primary/20 rounded-full"></div>
+                          <p className="text-foreground/90 leading-relaxed text-sm italic pl-4 border-l-2 border-primary/20 ml-1">
                             "{facilitator.approach}"
                           </p>
                         </div>
