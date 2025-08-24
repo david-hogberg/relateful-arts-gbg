@@ -3,7 +3,8 @@ INSERT INTO storage.buckets (id, name, public) VALUES
   ('profile-images', 'profile-images', true),
   ('event-images', 'event-images', true),
   ('resource-images', 'resource-images', true),
-  ('venue-images', 'venue-images', true);
+  ('venue-images', 'venue-images', true)
+ON CONFLICT (id) DO NOTHING;
 
 -- Add image_url columns to existing tables
 ALTER TABLE public.profiles ADD COLUMN image_url TEXT;

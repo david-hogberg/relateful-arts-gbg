@@ -14,11 +14,14 @@ import { useAuth } from '../hooks/useAuth';
 interface Venue {
   id: string;
   name: string;
-  location: string;
-  hosting_capacity: number;
-  contact_information: string;
-  cost_level: string;
-  notes?: string;
+  address: string;
+  capacity: number;
+  contact_email: string;
+  contact_phone: string;
+  category: string;
+  price_information: string;
+  description: string;
+  additional_notes?: string;
   author_id: string;
   created_at: string;
   image_url?: string;
@@ -42,7 +45,21 @@ const Venues: React.FC = () => {
     try {
       const { data, error } = await supabase
         .from('venues')
-        .select('*')
+        .select(`
+          id,
+          name,
+          address,
+          capacity,
+          contact_email,
+          contact_phone,
+          category,
+          price_information,
+          description,
+          additional_notes,
+          author_id,
+          created_at,
+          image_url
+        `)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -73,18 +90,18 @@ const Venues: React.FC = () => {
     return user && (user.id === venue.author_id || profile?.role === 'admin');
   };
 
-  const getCostLevelColor = (costLevel: string) => {
-    switch (costLevel.toLowerCase()) {
-      case 'free':
-        return 'bg-green-100 text-green-800';
-      case 'low':
-        return 'bg-blue-100 text-blue-800';
-      case 'medium':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'high':
-        return 'bg-red-100 text-red-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
+  const getCostLevelColor = (priceInfo: string) => {
+    const lowerPrice = priceInfo.toLowerCase();
+    if (lowerPrice.includes('free') || lowerPrice.includes('donation')) {
+      return 'bg-green-100 text-green-800';
+    } else if (lowerPrice.includes('low') || lowerPrice.includes('affordable')) {
+      return 'bg-blue-100 text-blue-800';
+    } else if (lowerPrice.includes('medium') || lowerPrice.includes('moderate')) {
+      return 'bg-yellow-100 text-yellow-800';
+    } else if (lowerPrice.includes('high') || lowerPrice.includes('premium')) {
+      return 'bg-red-100 text-red-800';
+    } else {
+      return 'bg-gray-100 text-gray-800';
     }
   };
 
@@ -155,7 +172,7 @@ const Venues: React.FC = () => {
                     />
                     <div className="card-image-overlay" />
                     <Badge className="card-badge-overlay">
-                      {venue.cost_level}
+                      {venue.category}
                     </Badge>
                   </div>
                 )}
@@ -164,14 +181,14 @@ const Venues: React.FC = () => {
                   {!venue.image_url && (
                     <div className="flex items-start justify-between mb-4">
                       <Badge className="tag-primary">
-                        {venue.cost_level}
+                        {venue.category}
                       </Badge>
                     </div>
                   )}
                   <CardTitle className="text-lg">{venue.name}</CardTitle>
                   <CardDescription className="flex items-center gap-2 text-muted-foreground">
                     <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
-                    <span className="line-clamp-2">{venue.location}</span>
+                    <span className="line-clamp-2">{venue.address}</span>
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="card-content-wrapper space-y-4">
@@ -184,41 +201,62 @@ const Venues: React.FC = () => {
                       </div>
                       <div className="info-content">
                         <div className="info-label">Capacity</div>
-                        <div className="info-value">{venue.hosting_capacity} people</div>
+                        <div className="info-value">{venue.capacity} people</div>
                       </div>
                     </div>
                     
-                    {/* Cost Level Info */}
+                    {/* Price Information */}
                     <div className="info-item">
                       <div className="info-icon">
                         <DollarSign className="h-4 w-4 text-primary" />
                       </div>
                       <div className="info-content">
-                        <div className="info-label">Cost Level</div>
-                        <div className="info-value capitalize">{venue.cost_level} cost</div>
+                        <div className="info-label">Price</div>
+                        <div className="info-value capitalize">{venue.price_information}</div>
                       </div>
                     </div>
                   </div>
                   
-                  {/* Additional Information */}
-                  {(venue.contact_information || venue.notes) && (
-                    <div className="space-y-3">
-                      {/* Contact Information */}
-                      {venue.contact_information && (
-                        <div className="p-3 bg-accent/10 rounded-lg border border-accent/20">
-                          <div className="text-xs font-medium text-foreground mb-1">Contact Information</div>
-                          <div className="text-xs text-muted-foreground line-clamp-2">{venue.contact_information}</div>
-                        </div>
+                  {/* Description */}
+                  {venue.description && (
+                    <div className="p-3 bg-muted/30 rounded-lg">
+                      <div className="text-xs font-medium text-foreground mb-1">Description</div>
+                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
+                        {venue.description}
+                      </p>
+                    </div>
+                  )}
+                  
+                  {/* Additional Notes */}
+                  {venue.additional_notes && (
+                    <div className="p-3 bg-muted/30 rounded-lg">
+                      <div className="text-xs font-medium text-foreground mb-1">Additional Notes</div>
+                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
+                        {venue.additional_notes}
+                      </p>
+                    </div>
+                  )}
+                  
+                  {/* Contact Actions - Clearer separation */}
+                  {(venue.contact_email || venue.contact_phone) && (
+                    <div className="mt-auto space-y-2 pt-4 border-t border-border/50">
+                      {venue.contact_email && (
+                        <Button 
+                          variant="outline" 
+                          className="w-full text-sm btn-outline-primary"
+                          onClick={() => window.location.href = `mailto:${venue.contact_email}`}
+                        >
+                          📧 Email {venue.name}
+                        </Button>
                       )}
-                      
-                      {/* Notes */}
-                      {venue.notes && (
-                        <div className="p-3 bg-muted/30 rounded-lg">
-                          <div className="text-xs font-medium text-foreground mb-1">Additional Notes</div>
-                          <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
-                            {venue.notes}
-                          </p>
-                        </div>
+                      {venue.contact_phone && (
+                        <Button 
+                          variant="outline" 
+                          className="w-full text-sm btn-outline-primary"
+                          onClick={() => window.location.href = `tel:${venue.contact_phone}`}
+                        >
+                          📞 Call {venue.name}
+                        </Button>
                       )}
                     </div>
                   )}

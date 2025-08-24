@@ -354,15 +354,18 @@ export type Database = {
       venue_submissions: {
         Row: {
           admin_notes: string | null
-          contact_information: string
-          cost_level: string
+          address: string
+          capacity: number
+          category: string
+          contact_email: string
+          contact_phone: string
           created_at: string
-          hosting_capacity: number
+          description: string
           id: string
           image_url: string | null
-          location: string
           name: string
-          notes: string | null
+          price_information: string
+          additional_notes: string | null
           reviewed_at: string | null
           reviewed_by: string | null
           status: string
@@ -372,15 +375,18 @@ export type Database = {
         }
         Insert: {
           admin_notes?: string | null
-          contact_information: string
-          cost_level: string
+          address: string
+          capacity: number
+          category: string
+          contact_email: string
+          contact_phone: string
           created_at?: string
-          hosting_capacity: number
+          description: string
           id?: string
           image_url?: string | null
-          location: string
           name: string
-          notes?: string | null
+          price_information: string
+          additional_notes?: string | null
           reviewed_at?: string | null
           reviewed_by?: string | null
           status?: string
@@ -390,15 +396,18 @@ export type Database = {
         }
         Update: {
           admin_notes?: string | null
-          contact_information?: string
-          cost_level?: string
+          address?: string
+          capacity?: number
+          category?: string
+          contact_email?: string
+          contact_phone?: string
           created_at?: string
-          hosting_capacity?: number
+          description?: string
           id?: string
           image_url?: string | null
-          location?: string
           name?: string
-          notes?: string | null
+          price_information?: string
+          additional_notes?: string | null
           reviewed_at?: string | null
           reviewed_by?: string | null
           status?: string
@@ -411,41 +420,50 @@ export type Database = {
       venues: {
         Row: {
           author_id: string
-          contact_information: string
-          cost_level: string
+          address: string
+          capacity: number
+          category: string
+          contact_email: string
+          contact_phone: string
           created_at: string
-          hosting_capacity: number
+          description: string
           id: string
           image_url: string | null
-          location: string
           name: string
-          notes: string | null
+          price_information: string
+          additional_notes: string | null
           updated_at: string
         }
         Insert: {
           author_id: string
-          contact_information: string
-          cost_level: string
+          address: string
+          capacity: number
+          category: string
+          contact_email: string
+          contact_phone: string
           created_at?: string
-          hosting_capacity: number
+          description: string
           id?: string
           image_url?: string | null
-          location: string
           name: string
-          notes?: string | null
+          price_information: string
+          additional_notes?: string | null
           updated_at?: string
         }
         Update: {
           author_id?: string
-          contact_information?: string
-          cost_level?: string
+          address?: string
+          capacity?: number
+          category?: string
+          contact_email?: string
+          contact_phone?: string
           created_at?: string
-          hosting_capacity?: number
+          description?: string
           id?: string
           image_url?: string | null
-          location?: string
           name?: string
-          notes?: string | null
+          price_information?: string
+          additional_notes?: string | null
           updated_at?: string
         }
         Relationships: []

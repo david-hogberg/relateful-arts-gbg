@@ -11,11 +11,14 @@ interface VenueSubmission {
   id: string;
   user_id: string;
   name: string;
-  location: string;
-  hosting_capacity: number;
-  contact_information: string;
-  cost_level: string;
-  notes?: string;
+  address: string;
+  capacity: number;
+  contact_email: string;
+  contact_phone: string;
+  category: string;
+  price_information: string;
+  description: string;
+  additional_notes?: string;
   status: string;
   admin_notes?: string;
   submitted_at: string;
@@ -99,11 +102,14 @@ export const ManageVenueSubmissions: React.FC = () => {
           .insert([{
             author_id: submission.user_id,
             name: submission.name,
-            location: submission.location,
-            hosting_capacity: submission.hosting_capacity,
-            contact_information: submission.contact_information,
-            cost_level: submission.cost_level,
-            notes: submission.notes,
+            address: submission.address,
+            capacity: submission.capacity,
+            contact_email: submission.contact_email,
+            contact_phone: submission.contact_phone,
+            category: submission.category,
+            price_information: submission.price_information,
+            description: submission.description,
+            additional_notes: submission.additional_notes,
           }]);
 
         if (venueError) throw venueError;
@@ -154,19 +160,9 @@ export const ManageVenueSubmissions: React.FC = () => {
     }
   };
 
-  const getCostLevelColor = (costLevel: string) => {
-    switch (costLevel.toLowerCase()) {
-      case 'free':
-        return 'bg-green-100 text-green-800';
-      case 'low':
-        return 'bg-blue-100 text-blue-800';
-      case 'medium':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'high':
-        return 'bg-red-100 text-red-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
+  const getCategoryColor = (category: string) => {
+    // Return a consistent color for categories
+    return 'bg-blue-100 text-blue-800';
   };
 
   const formatDate = (dateString: string) => {
@@ -208,8 +204,8 @@ export const ManageVenueSubmissions: React.FC = () => {
                   <Badge className={getStatusColor(submission.status)}>
                     {submission.status}
                   </Badge>
-                  <Badge className={getCostLevelColor(submission.cost_level)}>
-                    {submission.cost_level}
+                  <Badge className={getCategoryColor(submission.category)}>
+                    {submission.category}
                   </Badge>
                 </div>
                 <p className="text-sm text-muted-foreground">
@@ -227,8 +223,8 @@ export const ManageVenueSubmissions: React.FC = () => {
                 <div className="flex items-start gap-2">
                   <MapPin className="h-4 w-4 text-muted-foreground mt-1 flex-shrink-0" />
                   <div>
-                    <p className="font-medium text-sm">Location</p>
-                    <p className="text-sm text-muted-foreground">{submission.location}</p>
+                    <p className="font-medium text-sm">Address</p>
+                    <p className="text-sm text-muted-foreground">{submission.address}</p>
                   </div>
                 </div>
 
@@ -236,7 +232,7 @@ export const ManageVenueSubmissions: React.FC = () => {
                   <Users className="h-4 w-4 text-muted-foreground mt-1 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-sm">Capacity</p>
-                    <p className="text-sm text-muted-foreground">{submission.hosting_capacity} people</p>
+                    <p className="text-sm text-muted-foreground">{submission.capacity} people</p>
                   </div>
                 </div>
               </div>
@@ -245,14 +241,41 @@ export const ManageVenueSubmissions: React.FC = () => {
                 <Phone className="h-4 w-4 text-muted-foreground mt-1 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-sm">Contact Information</p>
-                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">{submission.contact_information}</p>
+                  <div className="space-y-1">
+                    <p className="text-sm text-muted-foreground">📧 {submission.contact_email}</p>
+                    <p className="text-sm text-muted-foreground">📞 {submission.contact_phone}</p>
+                  </div>
                 </div>
               </div>
 
-              {submission.notes && (
+              <div className="flex items-start gap-2">
+                <Building className="h-4 w-4 text-muted-foreground mt-1 flex-shrink-0" />
                 <div>
-                  <p className="font-medium text-sm mb-1">Notes & Instructions</p>
-                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">{submission.notes}</p>
+                  <p className="font-medium text-sm">Category</p>
+                  <p className="text-sm text-muted-foreground">{submission.category}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-2">
+                <Building className="h-4 w-4 text-muted-foreground mt-1 flex-shrink-0" />
+                <div>
+                  <p className="font-medium text-sm">Price Information</p>
+                  <p className="text-sm text-muted-foreground">{submission.price_information}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-2">
+                <Building className="h-4 w-4 text-muted-foreground mt-1 flex-shrink-0" />
+                <div>
+                  <p className="font-medium text-sm">Description</p>
+                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">{submission.description}</p>
+                </div>
+              </div>
+
+              {submission.additional_notes && (
+                <div>
+                  <p className="font-medium text-sm mb-1">Additional Notes</p>
+                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">{submission.additional_notes}</p>
                 </div>
               )}
 

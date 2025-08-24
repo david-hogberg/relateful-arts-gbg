@@ -25,7 +25,7 @@ CREATE TABLE public.facilitator_applications (
   certifications TEXT,
   preferred_practice_types TEXT[] DEFAULT '{}',
   availability TEXT,
-  references TEXT,
+  contact_references TEXT,
   status public.application_status NOT NULL DEFAULT 'pending',
   admin_notes TEXT,
   submitted_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
@@ -80,8 +80,7 @@ CREATE POLICY "Only admins can change user roles"
 ON public.profiles FOR UPDATE
 TO authenticated
 USING (
-  auth.uid() = user_id AND 
-  (OLD.role = NEW.role OR public.is_admin(auth.uid()))
+  auth.uid() = user_id OR public.is_admin(auth.uid())
 );
 
 -- Facilitator applications RLS policies

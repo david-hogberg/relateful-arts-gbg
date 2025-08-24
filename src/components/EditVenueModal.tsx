@@ -12,11 +12,14 @@ import { useToast } from '../hooks/use-toast';
 interface Venue {
   id: string;
   name: string;
-  location: string;
-  hosting_capacity: number;
-  contact_information: string;
-  cost_level: string;
-  notes?: string;
+  address: string;
+  capacity: number;
+  contact_email: string;
+  contact_phone: string;
+  category: string;
+  price_information: string;
+  description: string;
+  additional_notes?: string;
   image_url?: string;
   author_id: string;
 }
@@ -28,7 +31,17 @@ interface EditVenueModalProps {
   onUpdate: () => void;
 }
 
-const costLevels = ['free', 'low', 'medium', 'high'];
+const venueCategories = [
+  'Community Center',
+  'Studio',
+  'Gallery',
+  'Theater',
+  'Outdoor Space',
+  'Conference Room',
+  'Workshop Space',
+  'Retreat Center',
+  'Other'
+];
 
 export const EditVenueModal: React.FC<EditVenueModalProps> = ({
   venue,
@@ -40,11 +53,14 @@ export const EditVenueModal: React.FC<EditVenueModalProps> = ({
   const { toast } = useToast();
   
   const [name, setName] = useState('');
-  const [location, setLocation] = useState('');
-  const [hostingCapacity, setHostingCapacity] = useState('');
-  const [contactInformation, setContactInformation] = useState('');
-  const [costLevel, setCostLevel] = useState('');
-  const [notes, setNotes] = useState('');
+  const [address, setAddress] = useState('');
+  const [capacity, setCapacity] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
+  const [contactPhone, setContactPhone] = useState('');
+  const [category, setCategory] = useState('');
+  const [priceInformation, setPriceInformation] = useState('');
+  const [description, setDescription] = useState('');
+  const [additionalNotes, setAdditionalNotes] = useState('');
   const [imageUrl, setImageUrl] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -56,11 +72,14 @@ export const EditVenueModal: React.FC<EditVenueModalProps> = ({
   useEffect(() => {
     if (venue && isOpen) {
       setName(venue.name);
-      setLocation(venue.location);
-      setHostingCapacity(venue.hosting_capacity.toString());
-      setContactInformation(venue.contact_information);
-      setCostLevel(venue.cost_level);
-      setNotes(venue.notes || '');
+      setAddress(venue.address);
+      setCapacity(venue.capacity.toString());
+      setContactEmail(venue.contact_email);
+      setContactPhone(venue.contact_phone);
+      setCategory(venue.category);
+      setPriceInformation(venue.price_information);
+      setDescription(venue.description);
+      setAdditionalNotes(venue.additional_notes || '');
       setImageUrl(venue.image_url || '');
     }
   }, [venue, isOpen]);
@@ -75,11 +94,14 @@ export const EditVenueModal: React.FC<EditVenueModalProps> = ({
     try {
       const updateData = {
         name,
-        location,
-        hosting_capacity: parseInt(hostingCapacity),
-        contact_information: contactInformation,
-        cost_level: costLevel,
-        notes: notes || null,
+        address,
+        capacity: parseInt(capacity),
+        contact_email: contactEmail,
+        contact_phone: contactPhone,
+        category,
+        price_information: priceInformation,
+        description,
+        additional_notes: additionalNotes || null,
         image_url: imageUrl || null,
         updated_at: new Date().toISOString(),
       };
@@ -167,48 +189,59 @@ export const EditVenueModal: React.FC<EditVenueModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Location *</label>
+            <label className="block text-sm font-medium mb-2">Address *</label>
             <Input
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="City, address or general area"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="Full address of the venue"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Hosting Capacity *</label>
+            <label className="block text-sm font-medium mb-2">Capacity *</label>
             <Input
               type="number"
-              value={hostingCapacity}
-              onChange={(e) => setHostingCapacity(e.target.value)}
+              value={capacity}
+              onChange={(e) => setCapacity(e.target.value)}
               placeholder="Maximum number of people"
               min="1"
               required
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2">Contact Information *</label>
-            <Textarea
-              value={contactInformation}
-              onChange={(e) => setContactInformation(e.target.value)}
-              placeholder="How should facilitators contact you? (Email, phone, etc.)"
-              rows={3}
-              required
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-2">Contact Email *</label>
+              <Input
+                type="email"
+                value={contactEmail}
+                onChange={(e) => setContactEmail(e.target.value)}
+                placeholder="contact@venue.com"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Contact Phone *</label>
+              <Input
+                value={contactPhone}
+                onChange={(e) => setContactPhone(e.target.value)}
+                placeholder="+1 (555) 123-4567"
+                required
+              />
+            </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Cost Level *</label>
-            <Select value={costLevel} onValueChange={setCostLevel}>
+            <label className="block text-sm font-medium mb-2">Category *</label>
+            <Select value={category} onValueChange={setCategory}>
               <SelectTrigger>
-                <SelectValue placeholder="Select cost level" />
+                <SelectValue placeholder="Select venue category" />
               </SelectTrigger>
               <SelectContent>
-                {costLevels.map((level) => (
-                  <SelectItem key={level} value={level}>
-                    {level.charAt(0).toUpperCase() + level.slice(1)}
+                {venueCategories.map((cat) => (
+                  <SelectItem key={cat} value={cat}>
+                    {cat}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -216,12 +249,33 @@ export const EditVenueModal: React.FC<EditVenueModalProps> = ({
           </div>
 
           <div>
+            <label className="block text-sm font-medium mb-2">Price Information *</label>
+            <Input
+              value={priceInformation}
+              onChange={(e) => setPriceInformation(e.target.value)}
+              placeholder="e.g., Free, $50/hour, Contact for pricing"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Description *</label>
+            <Textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Describe the venue, its features, and what makes it suitable for events"
+              rows={4}
+              required
+            />
+          </div>
+
+          <div>
             <label className="block text-sm font-medium mb-2">Additional Notes</label>
             <Textarea
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              placeholder="Any additional information about the venue (facilities, accessibility, etc.)"
-              rows={4}
+              value={additionalNotes}
+              onChange={(e) => setAdditionalNotes(e.target.value)}
+              placeholder="Any additional information about facilities, accessibility, parking, etc."
+              rows={3}
             />
           </div>
 

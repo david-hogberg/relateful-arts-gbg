@@ -24,13 +24,28 @@ export const SubmitVenueModal: React.FC<SubmitVenueModalProps> = ({
   const { user, profile } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
+  
+  const venueCategories = [
+    'Community Center',
+    'Studio',
+    'Gallery',
+    'Theater',
+    'Outdoor Space',
+    'Conference Room',
+    'Workshop Space',
+    'Retreat Center',
+    'Other'
+  ];
   const [formData, setFormData] = useState({
     name: '',
-    location: '',
-    hosting_capacity: '',
-    contact_information: '',
-    cost_level: '',
-    notes: '',
+    address: '',
+    capacity: '',
+    contact_email: '',
+    contact_phone: '',
+    category: '',
+    price_information: '',
+    description: '',
+    additional_notes: '',
     image_url: '',
   });
 
@@ -50,11 +65,14 @@ export const SubmitVenueModal: React.FC<SubmitVenueModalProps> = ({
           .insert([{
             author_id: user.id,
             name: formData.name,
-            location: formData.location,
-            hosting_capacity: parseInt(formData.hosting_capacity),
-            contact_information: formData.contact_information,
-            cost_level: formData.cost_level,
-            notes: formData.notes || null,
+            address: formData.address,
+            capacity: parseInt(formData.capacity),
+            contact_email: formData.contact_email,
+            contact_phone: formData.contact_phone,
+            category: formData.category,
+            price_information: formData.price_information,
+            description: formData.description,
+            additional_notes: formData.additional_notes || null,
             image_url: formData.image_url || null,
           }]);
 
@@ -71,11 +89,14 @@ export const SubmitVenueModal: React.FC<SubmitVenueModalProps> = ({
           .insert([{
             user_id: user.id,
             name: formData.name,
-            location: formData.location,
-            hosting_capacity: parseInt(formData.hosting_capacity),
-            contact_information: formData.contact_information,
-            cost_level: formData.cost_level,
-            notes: formData.notes || null,
+            address: formData.address,
+            capacity: parseInt(formData.capacity),
+            contact_email: formData.contact_email,
+            contact_phone: formData.contact_phone,
+            category: formData.category,
+            price_information: formData.price_information,
+            description: formData.description,
+            additional_notes: formData.additional_notes || null,
             image_url: formData.image_url || null,
           }]);
 
@@ -90,11 +111,14 @@ export const SubmitVenueModal: React.FC<SubmitVenueModalProps> = ({
       // Reset form
       setFormData({
         name: '',
-        location: '',
-        hosting_capacity: '',
-        contact_information: '',
-        cost_level: '',
-        notes: '',
+        address: '',
+        capacity: '',
+        contact_email: '',
+        contact_phone: '',
+        category: '',
+        price_information: '',
+        description: '',
+        additional_notes: '',
         image_url: '',
       });
 
@@ -153,63 +177,100 @@ export const SubmitVenueModal: React.FC<SubmitVenueModalProps> = ({
             </div>
 
             <div>
-              <Label htmlFor="location">Location *</Label>
+              <Label htmlFor="address">Address *</Label>
               <Input
-                id="location"
-                value={formData.location}
-                onChange={(e) => handleChange('location', e.target.value)}
+                id="address"
+                value={formData.address}
+                onChange={(e) => handleChange('address', e.target.value)}
                 placeholder="e.g., 123 Main Street, City, State"
                 required
               />
             </div>
 
             <div>
-              <Label htmlFor="hosting_capacity">Hosting Capacity *</Label>
+              <Label htmlFor="capacity">Capacity *</Label>
               <Input
-                id="hosting_capacity"
+                id="capacity"
                 type="number"
                 min="1"
-                value={formData.hosting_capacity}
-                onChange={(e) => handleChange('hosting_capacity', e.target.value)}
+                value={formData.capacity}
+                onChange={(e) => handleChange('capacity', e.target.value)}
                 placeholder="e.g., 25"
                 required
               />
             </div>
 
-            <div>
-              <Label htmlFor="contact_information">Contact Information *</Label>
-              <Textarea
-                id="contact_information"
-                value={formData.contact_information}
-                onChange={(e) => handleChange('contact_information', e.target.value)}
-                placeholder="How to contact for booking (email, phone, website, etc.)"
-                required
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="contact_email">Contact Email *</Label>
+                <Input
+                  id="contact_email"
+                  type="email"
+                  value={formData.contact_email}
+                  onChange={(e) => handleChange('contact_email', e.target.value)}
+                  placeholder="contact@venue.com"
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="contact_phone">Contact Phone *</Label>
+                <Input
+                  id="contact_phone"
+                  value={formData.contact_phone}
+                  onChange={(e) => handleChange('contact_phone', e.target.value)}
+                  placeholder="+1 (555) 123-4567"
+                  required
+                />
+              </div>
             </div>
 
             <div>
-              <Label htmlFor="cost_level">Cost Level *</Label>
-              <Select onValueChange={(value) => handleChange('cost_level', value)} required>
+              <Label htmlFor="category">Category *</Label>
+              <Select onValueChange={(value) => handleChange('category', value)} required>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select cost level" />
+                  <SelectValue placeholder="Select venue category" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="free">Free</SelectItem>
-                  <SelectItem value="low">Low ($)</SelectItem>
-                  <SelectItem value="medium">Medium ($$)</SelectItem>
-                  <SelectItem value="high">High ($$$)</SelectItem>
+                  {venueCategories.map((cat) => (
+                    <SelectItem key={cat} value={cat}>
+                      {cat}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
 
             <div>
-              <Label htmlFor="notes">Notes & Instructions</Label>
+              <Label htmlFor="price_information">Price Information *</Label>
+              <Input
+                id="price_information"
+                value={formData.price_information}
+                onChange={(e) => handleChange('price_information', e.target.value)}
+                placeholder="e.g., Free, $50/hour, Contact for pricing"
+                required
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="description">Description *</Label>
               <Textarea
-                id="notes"
-                value={formData.notes}
-                onChange={(e) => handleChange('notes', e.target.value)}
-                placeholder="Additional information about the venue, booking process, amenities, restrictions, etc."
+                id="description"
+                value={formData.description}
+                onChange={(e) => handleChange('description', e.target.value)}
+                placeholder="Describe the venue, its features, and what makes it suitable for events"
                 rows={4}
+                required
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="additional_notes">Additional Notes</Label>
+              <Textarea
+                id="additional_notes"
+                value={formData.additional_notes}
+                onChange={(e) => handleChange('additional_notes', e.target.value)}
+                placeholder="Additional information about facilities, accessibility, parking, etc."
+                rows={3}
               />
             </div>
           </div>

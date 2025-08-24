@@ -6,11 +6,14 @@ import { MapPin, Users, DollarSign, Calendar, Building, Phone } from 'lucide-rea
 interface Venue {
   id: string;
   name: string;
-  location: string;
-  hosting_capacity: number;
-  contact_information: string;
-  cost_level: string;
-  notes?: string;
+  address: string;
+  capacity: number;
+  contact_email: string;
+  contact_phone: string;
+  category: string;
+  price_information: string;
+  description: string;
+  additional_notes?: string;
   author_id: string;
   created_at: string;
 }
@@ -26,19 +29,9 @@ export const ViewVenueModal: React.FC<ViewVenueModalProps> = ({
   isOpen,
   onClose,
 }) => {
-  const getCostLevelColor = (costLevel: string) => {
-    switch (costLevel.toLowerCase()) {
-      case 'free':
-        return 'bg-green-100 text-green-800';
-      case 'low':
-        return 'bg-blue-100 text-blue-800';
-      case 'medium':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'high':
-        return 'bg-red-100 text-red-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
+  const getCategoryColor = (category: string) => {
+    // Return a consistent color for categories
+    return 'bg-blue-100 text-blue-800';
   };
 
   const formatDate = (dateString: string) => {
@@ -58,8 +51,8 @@ export const ViewVenueModal: React.FC<ViewVenueModalProps> = ({
               <Building className="h-6 w-6" />
               {venue.name}
             </span>
-            <Badge className={getCostLevelColor(venue.cost_level)}>
-              {venue.cost_level}
+            <Badge className={getCategoryColor(venue.category)}>
+              {venue.category}
             </Badge>
           </DialogTitle>
         </DialogHeader>
@@ -71,9 +64,9 @@ export const ViewVenueModal: React.FC<ViewVenueModalProps> = ({
               <MapPin className="h-5 w-5 text-muted-foreground mt-1 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide mb-1">
-                  Location
+                  Address
                 </h3>
-                <p className="text-foreground">{venue.location}</p>
+                <p className="text-foreground">{venue.address}</p>
               </div>
             </div>
 
@@ -81,9 +74,9 @@ export const ViewVenueModal: React.FC<ViewVenueModalProps> = ({
               <Users className="h-5 w-5 text-muted-foreground mt-1 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide mb-1">
-                  Hosting Capacity
+                  Capacity
                 </h3>
-                <p className="text-foreground">{venue.hosting_capacity} people</p>
+                <p className="text-foreground">{venue.capacity} people</p>
               </div>
             </div>
 
@@ -93,18 +86,41 @@ export const ViewVenueModal: React.FC<ViewVenueModalProps> = ({
                 <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide mb-1">
                   Contact Information
                 </h3>
-                <p className="text-foreground whitespace-pre-wrap">{venue.contact_information}</p>
+                <div className="space-y-1">
+                  <p className="text-foreground">📧 {venue.contact_email}</p>
+                  <p className="text-foreground">📞 {venue.contact_phone}</p>
+                </div>
               </div>
             </div>
 
-            {venue.notes && (
+            <div className="flex items-start gap-3">
+              <DollarSign className="h-5 w-5 text-muted-foreground mt-1 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide mb-1">
+                  Price Information
+                </h3>
+                <p className="text-foreground">{venue.price_information}</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <Building className="h-5 w-5 text-muted-foreground mt-1 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide mb-1">
+                  Description
+                </h3>
+                <p className="text-foreground whitespace-pre-wrap">{venue.description}</p>
+              </div>
+            </div>
+
+            {venue.additional_notes && (
               <div className="flex items-start gap-3">
                 <Building className="h-5 w-5 text-muted-foreground mt-1 flex-shrink-0" />
                 <div>
                   <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide mb-1">
-                    Notes & Instructions
+                    Additional Notes
                   </h3>
-                  <p className="text-foreground whitespace-pre-wrap">{venue.notes}</p>
+                  <p className="text-foreground whitespace-pre-wrap">{venue.additional_notes}</p>
                 </div>
               </div>
             )}
