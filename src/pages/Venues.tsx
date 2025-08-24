@@ -4,10 +4,9 @@ import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { SubmitVenueModal } from '../components/SubmitVenueModal';
-import { ViewVenueModal } from '../components/ViewVenueModal';
 import { EditVenueModal } from '../components/EditVenueModal';
 import { supabase } from '../integrations/supabase/client';
-import { MapPin, Users, DollarSign, Building, Edit, Trash2, Loader2 } from 'lucide-react';
+import { MapPin, Users, DollarSign, Building, Edit, Trash2, Loader2, Mail, Phone } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
 import { useAuth } from '../hooks/useAuth';
 
@@ -32,7 +31,6 @@ const Venues: React.FC = () => {
   const [venues, setVenues] = useState<Venue[]>([]);
   const [loading, setLoading] = useState(true);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
-  const [showViewModal, setShowViewModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null);
   const { toast } = useToast();
@@ -74,11 +72,6 @@ const Venues: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleViewVenue = (venue: Venue) => {
-    setSelectedVenue(venue);
-    setShowViewModal(true);
   };
 
   const handleEditVenue = (venue: Venue) => {
@@ -159,8 +152,7 @@ const Venues: React.FC = () => {
             {venues.map((venue) => (
               <Card 
                 key={venue.id} 
-                className="card-elegant cursor-pointer"
-                onClick={() => handleViewVenue(venue)}
+                className="card-elegant"
               >
                 {/* Venue Image */}
                 {venue.image_url && (
@@ -206,22 +198,19 @@ const Venues: React.FC = () => {
                     </div>
                     
                     {/* Price Information */}
-                    <div className="info-item">
-                      <div className="info-icon">
-                        <DollarSign className="h-4 w-4 text-primary" />
-                      </div>
-                      <div className="info-content">
-                        <div className="info-label">Price</div>
-                        <div className="info-value capitalize">{venue.price_information}</div>
-                      </div>
+                    <div className="mb-4">
+                      <div className="text-sm font-medium text-foreground mb-2">Pricing</div>
+                      <p className="text-muted-foreground leading-relaxed text-sm capitalize">
+                        {venue.price_information}
+                      </p>
                     </div>
                   </div>
                   
                   {/* Description */}
                   {venue.description && (
-                    <div className="p-3 bg-muted/30 rounded-lg">
-                      <div className="text-xs font-medium text-foreground mb-1">Description</div>
-                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
+                    <div className="mb-4">
+                      <div className="text-sm font-medium text-foreground mb-2">About</div>
+                      <p className="text-muted-foreground leading-relaxed text-sm">
                         {venue.description}
                       </p>
                     </div>
@@ -229,9 +218,9 @@ const Venues: React.FC = () => {
                   
                   {/* Additional Notes */}
                   {venue.additional_notes && (
-                    <div className="p-3 bg-muted/30 rounded-lg">
-                      <div className="text-xs font-medium text-foreground mb-1">Additional Notes</div>
-                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
+                    <div className="mb-4">
+                      <div className="text-sm font-medium text-foreground mb-2">Additional Notes</div>
+                      <p className="text-muted-foreground leading-relaxed text-sm">
                         {venue.additional_notes}
                       </p>
                     </div>
@@ -246,7 +235,8 @@ const Venues: React.FC = () => {
                           className="w-full text-sm btn-outline-primary"
                           onClick={() => window.location.href = `mailto:${venue.contact_email}`}
                         >
-                          📧 Email {venue.name}
+                          <Mail className="w-4 h-4 mr-2" />
+                          Email
                         </Button>
                       )}
                       {venue.contact_phone && (
@@ -255,7 +245,8 @@ const Venues: React.FC = () => {
                           className="w-full text-sm btn-outline-primary"
                           onClick={() => window.location.href = `tel:${venue.contact_phone}`}
                         >
-                          📞 Call {venue.name}
+                          <Phone className="w-4 h-4 mr-2" />
+                          Call
                         </Button>
                       )}
                     </div>
@@ -301,13 +292,7 @@ const Venues: React.FC = () => {
         onSubmit={fetchVenues}
       />
 
-      {selectedVenue && (
-        <ViewVenueModal
-          venue={selectedVenue}
-          isOpen={showViewModal}
-          onClose={() => setShowViewModal(false)}
-        />
-      )}
+
 
       <EditVenueModal
         venue={selectedVenue}
