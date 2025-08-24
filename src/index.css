@@ -96,7 +96,7 @@ All colors MUST be HSL for consistency.
     color: hsl(var(--foreground));
   }
 
-  /* Typography with warm, friendly feel */
+  /* Typography with warm, friendly feel - Mobile responsive */
   h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     letter-spacing: -0.02em;
@@ -107,7 +107,7 @@ All colors MUST be HSL for consistency.
   }
 
   h1 {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 5vw, 2.5rem);
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 1rem;
@@ -115,7 +115,7 @@ All colors MUST be HSL for consistency.
   }
 
   h2 {
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 4vw, 2rem);
     font-weight: 600;
     line-height: 1.3;
     margin-bottom: 0.75rem;
@@ -123,7 +123,7 @@ All colors MUST be HSL for consistency.
   }
 
   h3 {
-    font-size: 1.5rem;
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
     font-weight: 600;
     line-height: 1.4;
     margin-bottom: 0.5rem;
@@ -135,6 +135,7 @@ All colors MUST be HSL for consistency.
     color: hsl(var(--foreground));
     line-height: 1.7;
     margin-bottom: 1rem;
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
   }
 
   /* Warm link styling */
@@ -150,16 +151,16 @@ All colors MUST be HSL for consistency.
 }
 
 @layer components {
-  /* Page Layout Components - Cozy and welcoming */
+  /* Page Layout Components - Cozy and welcoming - Mobile responsive */
   .page-header {
-    @apply py-24 bg-gradient-warm;
+    @apply py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-warm;
     background-image: var(--gradient-cozy);
-    padding-top: 6rem;
-    padding-bottom: 6rem;
+    padding-top: clamp(3rem, 8vw, 6rem);
+    padding-bottom: clamp(3rem, 8vw, 6rem);
   }
 
   .page-header-content {
-    @apply container mx-auto px-6;
+    @apply container mx-auto px-4 sm:px-6;
   }
 
   .page-header-inner {
@@ -167,40 +168,41 @@ All colors MUST be HSL for consistency.
   }
 
   .page-title {
-    @apply text-6xl font-bold mb-8 text-foreground;
+    @apply font-bold mb-6 sm:mb-8 text-foreground;
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
     background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     line-height: 1.2;
     padding-bottom: 0.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: clamp(1rem, 3vw, 2rem);
     padding-top: 0.5rem;
   }
 
   .page-description {
-    @apply text-xl text-muted-foreground mb-12 leading-relaxed;
-    font-size: 1.25rem;
+    @apply text-muted-foreground mb-8 sm:mb-12 leading-relaxed;
+    font-size: clamp(1rem, 3vw, 1.25rem);
     line-height: 1.6;
   }
 
   .page-section {
-    @apply py-20;
+    @apply py-12 sm:py-16 md:py-20;
   }
 
   .page-section-content {
-    @apply container mx-auto px-6;
+    @apply container mx-auto px-4 sm:px-6;
   }
 
-  /* Card Components - Warm and inviting */
+  /* Card Components - Warm and inviting - Mobile responsive */
   .card-elegant {
-    @apply relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-cozy transition-all duration-300 rounded-2xl;
+    @apply relative overflow-hidden bg-gradient-to-br from-card via-card to-card/95 border-0 shadow-cozy transition-all duration-300 rounded-xl sm:rounded-2xl;
     border: 1px solid hsl(var(--border));
   }
 
   .card-image-container {
-    @apply relative h-52 overflow-hidden;
-    border-radius: 1rem 1rem 0 0;
+    @apply relative h-40 sm:h-48 md:h-52 overflow-hidden;
+    border-radius: 0.75rem 0.75rem 0 0;
   }
 
   .card-image {
@@ -212,31 +214,31 @@ All colors MUST be HSL for consistency.
   }
 
   .card-badge-overlay {
-    @apply absolute top-4 right-4 bg-primary/95 text-white border-0 backdrop-blur-sm px-3 py-2 rounded-full;
+    @apply absolute top-3 right-3 sm:top-4 sm:right-4 bg-primary/95 text-white border-0 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-2 rounded-full text-xs sm:text-sm;
     box-shadow: var(--shadow-soft);
   }
 
   .card-price-overlay {
-    @apply absolute top-4 left-4 text-white bg-black/40 backdrop-blur-sm px-3 py-2 rounded-full;
+    @apply absolute top-3 left-3 sm:top-4 sm:left-4 text-white bg-black/40 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-2 rounded-full text-xs sm:text-sm;
     box-shadow: var(--shadow-soft);
   }
 
   .card-content-wrapper {
-    @apply relative z-10 p-6;
+    @apply relative z-10 p-4 sm:p-6;
   }
 
-  /* Info Display Components - Warm and friendly */
+  /* Info Display Components - Warm and friendly - Mobile responsive */
   .info-grid {
-    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8;
   }
 
   .info-item {
-    @apply flex items-center gap-4 p-4 bg-gradient-subtle rounded-xl border border-primary/15 transition-all duration-300;
+    @apply flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gradient-subtle rounded-lg sm:rounded-xl border border-primary/15 transition-all duration-300;
     box-shadow: var(--shadow-soft);
   }
 
   .info-icon {
-    @apply p-3 bg-primary/15 rounded-xl;
+    @apply p-2 sm:p-3 bg-primary/15 rounded-lg sm:rounded-xl;
     color: hsl(var(--primary));
   }
 
@@ -245,134 +247,142 @@ All colors MUST be HSL for consistency.
   }
 
   .info-label {
-    @apply text-sm font-medium text-foreground mb-1;
+    @apply text-xs sm:text-sm font-medium text-foreground mb-1;
   }
 
   .info-value {
-    @apply text-sm text-muted-foreground;
+    @apply text-xs sm:text-sm text-muted-foreground;
   }
 
-  /* Button Components - Warm and inviting */
+  /* Button Components - Warm and inviting - Mobile responsive */
   .btn-primary-gradient {
-    @apply bg-gradient-hero shadow-glow transition-all duration-300 rounded-full px-6 py-3 font-medium;
+    @apply bg-gradient-hero shadow-glow transition-all duration-300 rounded-full px-4 py-2 sm:px-6 sm:py-3 font-medium text-sm sm:text-base;
     border: none;
   }
 
   .btn-outline-primary {
-    @apply border-primary/40 transition-all duration-300 rounded-full px-6 py-3 font-medium;
+    @apply border-primary/40 transition-all duration-300 rounded-full px-4 py-2 sm:px-6 sm:py-3 font-medium text-sm sm:text-base;
     background: transparent;
     color: hsl(var(--primary));
   }
 
   /* Loading States - Warm and friendly */
   .loading-container {
-    @apply flex justify-center items-center py-16;
+    @apply flex justify-center items-center py-12 sm:py-16;
   }
 
   .loading-spinner {
-    @apply h-10 w-10 animate-spin;
+    @apply h-8 w-8 sm:h-10 sm:w-10 animate-spin;
     color: hsl(var(--primary));
   }
 
   .loading-text {
-    @apply ml-3 text-muted-foreground;
+    @apply ml-2 sm:ml-3 text-muted-foreground text-sm sm:text-base;
   }
 
-  /* Empty States - Welcoming and warm */
+  /* Empty States - Welcoming and warm - Mobile responsive */
   .empty-state {
-    @apply text-center py-16;
+    @apply text-center py-12 sm:py-16;
   }
 
   .empty-state-icon {
-    @apply h-20 w-20 text-muted-foreground mx-auto mb-6;
+    @apply h-16 w-16 sm:h-20 sm:w-20 text-muted-foreground mx-auto mb-4 sm:mb-6;
     color: hsl(var(--primary));
   }
 
   .empty-state-title {
-    @apply text-2xl font-semibold text-foreground mb-3;
+    @apply text-xl sm:text-2xl font-semibold text-foreground mb-2 sm:mb-3;
   }
 
   .empty-state-description {
-    @apply text-muted-foreground mb-6 text-lg;
+    @apply text-muted-foreground mb-4 sm:mb-6 text-base sm:text-lg;
   }
 
-  /* Form Elements - Warm and inviting */
+  /* Form Elements - Warm and inviting - Mobile responsive */
   .form-section {
-    @apply mb-16;
+    @apply mb-12 sm:mb-16;
   }
 
   .form-card {
-    @apply border-2 border-primary/20 rounded-2xl p-8;
+    @apply border-2 border-primary/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8;
     background: linear-gradient(135deg, hsl(var(--card)), hsl(var(--muted) / 0.3));
     box-shadow: var(--shadow-soft);
   }
 
   .form-card-header {
-    @apply text-center mb-8;
+    @apply text-center mb-6 sm:mb-8;
   }
 
   .form-card-content {
     @apply text-center;
   }
 
-  /* Tag Components - Warm and friendly */
+  /* Tag Components - Warm and friendly - Mobile responsive */
   .tag-container {
-    @apply flex flex-wrap gap-2;
+    @apply flex flex-wrap gap-1.5 sm:gap-2;
   }
 
   .tag-item {
-    @apply text-sm bg-accent/30 text-foreground border-accent/40 px-3 py-1 rounded-full;
+    @apply text-xs sm:text-sm bg-accent/30 text-foreground border-accent/40 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full;
     transition: var(--transition-gentle);
   }
 
   .tag-primary {
-    @apply text-sm bg-primary/15 text-primary border-primary/25 px-3 py-1 rounded-full transition-all duration-200;
+    @apply text-xs sm:text-sm bg-primary/15 text-primary border-primary/25 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full transition-all duration-200;
   }
 
-  /* Responsive Utilities */
+  /* Responsive Utilities - Improved mobile spacing */
   .responsive-grid {
-    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8;
   }
 
   .responsive-grid-wide {
-    @apply grid grid-cols-1 lg:grid-cols-2 gap-10;
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10;
   }
 
-  /* Additional cozy elements */
+  /* Additional cozy elements - Mobile responsive */
   .cozy-container {
-    @apply bg-gradient-to-br from-card via-card to-muted/30 rounded-2xl p-8;
+    @apply bg-gradient-to-br from-card via-card to-muted/30 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8;
     box-shadow: var(--shadow-cozy);
     border: 1px solid hsl(var(--border));
   }
 
   .warm-divider {
-    @apply h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent my-8;
+    @apply h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent my-6 sm:my-8;
   }
 
   .inviting-button {
-    @apply bg-gradient-to-r from-primary to-primary-glow text-white font-medium px-8 py-4 rounded-full transition-all duration-300;
+    @apply bg-gradient-to-r from-primary to-primary-glow text-white font-medium px-6 py-3 sm:px-8 sm:py-4 rounded-full transition-all duration-300 text-sm sm:text-base;
     box-shadow: var(--shadow-elegant);
   }
 
-  /* Profile and Admin page specific styling */
+  /* Profile and Admin page specific styling - Mobile responsive */
   .profile-header {
-    @apply text-center mb-8;
+    @apply text-center mb-6 sm:mb-8;
   }
 
   .profile-title {
-    @apply text-3xl font-bold text-foreground mb-3;
+    @apply text-2xl sm:text-3xl font-bold text-foreground mb-2 sm:mb-3;
   }
 
   .profile-description {
-    @apply text-muted-foreground max-w-2xl mx-auto;
+    @apply text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base;
   }
 
   .admin-tabs {
-    @apply grid w-full grid-cols-4 bg-gradient-subtle border border-primary/10 rounded-xl p-1;
+    @apply grid grid-cols-2 sm:grid-cols-4 bg-gradient-subtle border border-primary/10 rounded-lg sm:rounded-xl p-1;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
   }
 
   .admin-tab-trigger {
-    @apply flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-colors rounded-lg py-2;
+    @apply flex items-center gap-1 sm:gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-colors rounded-lg py-2 text-xs sm:text-sm px-2 sm:px-3;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .profile-card {
@@ -380,78 +390,511 @@ All colors MUST be HSL for consistency.
   }
 
   .profile-form {
-    @apply space-y-6;
+    @apply space-y-4 sm:space-y-6;
   }
 
   .profile-field {
-    @apply flex items-center gap-3 p-4 bg-gradient-subtle rounded-xl border border-primary/10 transition-all duration-300;
+    @apply flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-gradient-subtle rounded-lg sm:rounded-xl border border-primary/10 transition-all duration-300;
   }
 
   .profile-field-icon {
-    @apply w-8 h-8 text-primary p-2 bg-primary/15 rounded-lg;
+    @apply w-6 h-6 sm:w-8 sm:h-8 text-primary p-1.5 sm:p-2 bg-primary/15 rounded-lg flex-shrink-0;
   }
 
   .profile-field-label {
-    @apply font-semibold text-foreground min-w-[120px];
+    @apply font-semibold text-foreground text-sm sm:text-base min-w-[100px] sm:min-w-[120px];
   }
 
   .profile-field-value {
-    @apply text-foreground flex-1;
+    @apply text-foreground flex-1 text-sm sm:text-base break-words;
   }
 
   .profile-field-group {
-    @apply space-y-4;
+    @apply space-y-3 sm:space-y-4;
   }
 
   .profile-field-row {
-    @apply flex items-center gap-3 p-4 bg-gradient-subtle rounded-xl border border-primary/10 transition-all duration-300;
+    @apply flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-gradient-subtle rounded-lg sm:rounded-xl border border-primary/10 transition-all duration-300;
   }
 
   .profile-field-row-icon {
-    @apply w-8 h-8 text-primary p-2 bg-primary/15 rounded-lg flex-shrink-0;
+    @apply w-6 h-6 sm:w-8 sm:h-8 text-primary p-1.5 sm:p-2 bg-primary/15 rounded-lg flex-shrink-0;
   }
 
   .profile-field-row-content {
-    @apply flex-1;
+    @apply flex-1 min-w-0;
   }
 
   .profile-field-row-label {
-    @apply font-semibold text-foreground mb-1;
+    @apply font-semibold text-foreground mb-1 text-sm sm:text-base;
   }
 
   .profile-field-row-value {
-    @apply text-foreground;
+    @apply text-foreground text-sm sm:text-base break-words;
   }
 
   .profile-field-row-description {
-    @apply text-sm text-muted-foreground mt-1;
+    @apply text-xs sm:text-sm text-muted-foreground mt-1;
   }
 
   .profile-section {
-    @apply space-y-4;
+    @apply space-y-3 sm:space-y-4;
   }
 
   .profile-section-title {
-    @apply text-lg font-semibold text-foreground mb-3 flex items-center gap-2;
+    @apply text-base sm:text-lg font-semibold text-foreground mb-2 sm:mb-3 flex items-center gap-2;
   }
 
   .profile-section-title-icon {
-    @apply w-8 h-8 text-primary;
+    @apply w-6 h-6 sm:w-8 sm:h-8 text-primary;
   }
 
   .profile-badge {
-    @apply inline-flex items-center gap-2 px-3 py-1 bg-primary/15 text-primary border border-primary/25 rounded-full text-sm font-medium;
+    @apply inline-flex items-center gap-1.5 sm:gap-2 px-2 py-0.5 sm:px-3 sm:py-1 bg-primary/15 text-primary border border-primary/25 rounded-full text-xs sm:text-sm font-medium;
   }
 
   .profile-badge-icon {
-    @apply w-5 h-5;
+    @apply w-4 h-4 sm:w-5 sm:h-5;
   }
 
   .profile-link {
-    @apply text-primary underline transition-colors duration-200;
+    @apply text-primary underline transition-colors duration-200 break-all;
   }
 
   .profile-divider {
-    @apply h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent my-6;
+    @apply h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent my-4 sm:my-6;
+  }
+
+  /* Mobile-specific improvements */
+  @media (max-width: 640px) {
+    .page-header-content,
+    .page-section-content {
+      @apply px-3;
+    }
+    
+    .card-content-wrapper {
+      @apply p-3;
+    }
+    
+    .profile-field,
+    .profile-field-row {
+      @apply flex-col items-start;
+    }
+    
+    .profile-field-label {
+      @apply min-w-0 mb-1;
+    }
+    
+    .admin-tabs {
+      @apply grid-cols-2 gap-1;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+    }
+    
+    .admin-tab-trigger {
+      @apply text-xs px-1 py-1.5;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    .responsive-grid,
+    .responsive-grid-wide {
+      @apply gap-4;
+    }
+
+    /* Table overflow handling for mobile */
+    .overflow-x-auto {
+      @apply -mx-3;
+    }
+
+    /* Button sizing for mobile */
+    .btn-primary-gradient,
+    .btn-outline-primary {
+      @apply px-4 py-2 text-sm;
+    }
+
+    /* Profile field improvements for very small screens */
+    .profile-field,
+    .profile-field-row {
+      @apply p-3;
+    }
+
+    .profile-field-icon,
+    .profile-field-row-icon {
+      @apply w-5 h-5 p-1;
+    }
+
+    /* Card header improvements for mobile */
+    .card-header {
+      @apply p-4;
+    }
+
+    /* Better spacing for mobile forms */
+    .form-section {
+      @apply mb-8;
+    }
+
+    /* Improved mobile navigation */
+    .admin-tab-trigger {
+      @apply text-xs px-2 py-1;
+    }
+  }
+
+  /* Extra small screen improvements */
+  @media (max-width: 480px) {
+    .page-header-content,
+    .page-section-content {
+      @apply px-2;
+    }
+    
+    .card-content-wrapper {
+      @apply p-2;
+    }
+    
+    .profile-field,
+    .profile-field-row {
+      @apply p-2;
+    }
+    
+    .profile-field-label {
+      @apply text-xs;
+    }
+    
+    .profile-field-value {
+      @apply text-xs;
+    }
+    
+    .page-title {
+      font-size: clamp(2rem, 6vw, 2.5rem);
+    }
+    
+    .page-description {
+      font-size: clamp(0.875rem, 2.5vw, 1rem);
+    }
+    
+    .profile-title {
+      @apply text-xl;
+    }
+    
+    .profile-description {
+      @apply text-xs;
+    }
+
+    /* Table improvements for very small screens */
+    .table {
+      @apply text-xs;
+    }
+
+    .table th,
+    .table td {
+      @apply px-2 py-2;
+    }
+
+    /* Better mobile button handling */
+    .btn-sm {
+      @apply px-2 py-1 text-xs;
+    }
+  }
+
+  /* Table-specific mobile improvements */
+  @media (max-width: 640px) {
+    .table {
+      @apply text-sm;
+    }
+
+    .table th,
+    .table td {
+      @apply px-2 py-2;
+    }
+
+    /* Ensure table cells don't overflow */
+    .table td {
+      @apply max-w-0 truncate;
+    }
+
+    /* Better mobile table layout */
+    .overflow-x-auto {
+      @apply -mx-3 px-3;
+    }
+
+    /* Form improvements for mobile */
+    .form {
+      @apply space-y-4;
+    }
+
+    .form-field {
+      @apply space-y-2;
+    }
+
+    .form-label {
+      @apply text-sm font-medium;
+    }
+
+    .form-input,
+    .form-textarea {
+      @apply text-sm;
+    }
+
+    /* Modal improvements for mobile */
+    .modal-content {
+      @apply p-4;
+    }
+
+    .modal-header {
+      @apply pb-3;
+    }
+
+    .modal-footer {
+      @apply pt-3;
+    }
+
+    /* Better mobile spacing for profile sections */
+    .profile-section {
+      @apply space-y-3;
+    }
+
+    .profile-field-group {
+      @apply space-y-3;
+    }
+
+    /* Checkbox and select improvements for mobile */
+    .checkbox-group {
+      @apply grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3;
+    }
+
+    .checkbox-item {
+      @apply flex items-center space-x-2;
+    }
+
+    .checkbox-label {
+      @apply text-sm;
+    }
+
+    /* Select component improvements */
+    .select-trigger {
+      @apply text-sm;
+    }
+
+    .select-content {
+      @apply max-h-48;
+    }
+
+    /* Better mobile button groups */
+    .button-group {
+      @apply flex flex-col sm:flex-row gap-2 sm:gap-3;
+    }
+
+    .button-group .btn {
+      @apply flex-1;
+    }
+
+    /* Image upload improvements for mobile */
+    .image-upload {
+      @apply p-4;
+    }
+
+    .image-upload-preview {
+      @apply w-20 h-20 sm:w-24 sm:h-24;
+    }
+
+    .image-upload-button {
+      @apply text-sm px-3 py-2;
+    }
+
+    /* Badge improvements for mobile */
+    .badge {
+      @apply text-xs px-2 py-0.5;
+    }
+
+    .badge-sm {
+      @apply text-xs px-1.5 py-0.5;
+    }
+
+    /* Card improvements for mobile */
+    .card {
+      @apply rounded-lg sm:rounded-xl;
+    }
+
+    .card-header {
+      @apply p-4 sm:p-6;
+    }
+
+    .card-content {
+      @apply p-4 sm:p-6;
+    }
+
+    /* Input improvements for mobile */
+    .input,
+    .textarea {
+      @apply text-sm;
+    }
+
+    .input-sm {
+      @apply text-xs px-2 py-1;
+    }
+
+    /* Label improvements for mobile */
+    .label {
+      @apply text-sm font-medium;
+    }
+
+    /* Admin controls for extra small screens */
+    .admin-tabs {
+      @apply grid-cols-1;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    .admin-tab-trigger {
+      @apply text-xs px-2 py-2 justify-center;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Better mobile admin layout */
+    .admin-dashboard {
+      @apply space-y-4;
+    }
+
+    .admin-section {
+      @apply space-y-3;
+    }
+
+    /* Admin table for very small screens */
+    .admin-table-responsive {
+      @apply -mx-2;
+    }
+
+    .admin-table th,
+    .admin-table td {
+      @apply px-1 py-1 text-xs;
+    }
+
+    /* Admin action buttons for small screens */
+    .admin-actions {
+      @apply flex flex-col gap-1;
+    }
+
+    .admin-actions .btn {
+      @apply text-xs px-2 py-1.5;
+    }
+  }
+
+  /* Improved mobile navigation */
+  .admin-tab-trigger {
+    @apply text-xs px-2 py-1;
+  }
+
+  /* Admin controls improvements for mobile */
+  .admin-tabs {
+    @apply grid-cols-2 gap-1;
+  }
+
+  .admin-tab-trigger {
+    @apply text-xs px-1 py-1.5;
+  }
+
+  /* Better mobile spacing for admin content */
+  .tabs-content {
+    @apply space-y-4;
+  }
+
+  /* Admin card improvements for mobile */
+  .admin-card {
+    @apply p-3;
+  }
+
+  .admin-card-header {
+    @apply p-3 pb-2;
+  }
+
+  .admin-card-content {
+    @apply p-3 pt-2;
+  }
+
+  /* Admin table improvements for mobile */
+  .admin-table {
+    @apply text-xs;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    @apply px-1 py-1.5;
+  }
+
+  /* Admin button improvements for mobile */
+  .admin-button {
+    @apply text-xs px-2 py-1;
+  }
+
+  .admin-button-group {
+    @apply flex flex-col sm:flex-row gap-1 sm:gap-2;
+  }
+
+  /* Admin search improvements for mobile */
+  .admin-search {
+    @apply mb-4;
+  }
+
+  .admin-search-input {
+    @apply text-sm;
+  }
+
+  /* Admin tab content improvements */
+  .tabs-content {
+    @apply space-y-6 sm:space-y-8;
+  }
+
+  .tab-content {
+    @apply space-y-4 sm:space-y-6;
+  }
+
+  /* Admin tabs container improvements */
+  .admin-tabs-container {
+    @apply w-full max-w-full overflow-hidden;
+  }
+
+  .admin-tabs {
+    @apply grid grid-cols-2 sm:grid-cols-4 bg-gradient-subtle border border-primary/10 rounded-lg sm:rounded-xl p-1;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  /* Admin section improvements */
+  .admin-section-header {
+    @apply mb-4 sm:mb-6;
+  }
+
+  .admin-section-title {
+    @apply text-lg sm:text-xl font-semibold mb-2 sm:mb-3;
+  }
+
+  .admin-section-description {
+    @apply text-sm sm:text-base text-muted-foreground;
+  }
+
+  /* Admin content area improvements */
+  .admin-content-area {
+    @apply space-y-4 sm:space-y-6;
+  }
+
+  .admin-content-card {
+    @apply card-elegant;
+  }
+
+  .admin-content-header {
+    @apply p-4 sm:p-6 pb-3 sm:pb-4;
+  }
+
+  .admin-content-body {
+    @apply p-4 sm:p-6 pt-2 sm:pt-3;
   }
 }
