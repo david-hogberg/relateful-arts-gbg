@@ -1,73 +1,104 @@
-# Welcome to your Lovable project
+# Relateful Arts GBG
 
-## Project info
+A community platform for connecting artists, facilitators, and creative communities in Gothenburg, Sweden. Built with modern web technologies to foster meaningful connections and artistic collaboration.
 
-**URL**: https://lovable.dev/projects/d8c3c63f-d17a-43e8-970e-26a08157b1df
+## Features
 
-## How can I edit this code?
+- **Community Events**: Discover and join creative events and workshops
+- **Facilitator Profiles**: Connect with experienced facilitators and artists
+- **Resource Sharing**: Access and contribute to a shared knowledge base
+- **Venue Directory**: Find and submit creative spaces and venues
+- **User Management**: Secure authentication and profile management
+- **Admin Panel**: Comprehensive tools for community moderation
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- **Frontend**: React 18 + TypeScript
+- **Styling**: Tailwind CSS + shadcn/ui components
+- **Build Tool**: Vite
+- **Backend**: Supabase (PostgreSQL + Auth + Storage)
+- **Deployment**: Ready for Vercel, Netlify, or GitHub Pages
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d8c3c63f-d17a-43e8-970e-26a08157b1df) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js 18+ 
+- npm, yarn, or bun
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/relateful-arts-gbg.git
+   cd relateful-arts-gbg
+   ```
 
-Follow these steps:
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+3. **Set up environment variables**
+   Create a `.env` file in the root directory:
+   ```env
+   VITE_SUPABASE_URL=your_supabase_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   VITE_SUPABASE_PROJECT_ID=your_project_id
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+4. **Start development server**
+   ```bash
+   npm run dev
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+5. **Open your browser**
+   Navigate to `http://localhost:5173`
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+## Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `VITE_SUPABASE_URL` | Your Supabase project URL | Yes |
+| `VITE_SUPABASE_ANON_KEY` | Your Supabase anonymous/public key | Yes |
+| `VITE_SUPABASE_PROJECT_ID` | Your Supabase project ID | Yes |
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+- `npm run type-check` - Run TypeScript type checking
+
+## Project Structure
+
+```
+src/
+├── components/     # Reusable UI components
+├── pages/         # Page components and routing
+├── hooks/         # Custom React hooks
+├── integrations/  # External service integrations
+├── lib/           # Utility functions and helpers
+└── assets/        # Static assets and images
 ```
 
-**Edit a file directly in GitHub**
+## Contributing
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-**Use GitHub Codespaces**
+## License
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+This project is open source and available under the [MIT License](LICENSE).
 
-## What technologies are used for this project?
+## Support
 
-This project is built with:
+For questions or support, please open an issue in the GitHub repository or contact the development team.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/d8c3c63f-d17a-43e8-970e-26a08157b1df) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Built with ❤️ for the creative community of Gothenburg
