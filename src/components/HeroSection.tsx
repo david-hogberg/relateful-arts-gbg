@@ -30,7 +30,7 @@ const HeroSection = () => {
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed max-w-4xl mx-auto font-medium">
-            A warm, welcoming platform for deepening interpersonal practices and building meaningful connections in and around Gothenburg, Sweden.
+            A platform for deepening interpersonal practices and building meaningful connections in and around Gothenburg, Sweden.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
